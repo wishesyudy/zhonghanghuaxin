@@ -1,0 +1,10 @@
+# 素材源文件（太大/内部资料，不入库、不上传）
+北京中航华信智慧消防宣传片（版本2.0）.mp4
+中航华信公司介绍（new）.pptx
+
+# 中间产物
+_assets_raw/
+_assets_view/
+_pptx_text.txt
+_mobile_qr.png
+__pycache__/

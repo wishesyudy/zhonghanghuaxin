@@ -1,0 +1,165 @@
+/* ============================================================
+   中航华信官网 — responsive.css
+   平板 768-1024 / 手机 <768（竖屏 9:16 与横屏 16:9）
+   ============================================================ */
+
+/* ---------- 平板 ---------- */
+@media (max-width: 1024px) {
+  .container { padding: 0 24px; }
+  .section { padding: 88px 0; }
+
+  .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 36px 24px; }
+  .stats-grid .stat:nth-child(n+4) { grid-column: span 1; }
+
+  .about-grid { gap: 48px; }
+
+  .svc-grid { grid-template-columns: repeat(2, 1fr); }
+  .smart-features { grid-template-columns: repeat(3, 1fr); }
+  .smart-cases { grid-template-columns: repeat(2, 1fr); }
+  .cert-grid { grid-template-columns: repeat(3, 1fr); }
+  .team-grid { grid-template-columns: repeat(3, 1fr); }
+  .contact-cards { grid-template-columns: repeat(2, 1fr); }
+
+  .smart-grid { grid-template-columns: 1fr; gap: 52px; }
+  .smart-media { max-width: 640px; }
+
+  .case-list { grid-template-columns: 1fr; }
+}
+
+/* ---------- 手机 ---------- */
+@media (max-width: 768px) {
+  .container { padding: 0 20px; }
+  .section { padding: 68px 0; }
+  .sec-head { margin-bottom: 44px; }
+
+  /* 导航：汉堡菜单 */
+  .nav-toggle { display: flex; }
+  .nav-inner { padding: 0 20px; }
+  .nav-links {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(6, 30, 54, .97);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .35s var(--ease);
+    z-index: 1001;
+  }
+  .nav-open .nav-links { opacity: 1; pointer-events: auto; }
+  .nav-links a {
+    color: #fff !important;
+    font-size: 19px;
+    letter-spacing: 4px;
+    padding: 12px 20px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Hero */
+  .hero { min-height: 560px; }
+  .hero-title { letter-spacing: 6px; }
+  .hero-slogan { letter-spacing: 1.5px; }
+  .hero-sub { letter-spacing: 0; line-height: 1.8; }
+  .hero-cta { flex-wrap: wrap; }
+  .hero-cta .btn { padding: 14px 30px; }
+
+  /* 数据带 */
+  .stats-band { padding: 56px 0; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 34px 16px; }
+  .stat-num { font-size: 36px; }
+  .stat-label { font-size: 12.5px; letter-spacing: 1px; }
+
+  /* 关于 */
+  .about-grid { grid-template-columns: 1fr; gap: 40px; margin-bottom: 60px; }
+  .about-media { order: -1; }
+  .culture-band { padding: 32px 20px; gap: 10px; }
+  .culture-text { letter-spacing: 2px; }
+  .values-grid { grid-template-columns: 1fr; gap: 18px; }
+  .biz-chips { gap: 10px; }
+  .chip { padding: 8px 18px; font-size: 14px; }
+  .milestone { padding-left: 38px; }
+  .milestone-text { font-size: 15px; }
+
+  /* 业务 */
+  .tab-btns { gap: 0; justify-content: space-between; }
+  .tab-btn { font-size: 15px; letter-spacing: 1.5px; padding: 12px 2px 14px; }
+  .svc-grid { grid-template-columns: 1fr; gap: 16px; }
+  .maint-grid { grid-template-columns: 1fr; gap: 30px; }
+  .smart-features { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .smart-feature { padding: 22px 16px; }
+
+  /* 十项闭环竖排 */
+  .closed-loop { margin-top: 64px; }
+  .loop-track {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .loop-track::before {
+    top: 8px; bottom: 8px;
+    left: 8px; right: auto;
+    width: 1px; height: auto;
+    background: repeating-linear-gradient(180deg, var(--line) 0 10px, transparent 10px 18px);
+  }
+  .loop-node {
+    flex-direction: row;
+    gap: 18px;
+    padding: 12px 0;
+  }
+  .loop-node p { text-align: left; }
+
+  /* 智慧消防 */
+  .smart-grid { gap: 40px; }
+  .smart-media { padding-right: 30px; padding-bottom: 30px; }
+  .smart-cases { grid-template-columns: 1fr; gap: 16px; }
+
+  /* 资质 */
+  .cert-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .cert-badges { gap: 10px; }
+  .cert-badge { font-size: 12.5px; padding: 8px 16px; }
+
+  /* 团队 */
+  .team-grid { grid-template-columns: 1fr; gap: 16px; }
+  .member-desc { text-align: left; }
+  .org-row { flex-direction: column; align-items: center; gap: 10px; margin-top: 26px; }
+  .org-row::before { top: -14px; height: 14px; }
+
+  /* 案例 */
+  .client-wall { margin-bottom: 60px; padding: 18px 0; }
+  .client-item { font-size: 16px; letter-spacing: 2px; }
+  .client-track { gap: 46px; }
+  .case-item { padding: 18px 16px; }
+  .case-num { font-size: 22px; }
+
+  /* 联系 */
+  .contact-cards { grid-template-columns: 1fr; gap: 14px; }
+  .contact-card { padding: 26px 20px; }
+  .cc-value { font-size: 15px; }
+
+  /* 灯箱 */
+  .lb-img { max-width: 94vw; }
+  .lb-prev { left: 4px; }
+  .lb-next { right: 4px; }
+  .lb-close { top: 8px; right: 10px; }
+
+  /* 页脚 */
+  .footer-links { gap: 26px; }
+}
+
+/* ---------- 手机横屏 (16:9) ---------- */
+@media (orientation: landscape) and (max-height: 500px) {
+  .hero { min-height: 70vh; }
+  .hero-content { padding-top: 60px; }
+  .hero-title { font-size: clamp(34px, 6vw, 54px); }
+  .hero-gold-line { margin: 14px 0; }
+  .hero-slogan { font-size: 16px; margin-bottom: 4px; }
+  .hero-sub { font-size: 13px; margin-bottom: 20px; }
+  .hero-cta .btn { padding: 10px 24px; font-size: 13px; }
+  .hero-scroll { bottom: 14px; }
+  .section { padding: 48px 0; }
+  .sec-head { margin-bottom: 32px; }
+}
