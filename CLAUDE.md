@@ -9,7 +9,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 公开网址：https://wishesyudy.github.io/zhonghanghuaxin/
 - 自定义域名：**web.huaxin119.com**（用户 2026-09-19 在 GitHub 网页端绑定，GitHub 自动在远程 master 提交了 CNAME 文件；本地仓库根目录必须保留 CNAME，DNS 需将 web.huaxin119.com CNAME 指向 wishesyudy.github.io，HTTPS 证书 GitHub 自动签发；绑定后 github.io 地址会 301 跳转）
 - 仓库：github.com/wishesyudy/zhonghanghuaxin（gh CLI 已登录；master 分支直推，GitHub Pages legacy 模式自动上线）
-- 分支：`master` = 线上版（v1.0 tag）；`v2` = 中英双语切换开发版（外部会话已提交 i18n 功能，合并前需验证）
+- 分支：`master` = 线上版（当前 v2.0，中英双语切换已上线）；`v2` = 已合并的历史开发分支（v1.0 = 纯中文版，随时可回滚）
 - 设计规格：`docs/superpowers/specs/2026-09-19-zhonghanghuaxin-website-design.md`；实现计划：`docs/superpowers/plans/2026-09-19-zhonghanghuaxin-website.md`
 
 ## ⚠️ 版本管理规则（用户明确要求，最高优先级）
