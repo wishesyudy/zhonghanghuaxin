@@ -35,6 +35,8 @@
   /* 导航：汉堡菜单 */
   .nav-toggle { display: flex; }
   .nav-inner { padding: 0 20px; }
+  .lang-switch { margin-left: 12px; }
+  .lang-btn { padding: 6px 6px; font-size: 12.5px; }
   .nav-links {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;

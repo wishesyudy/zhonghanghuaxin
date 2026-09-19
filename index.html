@@ -25,17 +25,22 @@
           <span class="brand-en">ZHONGHANG HUAXIN</span>
         </span>
       </a>
-      <nav class="nav-links" id="nav-links" aria-label="主导航">
-        <a href="#home" class="active">首页</a>
-        <a href="#about">关于我们</a>
-        <a href="#services">业务服务</a>
-        <a href="#smart">智慧消防</a>
-        <a href="#quals">资质荣誉</a>
-        <a href="#team">团队</a>
-        <a href="#cases">案例</a>
-        <a href="#contact">联系我们</a>
+      <nav class="nav-links" id="nav-links" data-i18n-attr="aria-label:nav.label">
+        <a href="#home" class="active" data-i18n="nav.home">首页</a>
+        <a href="#about" data-i18n="nav.about">关于我们</a>
+        <a href="#services" data-i18n="nav.services">业务服务</a>
+        <a href="#smart" data-i18n="nav.smart">智慧消防</a>
+        <a href="#quals" data-i18n="nav.quals">资质荣誉</a>
+        <a href="#team" data-i18n="nav.team">团队</a>
+        <a href="#cases" data-i18n="nav.cases">案例</a>
+        <a href="#contact" data-i18n="nav.contact">联系我们</a>
       </nav>
-      <button class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false">
+      <div class="lang-switch" role="group" aria-label="语言 / Language">
+        <button class="lang-btn" data-lang="zh" type="button">中</button>
+        <span class="lang-sep" aria-hidden="true">/</span>
+        <button class="lang-btn" data-lang="en" type="button">EN</button>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" data-i18n-attr="aria-label:nav.toggle" aria-label="打开菜单" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -53,16 +58,16 @@
       <div class="hero-overlay"></div>
       <div class="hero-content container">
         <p class="hero-en">ZHONGHANG HUAXIN</p>
-        <h1 class="hero-title">中航华信</h1>
+        <h1 class="hero-title" data-i18n="hero.title">中航华信</h1>
         <div class="hero-gold-line"></div>
-        <p class="hero-slogan">机电全产业链 · 智慧消防 · 消控室远程值守</p>
-        <p class="hero-sub">机电设备安装 · 消防工程 · 维护维保 · 智慧消防一站式服务</p>
+        <p class="hero-slogan" data-i18n="hero.slogan">机电全产业链 · 智慧消防 · 消控室远程值守</p>
+        <p class="hero-sub" data-i18n="hero.sub">机电设备安装 · 消防工程 · 维护维保 · 智慧消防一站式服务</p>
         <div class="hero-cta">
-          <a class="btn btn-ghost" href="#services">了解业务</a>
-          <a class="btn btn-primary" href="#contact">联系我们</a>
+          <a class="btn btn-ghost" href="#services" data-i18n="hero.cta1">了解业务</a>
+          <a class="btn btn-primary" href="#contact" data-i18n="hero.cta2">联系我们</a>
         </div>
       </div>
-      <a class="hero-scroll" href="#stats" aria-label="向下滚动">
+      <a class="hero-scroll" href="#stats" data-i18n-attr="aria-label:hero.scroll" aria-label="向下滚动">
         <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M12 4v16M6 14l6 6 6-6"/>
         </svg>
@@ -74,23 +79,23 @@
       <div class="container stats-grid">
         <div class="stat reveal">
           <span class="stat-num" data-target="2013">0</span>
-          <span class="stat-label">年 公司成立</span>
+          <span class="stat-label" data-i18n="stats.founded">年 公司成立</span>
         </div>
         <div class="stat reveal">
-          <span class="stat-num" data-target="2300">0</span>
-          <span class="stat-label">万 注册资本</span>
+          <span class="stat-num" data-target="2300" data-i18n-attr="data-target:stats.capital.target">0</span>
+          <span class="stat-label" data-i18n="stats.capital.label">万 注册资本</span>
         </div>
         <div class="stat reveal">
           <span class="stat-num" data-target="200">0</span>
-          <span class="stat-label">+ 管理与技术人员</span>
+          <span class="stat-label" data-i18n="stats.staff">+ 管理与技术人员</span>
         </div>
         <div class="stat reveal">
           <span class="stat-num" data-target="6">0</span>
-          <span class="stat-label">项 工程专业承包资质</span>
+          <span class="stat-label" data-i18n="stats.quals">项 工程专业承包资质</span>
         </div>
         <div class="stat reveal">
           <span class="stat-num" data-target="100">0</span>
-          <span class="stat-label">+ 施工维保团队</span>
+          <span class="stat-label" data-i18n="stats.crew">+ 施工维保团队</span>
         </div>
       </div>
     </section>
@@ -101,55 +106,55 @@
         <div class="sec-head reveal">
           <p class="sec-en">ABOUT US</p>
           <div class="sec-line"></div>
-          <h2 class="sec-title">关于我们</h2>
-          <p class="sec-sub">深耕机电与消防领域十余年的全产业链工程公司</p>
+          <h2 class="sec-title" data-i18n="about.title">关于我们</h2>
+          <p class="sec-sub" data-i18n="about.sub">深耕机电与消防领域十余年的全产业链工程公司</p>
         </div>
 
         <div class="about-grid">
           <div class="about-text reveal">
-            <p>北京中航华信机电设备安装有限公司是一家专业从事机电<strong>「全产业链」</strong>的工程公司，总部位于北京市顺义区首都机场；业务涵盖机电设备安装、消防专业工程、智能化专业工程、设备维修维保服务、智慧消防服务、消控室远程值守等。</p>
-            <p>公司具有建筑工程施工总承包贰级、建筑机电安装工程专业承包贰级、建筑装修装饰工程专业承包贰级、消防设施工程专业承包贰级、电子与智能化工程专业承包贰级、施工劳务（不分等级）共<strong>6 项资质</strong>；拥有多项发明专利证书和软件著作权证书，<strong>国家高新技术企业</strong>。</p>
-            <p>公司秉承<strong>「诚信为本，服务至上」</strong>的运营理念，以消防工程、维保和智慧消防为主要业务板块，为客户提供从消防报审、图纸会审、项目施工、关系协调、消防验收到消防评估、检测、维修维保、培训、保险的<strong>全产业链服务</strong>。</p>
+            <p data-i18n-html="about.p1">北京中航华信机电设备安装有限公司是一家专业从事机电<strong>「全产业链」</strong>的工程公司，总部位于北京市顺义区首都机场；业务涵盖机电设备安装、消防专业工程、智能化专业工程、设备维修维保服务、智慧消防服务、消控室远程值守等。</p>
+            <p data-i18n-html="about.p2">公司具有建筑工程施工总承包贰级、建筑机电安装工程专业承包贰级、建筑装修装饰工程专业承包贰级、消防设施工程专业承包贰级、电子与智能化工程专业承包贰级、施工劳务（不分等级）共<strong>6 项资质</strong>；拥有多项发明专利证书和软件著作权证书，<strong>国家高新技术企业</strong>。</p>
+            <p data-i18n-html="about.p3">公司秉承<strong>「诚信为本，服务至上」</strong>的运营理念，以消防工程、维保和智慧消防为主要业务板块，为客户提供从消防报审、图纸会审、项目施工、关系协调、消防验收到消防评估、检测、维修维保、培训、保险的<strong>全产业链服务</strong>。</p>
           </div>
           <div class="about-media reveal">
             <div class="about-frame">
-              <img src="assets/img/about.jpg" alt="公司项目现场" loading="lazy">
+              <img src="assets/img/about.jpg" data-i18n-attr="alt:about.img" alt="公司项目现场" loading="lazy">
             </div>
           </div>
         </div>
 
         <div class="culture-band reveal">
           <span class="culture-quote">「</span>
-          <p class="culture-text">三跟文化 —— 跟我学，跟我上，跟我冲</p>
+          <p class="culture-text" data-i18n="about.culture">三跟文化 —— 跟我学，跟我上，跟我冲</p>
           <span class="culture-quote">」</span>
         </div>
 
         <div class="values-grid">
           <div class="value-card reveal">
-            <h3 class="value-title">企业愿景</h3>
-            <p class="value-text">成为业内一流机电工程综合服务公司</p>
+            <h3 class="value-title" data-i18n="about.v1t">企业愿景</h3>
+            <p class="value-text" data-i18n="about.v1">成为业内一流机电工程综合服务公司</p>
           </div>
           <div class="value-card reveal">
-            <h3 class="value-title">企业使命</h3>
-            <p class="value-text">为客户提供更好服务，为员工搭建广阔舞台</p>
+            <h3 class="value-title" data-i18n="about.v2t">企业使命</h3>
+            <p class="value-text" data-i18n="about.v2">为客户提供更好服务，为员工搭建广阔舞台</p>
           </div>
           <div class="value-card reveal">
-            <h3 class="value-title">核心价值观</h3>
-            <p class="value-text">诚信、公正、稳健、创造</p>
+            <h3 class="value-title" data-i18n="about.v3t">核心价值观</h3>
+            <p class="value-text" data-i18n="about.v3">诚信、公正、稳健、创造</p>
           </div>
         </div>
-        <p class="about-style reveal">企业作风：干工程交朋友树口碑，争先锋做表率立诚信</p>
+        <p class="about-style reveal" data-i18n="about.style">企业作风：干工程交朋友树口碑，争先锋做表率立诚信</p>
 
         <div class="biz-map reveal">
-          <p class="biz-map-title">业务版图</p>
+          <p class="biz-map-title" data-i18n="about.map">业务版图</p>
           <div class="biz-chips">
-            <span class="chip">机电</span>
-            <span class="chip">消防</span>
-            <span class="chip">智能化</span>
-            <span class="chip">消电检</span>
-            <span class="chip">安全评估</span>
-            <span class="chip">平台</span>
-            <span class="chip">远程值守</span>
+            <span class="chip" data-i18n="about.chip1">机电</span>
+            <span class="chip" data-i18n="about.chip2">消防</span>
+            <span class="chip" data-i18n="about.chip3">智能化</span>
+            <span class="chip" data-i18n="about.chip4">消电检</span>
+            <span class="chip" data-i18n="about.chip5">安全评估</span>
+            <span class="chip" data-i18n="about.chip6">平台</span>
+            <span class="chip" data-i18n="about.chip7">远程值守</span>
           </div>
         </div>
 
@@ -157,36 +162,36 @@
           <div class="milestone">
             <span class="milestone-dot"></span>
             <div class="milestone-body">
-              <p class="milestone-tag">行业首创</p>
-              <p class="milestone-text">国内首家提出消防维保概念，并成功应用于中国服务大厦项目</p>
+              <p class="milestone-tag" data-i18n="about.ms.tag">行业首创</p>
+              <p class="milestone-text" data-i18n="about.ms1">国内首家提出消防维保概念，并成功应用于中国服务大厦项目</p>
             </div>
           </div>
           <div class="milestone">
             <span class="milestone-dot"></span>
             <div class="milestone-body">
-              <p class="milestone-tag">行业首创</p>
-              <p class="milestone-text">在首都机场 T1 航站楼率先提出并实施弱电系统集成工程</p>
+              <p class="milestone-tag" data-i18n="about.ms.tag">行业首创</p>
+              <p class="milestone-text" data-i18n="about.ms2">在首都机场 T1 航站楼率先提出并实施弱电系统集成工程</p>
             </div>
           </div>
           <div class="milestone">
             <span class="milestone-dot"></span>
             <div class="milestone-body">
               <p class="milestone-tag">2021</p>
-              <p class="milestone-text">疫情期间，5000 个方舱房间弱电消防工程工期压缩到 2 周完成，并采用无线报警传输方式</p>
+              <p class="milestone-text" data-i18n="about.ms3">疫情期间，5000 个方舱房间弱电消防工程工期压缩到 2 周完成，并采用无线报警传输方式</p>
             </div>
           </div>
           <div class="milestone">
             <span class="milestone-dot"></span>
             <div class="milestone-body">
               <p class="milestone-tag">2023</p>
-              <p class="milestone-text">推出华信一站式消防管家服务平台</p>
+              <p class="milestone-text" data-i18n="about.ms4">推出华信一站式消防管家服务平台</p>
             </div>
           </div>
           <div class="milestone">
             <span class="milestone-dot"></span>
             <div class="milestone-body">
               <p class="milestone-tag">2025</p>
-              <p class="milestone-text">推出消控室远程值守产品和服务</p>
+              <p class="milestone-text" data-i18n="about.ms5">推出消控室远程值守产品和服务</p>
             </div>
           </div>
         </div>
@@ -199,73 +204,73 @@
         <div class="sec-head center reveal">
           <p class="sec-en">OUR SERVICES</p>
           <div class="sec-line"></div>
-          <h2 class="sec-title">业务服务</h2>
-          <p class="sec-sub">工程施工 · 维护维保 · 智慧消防 —— 三驾马车</p>
+          <h2 class="sec-title" data-i18n="services.title">业务服务</h2>
+          <p class="sec-sub" data-i18n="services.sub">工程施工 · 维护维保 · 智慧消防 —— 三驾马车</p>
         </div>
 
         <div class="service-tabs reveal">
           <div class="tab-btns" role="tablist">
-            <button class="tab-btn active" data-tab="eng" role="tab">工程施工</button>
-            <button class="tab-btn" data-tab="maint" role="tab">维护维保</button>
-            <button class="tab-btn" data-tab="smart" role="tab">智慧消防</button>
+            <button class="tab-btn active" data-tab="eng" role="tab" data-i18n="services.tab1">工程施工</button>
+            <button class="tab-btn" data-tab="maint" role="tab" data-i18n="services.tab2">维护维保</button>
+            <button class="tab-btn" data-tab="smart" role="tab" data-i18n="services.tab3">智慧消防</button>
           </div>
 
           <!-- 面板 1：工程施工 -->
           <div class="tab-panel active" data-panel="eng" role="tabpanel">
             <div class="svc-grid">
               <div class="svc-card">
-                <h3 class="svc-title">机电设备安装</h3>
-                <p class="svc-qual">建筑机电安装工程专业承包贰级</p>
-                <p class="svc-desc">前期可研、立项、设计 + 施工的 EPC 服务，为业主实施新建、改造工程服务</p>
+                <h3 class="svc-title" data-i18n="svc.1.title">机电设备安装</h3>
+                <p class="svc-qual" data-i18n="svc.1.qual">建筑机电安装工程专业承包贰级</p>
+                <p class="svc-desc" data-i18n="svc.1.desc">前期可研、立项、设计 + 施工的 EPC 服务，为业主实施新建、改造工程服务</p>
               </div>
               <div class="svc-card">
-                <h3 class="svc-title">消防设施工程</h3>
-                <p class="svc-qual">消防设施工程专业承包贰级</p>
-                <p class="svc-desc">消防弱电施工、消防电工程、火灾自动报警系统、气体灭火设备安装，一体化全过程专业服务</p>
+                <h3 class="svc-title" data-i18n="svc.2.title">消防设施工程</h3>
+                <p class="svc-qual" data-i18n="svc.2.qual">消防设施工程专业承包贰级</p>
+                <p class="svc-desc" data-i18n="svc.2.desc">消防弱电施工、消防电工程、火灾自动报警系统、气体灭火设备安装，一体化全过程专业服务</p>
               </div>
               <div class="svc-card">
-                <h3 class="svc-title">电子与智能化工程</h3>
-                <p class="svc-qual">电子与智能化工程专业承包贰级</p>
-                <p class="svc-desc">弱电系统集成、安防视频、综合布线、机房设备维护、末端节点设备安装维护</p>
+                <h3 class="svc-title" data-i18n="svc.3.title">电子与智能化工程</h3>
+                <p class="svc-qual" data-i18n="svc.3.qual">电子与智能化工程专业承包贰级</p>
+                <p class="svc-desc" data-i18n="svc.3.desc">弱电系统集成、安防视频、综合布线、机房设备维护、末端节点设备安装维护</p>
               </div>
               <div class="svc-card">
-                <h3 class="svc-title">建筑装修装饰</h3>
-                <p class="svc-qual">建筑装修装饰工程专业承包贰级</p>
-                <p class="svc-desc">建筑装修装饰专业承包贰级资质范围内的工程服务</p>
+                <h3 class="svc-title" data-i18n="svc.4.title">建筑装修装饰</h3>
+                <p class="svc-qual" data-i18n="svc.4.qual">建筑装修装饰工程专业承包贰级</p>
+                <p class="svc-desc" data-i18n="svc.4.desc">建筑装修装饰专业承包贰级资质范围内的工程服务</p>
               </div>
               <div class="svc-card">
-                <h3 class="svc-title">施工劳务</h3>
-                <p class="svc-qual">施工劳务（不分等级）</p>
-                <p class="svc-desc">具备大型会战实施能力，在重点项目及应急抢险救援项目中能打硬仗</p>
+                <h3 class="svc-title" data-i18n="svc.5.title">施工劳务</h3>
+                <p class="svc-qual" data-i18n="svc.5.qual">施工劳务（不分等级）</p>
+                <p class="svc-desc" data-i18n="svc.5.desc">具备大型会战实施能力，在重点项目及应急抢险救援项目中能打硬仗</p>
               </div>
             </div>
-            <p class="svc-note">从前期可研、立项到设计施工，公司具备覆盖机电安装、消防设施、电子智能化、装修装饰与施工劳务的完整施工能力；抢工期间可动员劳务人员千余人。</p>
+            <p class="svc-note" data-i18n="svc.note1">从前期可研、立项到设计施工，公司具备覆盖机电安装、消防设施、电子智能化、装修装饰与施工劳务的完整施工能力；抢工期间可动员劳务人员千余人。</p>
           </div>
 
           <!-- 面板 2：维护维保 -->
           <div class="tab-panel" data-panel="maint" role="tabpanel">
             <div class="maint-grid">
               <div class="maint-intro">
-                <h3 class="maint-title">一站式消防管家服务</h3>
-                <p class="maint-text">为用户提供维保服务、消电检及消防安全评估的一站式消防管家服务，覆盖消防设施全生命周期的日常技术保障。</p>
+                <h3 class="maint-title" data-i18n="maint.title">一站式消防管家服务</h3>
+                <p class="maint-text" data-i18n="maint.text">为用户提供维保服务、消电检及消防安全评估的一站式消防管家服务，覆盖消防设施全生命周期的日常技术保障。</p>
                 <div class="maint-badges">
-                  <span class="maint-badge">7 × 24 小时响应</span>
-                  <span class="maint-badge">驻场 + 巡检</span>
-                  <span class="maint-badge">年度检测</span>
+                  <span class="maint-badge" data-i18n="maint.b1">7 × 24 小时响应</span>
+                  <span class="maint-badge" data-i18n="maint.b2">驻场 + 巡检</span>
+                  <span class="maint-badge" data-i18n="maint.b3">年度检测</span>
                 </div>
               </div>
               <div class="maint-cards">
                 <div class="maint-card">
-                  <h4>维保服务</h4>
-                  <p>驻场班组日常维护，按周期巡检并留痕，远程值守中心集中受理火警与故障信号，分级派单到人</p>
+                  <h4 data-i18n="maint.c1t">维保服务</h4>
+                  <p data-i18n="maint.c1">驻场班组日常维护，按周期巡检并留痕，远程值守中心集中受理火警与故障信号，分级派单到人</p>
                 </div>
                 <div class="maint-card">
-                  <h4>消电检</h4>
-                  <p>消防电气检测与消防安全评估同步交付，形成完整合规档案</p>
+                  <h4 data-i18n="maint.c2t">消电检</h4>
+                  <p data-i18n="maint.c2">消防电气检测与消防安全评估同步交付，形成完整合规档案</p>
                 </div>
                 <div class="maint-card">
-                  <h4>消防安全评估</h4>
-                  <p>专业团队对消防设施全生命周期进行安全评估，出具权威报告</p>
+                  <h4 data-i18n="maint.c3t">消防安全评估</h4>
+                  <p data-i18n="maint.c3">专业团队对消防设施全生命周期进行安全评估，出具权威报告</p>
                 </div>
               </div>
             </div>
@@ -276,60 +281,60 @@
             <div class="smart-features">
               <div class="smart-feature">
                 <span class="sf-icon" aria-hidden="true"></span>
-                <h4>AI 视频算法</h4>
-                <p>智能识别火情与隐患，主动预警</p>
+                <h4 data-i18n="sfeat.1t">AI 视频算法</h4>
+                <p data-i18n="sfeat.1">智能识别火情与隐患，主动预警</p>
               </div>
               <div class="smart-feature">
                 <span class="sf-icon" aria-hidden="true"></span>
-                <h4>数字孪生</h4>
-                <p>楼宇消防系统三维可视化管理</p>
+                <h4 data-i18n="sfeat.2t">数字孪生</h4>
+                <p data-i18n="sfeat.2">楼宇消防系统三维可视化管理</p>
               </div>
               <div class="smart-feature">
                 <span class="sf-icon" aria-hidden="true"></span>
-                <h4>智能维保</h4>
-                <p>维保计划自动生成，全流程留痕</p>
+                <h4 data-i18n="sfeat.3t">智能维保</h4>
+                <p data-i18n="sfeat.3">维保计划自动生成，全流程留痕</p>
               </div>
               <div class="smart-feature">
                 <span class="sf-icon" aria-hidden="true"></span>
-                <h4>设备巡查</h4>
-                <p>巡查任务在线派发，结果实时回传</p>
+                <h4 data-i18n="sfeat.4t">设备巡查</h4>
+                <p data-i18n="sfeat.4">巡查任务在线派发，结果实时回传</p>
               </div>
               <div class="smart-feature">
                 <span class="sf-icon" aria-hidden="true"></span>
-                <h4>智慧用电</h4>
-                <p>电气火灾隐患实时监测预警</p>
+                <h4 data-i18n="sfeat.5t">智慧用电</h4>
+                <p data-i18n="sfeat.5">电气火灾隐患实时监测预警</p>
               </div>
               <div class="smart-feature">
                 <span class="sf-icon" aria-hidden="true"></span>
-                <h4>可燃气体探测</h4>
-                <p>燃气泄漏快速感知，联动处置</p>
+                <h4 data-i18n="sfeat.6t">可燃气体探测</h4>
+                <p data-i18n="sfeat.6">燃气泄漏快速感知，联动处置</p>
               </div>
               <div class="smart-feature">
                 <span class="sf-icon" aria-hidden="true"></span>
-                <h4>远程监控</h4>
-                <p>设备状态、告警信号同屏可查</p>
+                <h4 data-i18n="sfeat.7t">远程监控</h4>
+                <p data-i18n="sfeat.7">设备状态、告警信号同屏可查</p>
               </div>
             </div>
-            <p class="svc-note">华信智慧消防云平台为公司自研，物业与业主方无需到机房，即可掌握楼宇消防运行状况。</p>
+            <p class="svc-note" data-i18n="svc.note3">华信智慧消防云平台为公司自研，物业与业主方无需到机房，即可掌握楼宇消防运行状况。</p>
           </div>
         </div>
 
         <!-- 十项闭环 -->
         <div class="closed-loop reveal">
-          <h3 class="loop-title">全产业链 · 十项闭环</h3>
+          <h3 class="loop-title" data-i18n="loop.title">全产业链 · 十项闭环</h3>
           <div class="loop-track">
-            <div class="loop-node"><span class="loop-dot"></span><p>消防报审</p></div>
-            <div class="loop-node"><span class="loop-dot"></span><p>图纸会审</p></div>
-            <div class="loop-node"><span class="loop-dot"></span><p>项目施工</p></div>
-            <div class="loop-node"><span class="loop-dot"></span><p>关系协调</p></div>
-            <div class="loop-node"><span class="loop-dot"></span><p>消防验收</p></div>
-            <div class="loop-node"><span class="loop-dot"></span><p>消防评估</p></div>
-            <div class="loop-node"><span class="loop-dot"></span><p>消防检测</p></div>
-            <div class="loop-node"><span class="loop-dot"></span><p>维修与维保</p></div>
-            <div class="loop-node"><span class="loop-dot"></span><p>消防培训</p></div>
-            <div class="loop-node"><span class="loop-dot"></span><p>消防保险</p></div>
+            <div class="loop-node"><span class="loop-dot"></span><p data-i18n="loop.1">消防报审</p></div>
+            <div class="loop-node"><span class="loop-dot"></span><p data-i18n="loop.2">图纸会审</p></div>
+            <div class="loop-node"><span class="loop-dot"></span><p data-i18n="loop.3">项目施工</p></div>
+            <div class="loop-node"><span class="loop-dot"></span><p data-i18n="loop.4">关系协调</p></div>
+            <div class="loop-node"><span class="loop-dot"></span><p data-i18n="loop.5">消防验收</p></div>
+            <div class="loop-node"><span class="loop-dot"></span><p data-i18n="loop.6">消防评估</p></div>
+            <div class="loop-node"><span class="loop-dot"></span><p data-i18n="loop.7">消防检测</p></div>
+            <div class="loop-node"><span class="loop-dot"></span><p data-i18n="loop.8">维修与维保</p></div>
+            <div class="loop-node"><span class="loop-dot"></span><p data-i18n="loop.9">消防培训</p></div>
+            <div class="loop-node"><span class="loop-dot"></span><p data-i18n="loop.10">消防保险</p></div>
           </div>
-          <p class="loop-note">业主只需对接一家，从报审到保险的十个环节全部覆盖。</p>
+          <p class="loop-note" data-i18n="loop.note">业主只需对接一家，从报审到保险的十个环节全部覆盖。</p>
         </div>
       </div>
     </section>
@@ -340,43 +345,43 @@
         <div class="sec-head reveal">
           <p class="sec-en">SMART FIRE PROTECTION</p>
           <div class="sec-line"></div>
-          <h2 class="sec-title">智慧消防 · 远程值守</h2>
-          <p class="sec-sub">北京消防协会首批认证远程值守中心</p>
+          <h2 class="sec-title" data-i18n="smart.title">智慧消防 · 远程值守</h2>
+          <p class="sec-sub" data-i18n="smart.sub">北京消防协会首批认证远程值守中心</p>
         </div>
 
         <div class="smart-grid">
           <div class="smart-text reveal">
-            <p class="smart-lead">消控室远程值守中心 —— 北京消防协会首批认证远值中心</p>
-            <p class="smart-para">值守人员在岗状态实时可见，火警与故障信号集中受理，<strong class="smart-hl">7 × 24 小时</strong>为客户进行远程值守。</p>
-            <p class="smart-para">通话录音、操作记录留痕、签订责权协议，所有操作人员均<strong class="smart-hl">持证上岗</strong>。</p>
-            <p class="smart-para"><strong class="smart-hl">半托管 · 全托管</strong>两种模式可选，实现消控室<strong class="smart-hl">单人值班合规升级</strong>，帮助企业降本增效。</p>
+            <p class="smart-lead" data-i18n="smart.lead">消控室远程值守中心 —— 北京消防协会首批认证远值中心</p>
+            <p class="smart-para" data-i18n-html="smart.p1">值守人员在岗状态实时可见，火警与故障信号集中受理，<strong class="smart-hl">7 × 24 小时</strong>为客户进行远程值守。</p>
+            <p class="smart-para" data-i18n-html="smart.p2">通话录音、操作记录留痕、签订责权协议，所有操作人员均<strong class="smart-hl">持证上岗</strong>。</p>
+            <p class="smart-para" data-i18n-html="smart.p3"><strong class="smart-hl">半托管 · 全托管</strong>两种模式可选，实现消控室<strong class="smart-hl">单人值班合规升级</strong>，帮助企业降本增效。</p>
           </div>
           <div class="smart-media reveal">
-            <img class="smart-img-main" src="assets/img/platform.jpg" alt="华信智慧消防远程监控平台" loading="lazy">
-            <img class="smart-img-sub" src="assets/img/ops.jpg" alt="消控室远程值守中心" loading="lazy">
+            <img class="smart-img-main" src="assets/img/platform.jpg" data-i18n-attr="alt:smart.img1" alt="华信智慧消防远程监控平台" loading="lazy">
+            <img class="smart-img-sub" src="assets/img/ops.jpg" data-i18n-attr="alt:smart.img2" alt="消控室远程值守中心" loading="lazy">
           </div>
         </div>
 
         <div class="smart-cases">
           <div class="smart-case reveal">
-            <h4 class="sc-title">北京地坛医院</h4>
-            <p class="sc-tag">消防运营中心</p>
-            <p class="sc-desc">三甲医院消防运营集中管理，值守、告警、巡检统一受理</p>
+            <h4 class="sc-title" data-i18n="sc1.t">北京地坛医院</h4>
+            <p class="sc-tag" data-i18n="sc1.tag">消防运营中心</p>
+            <p class="sc-desc" data-i18n="sc1.d">三甲医院消防运营集中管理，值守、告警、巡检统一受理</p>
           </div>
           <div class="smart-case reveal">
-            <h4 class="sc-title">中国服务大厦</h4>
-            <p class="sc-tag">智慧消防项目</p>
-            <p class="sc-desc">国内首个提出消防维保概念并落地平台的项目</p>
+            <h4 class="sc-title" data-i18n="sc2.t">中国服务大厦</h4>
+            <p class="sc-tag" data-i18n="sc2.tag">智慧消防项目</p>
+            <p class="sc-desc" data-i18n="sc2.d">国内首个提出消防维保概念并落地平台的项目</p>
           </div>
           <div class="smart-case reveal">
-            <h4 class="sc-title">首都机场集团办公楼 · 信息楼 · 科技档案馆 · 电视台</h4>
-            <p class="sc-tag">四栋同步改造</p>
-            <p class="sc-desc">办公楼、信息楼、科技档案馆、电视台四栋同步改造</p>
+            <h4 class="sc-title" data-i18n="sc3.t">首都机场集团办公楼 · 信息楼 · 科技档案馆 · 电视台</h4>
+            <p class="sc-tag" data-i18n="sc3.tag">四栋同步改造</p>
+            <p class="sc-desc" data-i18n="sc3.d">办公楼、信息楼、科技档案馆、电视台四栋同步改造</p>
           </div>
           <div class="smart-case reveal">
-            <h4 class="sc-title">大兴机场公务机楼</h4>
-            <p class="sc-tag">消控室单人值班项目</p>
-            <p class="sc-desc">单人值班合规化的样板，模式可复制到同类楼宇</p>
+            <h4 class="sc-title" data-i18n="sc4.t">大兴机场公务机楼</h4>
+            <p class="sc-tag" data-i18n="sc4.tag">消控室单人值班项目</p>
+            <p class="sc-desc" data-i18n="sc4.d">单人值班合规化的样板，模式可复制到同类楼宇</p>
           </div>
         </div>
       </div>
@@ -388,34 +393,34 @@
         <div class="sec-head center reveal">
           <p class="sec-en">QUALIFICATIONS</p>
           <div class="sec-line"></div>
-          <h2 class="sec-title">资质荣誉</h2>
-          <p class="sec-sub">6 项工程资质 · ISO 三体系 · AAA 信用 · 国家高新技术企业</p>
+          <h2 class="sec-title" data-i18n="quals.title">资质荣誉</h2>
+          <p class="sec-sub" data-i18n="quals.sub">6 项工程资质 · ISO 三体系 · AAA 信用 · 国家高新技术企业</p>
         </div>
 
         <div class="cert-badges reveal">
-          <span class="cert-badge">ISO9001 质量管理体系</span>
-          <span class="cert-badge">ISO14001 环境管理体系</span>
-          <span class="cert-badge">ISO45001 职业健康安全</span>
-          <span class="cert-badge">企业信用等级 AAA</span>
-          <span class="cert-badge">国家高新技术企业</span>
-          <span class="cert-badge">北京消防协会单位会员</span>
+          <span class="cert-badge" data-i18n="quals.b1">ISO9001 质量管理体系</span>
+          <span class="cert-badge" data-i18n="quals.b2">ISO14001 环境管理体系</span>
+          <span class="cert-badge" data-i18n="quals.b3">ISO45001 职业健康安全</span>
+          <span class="cert-badge" data-i18n="quals.b4">企业信用等级 AAA</span>
+          <span class="cert-badge" data-i18n="quals.b5">国家高新技术企业</span>
+          <span class="cert-badge" data-i18n="quals.b6">北京消防协会单位会员</span>
         </div>
 
         <div class="cert-grid" id="cert-grid">
-          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-01.jpg" alt="资质证书 1" data-full="assets/img/cert-01.jpg" loading="lazy"></figure>
-          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-02.jpg" alt="资质证书 2" data-full="assets/img/cert-02.jpg" loading="lazy"></figure>
-          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-03.jpg" alt="资质证书 3" data-full="assets/img/cert-03.jpg" loading="lazy"></figure>
-          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-04.jpg" alt="资质证书 4" data-full="assets/img/cert-04.jpg" loading="lazy"></figure>
-          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-05.jpg" alt="资质证书 5" data-full="assets/img/cert-05.jpg" loading="lazy"></figure>
-          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-06.jpg" alt="资质证书 6" data-full="assets/img/cert-06.jpg" loading="lazy"></figure>
-          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-07.jpg" alt="资质证书 7" data-full="assets/img/cert-07.jpg" loading="lazy"></figure>
-          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-08.jpg" alt="资质证书 8" data-full="assets/img/cert-08.jpg" loading="lazy"></figure>
-          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-09.jpg" alt="资质证书 9" data-full="assets/img/cert-09.jpg" loading="lazy"></figure>
-          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-10.jpg" alt="资质证书 10" data-full="assets/img/cert-10.jpg" loading="lazy"></figure>
-          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-11.jpg" alt="资质证书 11" data-full="assets/img/cert-11.jpg" loading="lazy"></figure>
-          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-12.jpg" alt="资质证书 12" data-full="assets/img/cert-12.jpg" loading="lazy"></figure>
+          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-01.jpg" data-i18n-attr="alt:quals.cert1" alt="资质证书 1" data-full="assets/img/cert-01.jpg" loading="lazy"></figure>
+          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-02.jpg" data-i18n-attr="alt:quals.cert2" alt="资质证书 2" data-full="assets/img/cert-02.jpg" loading="lazy"></figure>
+          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-03.jpg" data-i18n-attr="alt:quals.cert3" alt="资质证书 3" data-full="assets/img/cert-03.jpg" loading="lazy"></figure>
+          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-04.jpg" data-i18n-attr="alt:quals.cert4" alt="资质证书 4" data-full="assets/img/cert-04.jpg" loading="lazy"></figure>
+          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-05.jpg" data-i18n-attr="alt:quals.cert5" alt="资质证书 5" data-full="assets/img/cert-05.jpg" loading="lazy"></figure>
+          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-06.jpg" data-i18n-attr="alt:quals.cert6" alt="资质证书 6" data-full="assets/img/cert-06.jpg" loading="lazy"></figure>
+          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-07.jpg" data-i18n-attr="alt:quals.cert7" alt="资质证书 7" data-full="assets/img/cert-07.jpg" loading="lazy"></figure>
+          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-08.jpg" data-i18n-attr="alt:quals.cert8" alt="资质证书 8" data-full="assets/img/cert-08.jpg" loading="lazy"></figure>
+          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-09.jpg" data-i18n-attr="alt:quals.cert9" alt="资质证书 9" data-full="assets/img/cert-09.jpg" loading="lazy"></figure>
+          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-10.jpg" data-i18n-attr="alt:quals.cert10" alt="资质证书 10" data-full="assets/img/cert-10.jpg" loading="lazy"></figure>
+          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-11.jpg" data-i18n-attr="alt:quals.cert11" alt="资质证书 11" data-full="assets/img/cert-11.jpg" loading="lazy"></figure>
+          <figure class="cert-item reveal"><img class="cert-img" src="assets/img/cert-12.jpg" data-i18n-attr="alt:quals.cert12" alt="资质证书 12" data-full="assets/img/cert-12.jpg" loading="lazy"></figure>
         </div>
-        <p class="cert-hint reveal">点击证书可放大查看（证照原件实拍）</p>
+        <p class="cert-hint reveal" data-i18n="quals.hint">点击证书可放大查看（证照原件实拍）</p>
       </div>
     </section>
 
@@ -425,80 +430,80 @@
         <div class="sec-head center reveal">
           <p class="sec-en">OUR TEAM</p>
           <div class="sec-line"></div>
-          <h2 class="sec-title">团队专家</h2>
-          <p class="sec-sub">7 位核心岗位管理人员 · 15 名一级建造师 · 8 名一级注册消防工程师 · 9 名二级建造师</p>
+          <h2 class="sec-title" data-i18n="team.title">团队专家</h2>
+          <p class="sec-sub" data-i18n="team.sub">7 位核心岗位管理人员 · 15 名一级建造师 · 8 名一级注册消防工程师 · 9 名二级建造师</p>
         </div>
 
         <div class="team-grid">
           <div class="member-card reveal">
-            <span class="member-avatar">李</span>
-            <h3 class="member-name">李华</h3>
-            <p class="member-role">总经理</p>
-            <p class="member-cred">荷兰商学院 DBA 博士</p>
-            <p class="member-desc">代表项目横跨机场、地铁、通信、高校、酒店的 14 项重点工程——从单体楼宇到城市轨道交通线网；6 条北京轨道交通线路的机电与消防系统建设经历。地铁是消防验收最严、工期最紧的场景之一。</p>
+            <span class="member-avatar" data-i18n="mem1.avatar">李</span>
+            <h3 class="member-name" data-i18n="mem1.name">李华</h3>
+            <p class="member-role" data-i18n="mem1.role">总经理</p>
+            <p class="member-cred" data-i18n="mem1.cred">荷兰商学院 DBA 博士</p>
+            <p class="member-desc" data-i18n="mem1.desc">代表项目横跨机场、地铁、通信、高校、酒店的 14 项重点工程——从单体楼宇到城市轨道交通线网；6 条北京轨道交通线路的机电与消防系统建设经历。地铁是消防验收最严、工期最紧的场景之一。</p>
           </div>
           <div class="member-card reveal">
-            <span class="member-avatar">武</span>
-            <h3 class="member-name">武仁杰</h3>
-            <p class="member-role">副总经理 · 综合部经理</p>
-            <p class="member-cred">一级建造师（机电）2015 · 一级消防工程师 2024</p>
-            <p class="member-desc">代表项目：电子城 IT 产业园、万寿路甲 15 号院五区节能综合改造、上海嘉定行政服务中心、北京信息科技大学、北京新机场公务机楼</p>
+            <span class="member-avatar" data-i18n="mem2.avatar">武</span>
+            <h3 class="member-name" data-i18n="mem2.name">武仁杰</h3>
+            <p class="member-role" data-i18n="mem2.role">副总经理 · 综合部经理</p>
+            <p class="member-cred" data-i18n="mem2.cred">一级建造师（机电）2015 · 一级消防工程师 2024</p>
+            <p class="member-desc" data-i18n="mem2.desc">代表项目：电子城 IT 产业园、万寿路甲 15 号院五区节能综合改造、上海嘉定行政服务中心、北京信息科技大学、北京新机场公务机楼</p>
           </div>
           <div class="member-card reveal">
-            <span class="member-avatar">张</span>
-            <h3 class="member-name">张炯锋</h3>
-            <p class="member-role">市场部经理 · 公司法定代表人</p>
-            <p class="member-cred">一级建造师（机电）2023 · 中级消防员</p>
-            <p class="member-desc">代表项目：地坛医院消防工程和安防工程、大兴公务机空侧维修机库 / 停机库 / 特车库消防中控室集成改造、通马路综合交通枢纽 A 区消防 / 弱电、首都公务机楼消防管理服务</p>
+            <span class="member-avatar" data-i18n="mem3.avatar">张</span>
+            <h3 class="member-name" data-i18n="mem3.name">张炯锋</h3>
+            <p class="member-role" data-i18n="mem3.role">市场部经理 · 公司法定代表人</p>
+            <p class="member-cred" data-i18n="mem3.cred">一级建造师（机电）2023 · 中级消防员</p>
+            <p class="member-desc" data-i18n="mem3.desc">代表项目：地坛医院消防工程和安防工程、大兴公务机空侧维修机库 / 停机库 / 特车库消防中控室集成改造、通马路综合交通枢纽 A 区消防 / 弱电、首都公务机楼消防管理服务</p>
           </div>
           <div class="member-card reveal">
-            <span class="member-avatar">卢</span>
-            <h3 class="member-name">卢秀文</h3>
-            <p class="member-role">履约部经理</p>
-            <p class="member-cred">二级造价师（安装）2024 · 建（构）筑物中级消防员 2016</p>
-            <p class="member-desc">代表投标项目：重庆江北机场、北京中航总部大厦、卫星通讯大厦、专利大厦、北京地铁 7 / 8 / 西郊线、7 号线二期、昌南线、房山线北延、19 号线二期等投标</p>
+            <span class="member-avatar" data-i18n="mem4.avatar">卢</span>
+            <h3 class="member-name" data-i18n="mem4.name">卢秀文</h3>
+            <p class="member-role" data-i18n="mem4.role">履约部经理</p>
+            <p class="member-cred" data-i18n="mem4.cred">二级造价师（安装）2024 · 建（构）筑物中级消防员 2016</p>
+            <p class="member-desc" data-i18n="mem4.desc">代表投标项目：重庆江北机场、北京中航总部大厦、卫星通讯大厦、专利大厦、北京地铁 7 / 8 / 西郊线、7 号线二期、昌南线、房山线北延、19 号线二期等投标</p>
           </div>
           <div class="member-card reveal">
-            <span class="member-avatar">陈</span>
-            <h3 class="member-name">陈飞虹</h3>
-            <p class="member-role">工程主管</p>
-            <p class="member-cred">19 号线开通保障优秀单位 · 优秀员工</p>
-            <p class="member-desc">代表项目：首都机场东海康得思酒店、金盖方舱医院、地铁 19 号线、国家粮食和物资储备局月坛北街 25 号院、首都机场 2 号航站楼 1301 气体灭火更新、T1 / T2 消防稳压罐更换、T2 消防水炮更新改造</p>
+            <span class="member-avatar" data-i18n="mem5.avatar">陈</span>
+            <h3 class="member-name" data-i18n="mem5.name">陈飞虹</h3>
+            <p class="member-role" data-i18n="mem5.role">工程主管</p>
+            <p class="member-cred" data-i18n="mem5.cred">19 号线开通保障优秀单位 · 优秀员工</p>
+            <p class="member-desc" data-i18n="mem5.desc">代表项目：首都机场东海康得思酒店、金盖方舱医院、地铁 19 号线、国家粮食和物资储备局月坛北街 25 号院、首都机场 2 号航站楼 1301 气体灭火更新、T1 / T2 消防稳压罐更换、T2 消防水炮更新改造</p>
           </div>
           <div class="member-card reveal">
-            <span class="member-avatar">于</span>
-            <h3 class="member-name">于东鹰</h3>
-            <p class="member-role">市场主管 · 智慧消防</p>
-            <p class="member-cred">思科认证网络工程师</p>
-            <p class="member-desc">代表工作：智慧消防平台建设、消防中控室值班技术推广、硬件集成、软件开发、地坛医院消控室单人值班、中国服务大厦智慧消防</p>
+            <span class="member-avatar" data-i18n="mem6.avatar">于</span>
+            <h3 class="member-name" data-i18n="mem6.name">于东鹰</h3>
+            <p class="member-role" data-i18n="mem6.role">市场主管 · 智慧消防</p>
+            <p class="member-cred" data-i18n="mem6.cred">思科认证网络工程师</p>
+            <p class="member-desc" data-i18n="mem6.desc">代表工作：智慧消防平台建设、消防中控室值班技术推广、硬件集成、软件开发、地坛医院消控室单人值班、中国服务大厦智慧消防</p>
           </div>
           <div class="member-card reveal">
-            <span class="member-avatar">郑</span>
-            <h3 class="member-name">郑健</h3>
-            <p class="member-role">财务主管</p>
-            <p class="member-cred">会计中级职称 · 2023 / 2024 连续两年优秀员工</p>
-            <p class="member-desc">职责范围：全盘账务审核、月度结账、财务报表及经营分析、资金收支、税务筹划、财务制度、内控流程、成本核算、预算管理</p>
+            <span class="member-avatar" data-i18n="mem7.avatar">郑</span>
+            <h3 class="member-name" data-i18n="mem7.name">郑健</h3>
+            <p class="member-role" data-i18n="mem7.role">财务主管</p>
+            <p class="member-cred" data-i18n="mem7.cred">会计中级职称 · 2023 / 2024 连续两年优秀员工</p>
+            <p class="member-desc" data-i18n="mem7.desc">职责范围：全盘账务审核、月度结账、财务报表及经营分析、资金收支、税务筹划、财务制度、内控流程、成本核算、预算管理</p>
           </div>
         </div>
 
         <div class="org-chart reveal">
-          <p class="org-title">组织架构</p>
+          <p class="org-title" data-i18n="org.title">组织架构</p>
           <div class="org-tree">
-            <div class="org-node org-root">总经理</div>
-            <div class="org-node org-mid">常务副总经理</div>
+            <div class="org-node org-root" data-i18n="org.1">总经理</div>
+            <div class="org-node org-mid" data-i18n="org.2">常务副总经理</div>
             <div class="org-row">
-              <div class="org-node">办公室</div>
-              <div class="org-node">核查办</div>
-              <div class="org-node">财务副经理</div>
-              <div class="org-node">市场规划副经理</div>
-              <div class="org-node">合同履约副经理</div>
+              <div class="org-node" data-i18n="org.3">办公室</div>
+              <div class="org-node" data-i18n="org.4">核查办</div>
+              <div class="org-node" data-i18n="org.5">财务副经理</div>
+              <div class="org-node" data-i18n="org.6">市场规划副经理</div>
+              <div class="org-node" data-i18n="org.7">合同履约副经理</div>
             </div>
-            <div class="org-node org-mid">商务中心</div>
+            <div class="org-node org-mid" data-i18n="org.8">商务中心</div>
             <div class="org-row">
-              <div class="org-node">第一中心</div>
-              <div class="org-node">第二中心</div>
-              <div class="org-node">第三中心</div>
-              <div class="org-node">维保</div>
+              <div class="org-node" data-i18n="org.9">第一中心</div>
+              <div class="org-node" data-i18n="org.10">第二中心</div>
+              <div class="org-node" data-i18n="org.11">第三中心</div>
+              <div class="org-node" data-i18n="org.12">维保</div>
             </div>
           </div>
         </div>
@@ -511,84 +516,84 @@
         <div class="sec-head center reveal">
           <p class="sec-en">CLIENTS &amp; CASES</p>
           <div class="sec-line"></div>
-          <h2 class="sec-title">客户与案例</h2>
-          <p class="sec-sub">长期服务对象覆盖机场、轨道交通、三甲医院、文体场馆、央企高校与政府机关——共 13 组重点客户</p>
+          <h2 class="sec-title" data-i18n="cases.title">客户与案例</h2>
+          <p class="sec-sub" data-i18n="cases.sub">长期服务对象覆盖机场、轨道交通、三甲医院、文体场馆、央企高校与政府机关——共 13 组重点客户</p>
         </div>
 
         <div class="client-wall reveal" id="client-wall">
           <div class="client-track">
-            <span class="client-item">首都机场集团</span>
-            <span class="client-item">大兴国际机场</span>
-            <span class="client-item">北京地铁</span>
-            <span class="client-item">北京公交有轨电车有限公司</span>
-            <span class="client-item">首都医科大学附属北京地坛医院</span>
-            <span class="client-item">首都图书馆</span>
-            <span class="client-item">北京首都机场希尔顿酒店</span>
-            <span class="client-item">东海康得思酒店</span>
-            <span class="client-item">中国航空集团</span>
-            <span class="client-item">中国卫通</span>
-            <span class="client-item">中国地质大学</span>
-            <span class="client-item">北京信息科技大学</span>
-            <span class="client-item">国家粮食和物资储备局</span>
+            <span class="client-item" data-i18n="client.1">首都机场集团</span>
+            <span class="client-item" data-i18n="client.2">大兴国际机场</span>
+            <span class="client-item" data-i18n="client.3">北京地铁</span>
+            <span class="client-item" data-i18n="client.4">北京公交有轨电车有限公司</span>
+            <span class="client-item" data-i18n="client.5">首都医科大学附属北京地坛医院</span>
+            <span class="client-item" data-i18n="client.6">首都图书馆</span>
+            <span class="client-item" data-i18n="client.7">北京首都机场希尔顿酒店</span>
+            <span class="client-item" data-i18n="client.8">东海康得思酒店</span>
+            <span class="client-item" data-i18n="client.9">中国航空集团</span>
+            <span class="client-item" data-i18n="client.10">中国卫通</span>
+            <span class="client-item" data-i18n="client.11">中国地质大学</span>
+            <span class="client-item" data-i18n="client.12">北京信息科技大学</span>
+            <span class="client-item" data-i18n="client.13">国家粮食和物资储备局</span>
           </div>
         </div>
 
         <div class="case-tabs reveal">
           <div class="tab-btns" role="tablist">
-            <button class="tab-btn active" data-tab="case-eng" role="tab">工程实施 · 15 项</button>
-            <button class="tab-btn" data-tab="case-maint" role="tab">消防维保 · 11 项</button>
-            <button class="tab-btn" data-tab="case-smart" role="tab">智慧消防 · 4 项</button>
+            <button class="tab-btn active" data-tab="case-eng" role="tab" data-i18n="cases.tab1">工程实施 · 15 项</button>
+            <button class="tab-btn" data-tab="case-maint" role="tab" data-i18n="cases.tab2">消防维保 · 11 项</button>
+            <button class="tab-btn" data-tab="case-smart" role="tab" data-i18n="cases.tab3">智慧消防 · 4 项</button>
           </div>
 
           <!-- 工程实施 -->
           <div class="tab-panel active" data-panel="case-eng" role="tabpanel">
             <ol class="case-list">
-              <li class="case-item"><span class="case-num">01</span><p>北京地铁 7 号线工程 FAS 系统及气体灭火设备安装工程 I 标段</p></li>
-              <li class="case-item"><span class="case-num">02</span><p>北京地铁 8 号线三期工程 FAS 系统及气体灭火设备安装工程 II 标段</p></li>
-              <li class="case-item"><span class="case-num">03</span><p>北京市轨道交通房山线北延工程火灾自动报警系统及气体灭火设备安装工程</p></li>
-              <li class="case-item"><span class="case-num">04</span><p>北京地铁 19 号线工程 FAS 系统及气体灭火设备安装工程 II 标段</p></li>
-              <li class="case-item"><span class="case-num">05</span><p>北京市轨道交通昌平线南延工程火灾自动报警、气体灭火及集中控制型疏散指示系统设备安装工程</p></li>
-              <li class="case-item"><span class="case-num">06</span><p>中国航空集团总部大厦项目消防工程</p></li>
-              <li class="case-item"><span class="case-num">07</span><p>首都机场 2 号航站楼消防主机扩容改造项目</p></li>
-              <li class="case-item"><span class="case-num">08</span><p>北京新机场公务机楼工程消防专业分包工程</p></li>
-              <li class="case-item"><span class="case-num">09</span><p>北京信息科技大学新校区建设工程第一教学组团项目弱电工程 / 消防电工程</p></li>
-              <li class="case-item"><span class="case-num">10</span><p>北京通州文化旅游区通马路综合交通枢纽项目 A 区消防工程 / 弱电工程</p></li>
-              <li class="case-item"><span class="case-num">11</span><p>北京新机场飞行区附属工程 1 号消防站及急救站机电专业分包工程</p></li>
-              <li class="case-item"><span class="case-num">12</span><p>北京首都机场东海康得思酒店机电维修改造工程</p></li>
-              <li class="case-item"><span class="case-num">13</span><p>北京大兴国际机场飞行区充电桩二期项目</p></li>
-              <li class="case-item"><span class="case-num">14</span><p>中国卫星通讯大厦机电及消防工程</p></li>
-              <li class="case-item"><span class="case-num">15</span><p>中国地质大学（北京）交流中心改造消防工程</p></li>
+              <li class="case-item"><span class="case-num">01</span><p data-i18n="ceng.1">北京地铁 7 号线工程 FAS 系统及气体灭火设备安装工程 I 标段</p></li>
+              <li class="case-item"><span class="case-num">02</span><p data-i18n="ceng.2">北京地铁 8 号线三期工程 FAS 系统及气体灭火设备安装工程 II 标段</p></li>
+              <li class="case-item"><span class="case-num">03</span><p data-i18n="ceng.3">北京市轨道交通房山线北延工程火灾自动报警系统及气体灭火设备安装工程</p></li>
+              <li class="case-item"><span class="case-num">04</span><p data-i18n="ceng.4">北京地铁 19 号线工程 FAS 系统及气体灭火设备安装工程 II 标段</p></li>
+              <li class="case-item"><span class="case-num">05</span><p data-i18n="ceng.5">北京市轨道交通昌平线南延工程火灾自动报警、气体灭火及集中控制型疏散指示系统设备安装工程</p></li>
+              <li class="case-item"><span class="case-num">06</span><p data-i18n="ceng.6">中国航空集团总部大厦项目消防工程</p></li>
+              <li class="case-item"><span class="case-num">07</span><p data-i18n="ceng.7">首都机场 2 号航站楼消防主机扩容改造项目</p></li>
+              <li class="case-item"><span class="case-num">08</span><p data-i18n="ceng.8">北京新机场公务机楼工程消防专业分包工程</p></li>
+              <li class="case-item"><span class="case-num">09</span><p data-i18n="ceng.9">北京信息科技大学新校区建设工程第一教学组团项目弱电工程 / 消防电工程</p></li>
+              <li class="case-item"><span class="case-num">10</span><p data-i18n="ceng.10">北京通州文化旅游区通马路综合交通枢纽项目 A 区消防工程 / 弱电工程</p></li>
+              <li class="case-item"><span class="case-num">11</span><p data-i18n="ceng.11">北京新机场飞行区附属工程 1 号消防站及急救站机电专业分包工程</p></li>
+              <li class="case-item"><span class="case-num">12</span><p data-i18n="ceng.12">北京首都机场东海康得思酒店机电维修改造工程</p></li>
+              <li class="case-item"><span class="case-num">13</span><p data-i18n="ceng.13">北京大兴国际机场飞行区充电桩二期项目</p></li>
+              <li class="case-item"><span class="case-num">14</span><p data-i18n="ceng.14">中国卫星通讯大厦机电及消防工程</p></li>
+              <li class="case-item"><span class="case-num">15</span><p data-i18n="ceng.15">中国地质大学（北京）交流中心改造消防工程</p></li>
             </ol>
-            <p class="case-note">已完工程均通过消防验收并投入使用，可提供合同与验收资料供核查。</p>
+            <p class="case-note" data-i18n="ceng.note">已完工程均通过消防验收并投入使用，可提供合同与验收资料供核查。</p>
           </div>
 
           <!-- 消防维保 -->
           <div class="tab-panel" data-panel="case-maint" role="tabpanel">
             <ol class="case-list">
-              <li class="case-item"><span class="case-num">01</span><p>北京首都机场物业管理有限公司七处楼宇消防维保及监控服务项目</p></li>
-              <li class="case-item"><span class="case-num">02</span><p>北京大兴国际机场运行办服务楼宇消防设备维保项目</p></li>
-              <li class="case-item"><span class="case-num">03</span><p>北京大兴国际机场消防管理部火警指挥调度系统维保服务项目</p></li>
-              <li class="case-item"><span class="case-num">04</span><p>大兴公务机兴和楼及陆侧园区消防管理服务项目</p></li>
-              <li class="case-item"><span class="case-num">05</span><p>大兴机场货运区消防设备设施维保项目</p></li>
-              <li class="case-item"><span class="case-num">06</span><p>北京首都机场旅业有限公司首都机场希尔顿酒店消防系统维护技术服务项目</p></li>
-              <li class="case-item"><span class="case-num">07</span><p>民航营业大厦消防维保项目</p></li>
-              <li class="case-item"><span class="case-num">08</span><p>首都图书馆消防维保服务项目</p></li>
-              <li class="case-item"><span class="case-num">09</span><p>首都医科大学附属北京地坛医院及顺义院区消防维保服务项目</p></li>
-              <li class="case-item"><span class="case-num">10</span><p>北京首都机场东海康得思酒店消防维保项目</p></li>
-              <li class="case-item"><span class="case-num">11</span><p>哈尔滨太平国际机场公共区域建筑消防设施设备巡查、保养维修及年度消防安全检测服务项目</p></li>
+              <li class="case-item"><span class="case-num">01</span><p data-i18n="cmaint.1">北京首都机场物业管理有限公司七处楼宇消防维保及监控服务项目</p></li>
+              <li class="case-item"><span class="case-num">02</span><p data-i18n="cmaint.2">北京大兴国际机场运行办服务楼宇消防设备维保项目</p></li>
+              <li class="case-item"><span class="case-num">03</span><p data-i18n="cmaint.3">北京大兴国际机场消防管理部火警指挥调度系统维保服务项目</p></li>
+              <li class="case-item"><span class="case-num">04</span><p data-i18n="cmaint.4">大兴公务机兴和楼及陆侧园区消防管理服务项目</p></li>
+              <li class="case-item"><span class="case-num">05</span><p data-i18n="cmaint.5">大兴机场货运区消防设备设施维保项目</p></li>
+              <li class="case-item"><span class="case-num">06</span><p data-i18n="cmaint.6">北京首都机场旅业有限公司首都机场希尔顿酒店消防系统维护技术服务项目</p></li>
+              <li class="case-item"><span class="case-num">07</span><p data-i18n="cmaint.7">民航营业大厦消防维保项目</p></li>
+              <li class="case-item"><span class="case-num">08</span><p data-i18n="cmaint.8">首都图书馆消防维保服务项目</p></li>
+              <li class="case-item"><span class="case-num">09</span><p data-i18n="cmaint.9">首都医科大学附属北京地坛医院及顺义院区消防维保服务项目</p></li>
+              <li class="case-item"><span class="case-num">10</span><p data-i18n="cmaint.10">北京首都机场东海康得思酒店消防维保项目</p></li>
+              <li class="case-item"><span class="case-num">11</span><p data-i18n="cmaint.11">哈尔滨太平国际机场公共区域建筑消防设施设备巡查、保养维修及年度消防安全检测服务项目</p></li>
             </ol>
-            <p class="case-note">远程值守中心集中受理火警与故障信号，分级派单到人；驻场班组日常维护，按周期巡检并留痕；消电检与消防安全评估同步交付，形成完整合规档案。</p>
+            <p class="case-note" data-i18n="cmaint.note">远程值守中心集中受理火警与故障信号，分级派单到人；驻场班组日常维护，按周期巡检并留痕；消电检与消防安全评估同步交付，形成完整合规档案。</p>
           </div>
 
           <!-- 智慧消防 -->
           <div class="tab-panel" data-panel="case-smart" role="tabpanel">
             <ol class="case-list">
-              <li class="case-item"><span class="case-num">01</span><p>北京地坛医院 · 消防运营中心</p></li>
-              <li class="case-item"><span class="case-num">02</span><p>中国服务大厦 · 智慧消防项目</p></li>
-              <li class="case-item"><span class="case-num">03</span><p>首都机场集团办公楼 · 信息楼 · 科技档案馆 · 电视台四栋同步改造</p></li>
-              <li class="case-item"><span class="case-num">04</span><p>大兴机场公务机楼 · 消控室单人值班项目</p></li>
+              <li class="case-item"><span class="case-num">01</span><p data-i18n="csmart.1">北京地坛医院 · 消防运营中心</p></li>
+              <li class="case-item"><span class="case-num">02</span><p data-i18n="csmart.2">中国服务大厦 · 智慧消防项目</p></li>
+              <li class="case-item"><span class="case-num">03</span><p data-i18n="csmart.3">首都机场集团办公楼 · 信息楼 · 科技档案馆 · 电视台四栋同步改造</p></li>
+              <li class="case-item"><span class="case-num">04</span><p data-i18n="csmart.4">大兴机场公务机楼 · 消控室单人值班项目</p></li>
             </ol>
-            <p class="case-note">设备状态、告警信号、值守排班、巡检记录在同一屏内可查。物业与业主方无需到机房，即可掌握楼宇消防运行状况。平台为公司自研。</p>
+            <p class="case-note" data-i18n="csmart.note">设备状态、告警信号、值守排班、巡检记录在同一屏内可查。物业与业主方无需到机房，即可掌握楼宇消防运行状况。平台为公司自研。</p>
           </div>
         </div>
       </div>
@@ -601,8 +606,8 @@
         <div class="sec-head center reveal">
           <p class="sec-en">CONTACT US</p>
           <div class="sec-line"></div>
-          <h2 class="sec-title">联系我们</h2>
-          <p class="sec-sub">期待与您合作</p>
+          <h2 class="sec-title" data-i18n="contact.title">联系我们</h2>
+          <p class="sec-sub" data-i18n="contact.sub">期待与您合作</p>
         </div>
 
         <div class="contact-cards">
@@ -610,7 +615,7 @@
             <svg class="cc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="30" height="30" aria-hidden="true">
               <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/>
             </svg>
-            <p class="cc-label">电话</p>
+            <p class="cc-label" data-i18n="contact.phone">电话</p>
             <p class="cc-value">13366130540</p>
           </a>
           <a class="contact-card reveal" href="mailto:13366130540@163.com">
@@ -618,7 +623,7 @@
               <rect x="2" y="4" width="20" height="16" rx="2"/>
               <path d="m22 7-10 6L2 7"/>
             </svg>
-            <p class="cc-label">邮箱</p>
+            <p class="cc-label" data-i18n="contact.email">邮箱</p>
             <p class="cc-value">13366130540@163.com</p>
           </a>
           <div class="contact-card reveal">
@@ -626,16 +631,16 @@
               <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/>
               <circle cx="12" cy="10" r="3"/>
             </svg>
-            <p class="cc-label">地址</p>
-            <p class="cc-value">北京市顺义区首都机场</p>
+            <p class="cc-label" data-i18n="contact.addr">地址</p>
+            <p class="cc-value" data-i18n="contact.addrval">北京市顺义区首都机场</p>
           </div>
           <div class="contact-card reveal">
             <svg class="cc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="30" height="30" aria-hidden="true">
               <path d="M8 10a4 4 0 1 0 8 0 4 4 0 0 0-8 0z"/>
               <path d="M3 21c.5-3.5 4-6 9-6s8.5 2.5 9 6"/>
             </svg>
-            <p class="cc-label">微信公众号</p>
-            <p class="cc-value">北京中航华信机电设备安装有限公司</p>
+            <p class="cc-label" data-i18n="contact.wechat">微信公众号</p>
+            <p class="cc-value" data-i18n="contact.wechatval">北京中航华信机电设备安装有限公司</p>
           </div>
         </div>
       </div>
@@ -645,10 +650,10 @@
 
   <!-- ======== 灯箱 ======== -->
   <div class="lightbox" id="lightbox" hidden>
-    <button class="lb-close" aria-label="关闭">×</button>
-    <button class="lb-prev" aria-label="上一张">‹</button>
-    <img class="lb-img" alt="证书放大图">
-    <button class="lb-next" aria-label="下一张">›</button>
+    <button class="lb-close" data-i18n-attr="aria-label:lb.close" aria-label="关闭">×</button>
+    <button class="lb-prev" data-i18n-attr="aria-label:lb.prev" aria-label="上一张">‹</button>
+    <img class="lb-img" data-i18n-attr="alt:lb.img" alt="证书放大图">
+    <button class="lb-next" data-i18n-attr="aria-label:lb.next" aria-label="下一张">›</button>
   </div>
 
   <!-- ======== 页脚 ======== -->
@@ -661,21 +666,22 @@
             <polygon points="22,10 33,17 33,29 22,36 11,29 11,17" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".65"/>
           </svg>
           <span class="brand-text">
-            <span class="brand-cn">北京中航华信机电设备安装有限公司</span>
+            <span class="brand-cn" data-i18n="footer.brand">北京中航华信机电设备安装有限公司</span>
             <span class="brand-en">ZHONGHANG HUAXIN</span>
           </span>
         </a>
       </div>
-      <nav class="footer-links" aria-label="页脚导航">
-        <a href="#services">工程施工</a>
-        <a href="#smart">智慧消防</a>
-        <a href="#contact">联系我们</a>
+      <nav class="footer-links" data-i18n-attr="aria-label:footer.nav" aria-label="页脚导航">
+        <a href="#services" data-i18n="footer.l1">工程施工</a>
+        <a href="#smart" data-i18n="footer.l2">智慧消防</a>
+        <a href="#contact" data-i18n="footer.l3">联系我们</a>
       </nav>
-      <p class="footer-copy">© 2026 北京中航华信机电设备安装有限公司 版权所有</p>
-      <p class="footer-icp">京ICP备XXXXXXXX号</p>
+      <p class="footer-copy" data-i18n="footer.copy">© 2026 北京中航华信机电设备安装有限公司 版权所有</p>
+      <p class="footer-icp" data-i18n="footer.icp">京ICP备XXXXXXXX号</p>
     </div>
   </footer>
 
+  <script src="js/i18n.js" defer></script>
   <script src="js/main.js" defer></script>
 
 </body>

@@ -48,6 +48,19 @@ body {
   overflow-x: hidden;
 }
 
+/* ---------- 英文模式排版微调 ----------
+   中文字距对长英文词组过大，切换后收敛；字体改用西文栈 */
+html[lang="en"] body { font-family: var(--font-en); }
+html[lang="en"] .hero-title { font-size: clamp(42px, 7vw, 84px); letter-spacing: 2px; }
+html[lang="en"] .hero-slogan { letter-spacing: 1px; }
+html[lang="en"] .hero-sub { letter-spacing: .5px; }
+html[lang="en"] .sec-title { letter-spacing: 0; }
+html[lang="en"] .stat-label { font-size: 13px; letter-spacing: .3px; line-height: 1.5; }
+html[lang="en"] .brand-cn { font-size: 16px; letter-spacing: 1px; }
+html[lang="en"] .tab-btn { letter-spacing: .5px; }
+html[lang="en"] .client-item { letter-spacing: 1px; }
+html[lang="en"] .btn { letter-spacing: 1px; }
+
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 ul, ol { list-style: none; }

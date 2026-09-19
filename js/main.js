@@ -231,4 +231,18 @@
     initMarquee();
     initHeroVideo();
   });
+
+  /* ---------- 语言切换：重置统计数字并重播 ----------
+     i18n.js 切换语言后派发 zhx:langchange；
+     跑马灯无需重建（克隆节点同样带 data-i18n，已被一并翻译） */
+  document.addEventListener('zhx:langchange', function () {
+    document.querySelectorAll('.stat-num[data-target]').forEach(function (el) {
+      el.textContent = '0';
+    });
+    var statsBand = document.getElementById('stats');
+    if (statsBand) {
+      var rect = statsBand.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) runCounters();
+    }
+  });
 })();

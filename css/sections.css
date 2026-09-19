@@ -66,6 +66,33 @@
 .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 .nav-links a.active { color: var(--gold); }
 
+/* 中英切换 */
+.lang-switch {
+  position: relative;
+  z-index: 1002; /* 与汉堡同级，移动端菜单打开时仍可点 */
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  margin-left: 28px;
+}
+.lang-btn {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 6px 8px;
+  color: #fff;
+  opacity: .65;
+  transition: color .3s, opacity .3s;
+}
+.lang-btn:hover { opacity: 1; }
+.lang-btn.active { color: var(--gold); opacity: 1; }
+.lang-sep { color: rgba(255, 255, 255, .35); font-size: 13px; }
+.site-nav.scrolled .lang-btn { color: var(--text-dark); }
+.site-nav.scrolled .lang-sep { color: rgba(22, 33, 43, .25); }
+.nav-open .lang-btn { color: #fff; }
+.nav-open .lang-sep { color: rgba(255, 255, 255, .35); }
+
 /* 汉堡按钮（默认隐藏，移动端显示） */
 .nav-toggle { display: none; flex-direction: column; gap: 5px; padding: 8px; z-index: 1002; }
 .nav-toggle span {
