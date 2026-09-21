@@ -1151,6 +1151,37 @@ a.contact-card { display: block; }
   transition: color .3s;
 }
 .footer-links a:hover { color: var(--gold); }
+
+/* 员工入口 —— 内部系统入口，DOM 上紧接页脚导航。
+   视觉上比导航弱一档（描边胶囊、小一号字 + 淡一档的色），
+   不抢公开内容的注意力，员工扫一眼又能找到。 */
+.footer-staff {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 26px;
+}
+.footer-staff-title {
+  font-size: 12.5px;
+  letter-spacing: 3px;
+  color: rgba(232, 238, 245, .45);
+}
+.footer-staff-link {
+  font-size: 12.5px;
+  letter-spacing: 1.5px;
+  padding: 5px 14px;
+  border: 1px solid rgba(201, 165, 76, .4);
+  border-radius: 999px;
+  color: var(--gold-soft);
+  transition: color .3s, background-color .3s, border-color .3s;
+}
+.footer-staff-link:hover {
+  color: var(--navy-deep);
+  background-color: var(--gold);
+  border-color: var(--gold);
+}
 .footer-copy { font-size: 12.5px; letter-spacing: 1px; }
 .footer-icp {
   margin-top: 10px;

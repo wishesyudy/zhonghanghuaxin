@@ -676,6 +676,23 @@
         <a href="#smart" data-i18n="footer.l2">智慧消防</a>
         <a href="#contact" data-i18n="footer.l3">联系我们</a>
       </nav>
+
+      <!-- ======== 员工入口 ========
+           指向 oa.html —— 《华信投标决策中枢》的演示版快照（源文件在桌面）。
+             该页是静态原型，无登录校验、无数据库、无后端。
+             该页带 noindex，页内标注「演示版 · 非生产系统」。
+           真系统（Flask · 127.0.0.1:8000）上线后，把 href 换成它的实际地址。
+
+           ⚠ oa.html 由桌面原件经 7 处发布前处理生成，不要直接编辑它：
+             改桌面原件，再重跑脚本，否则下次覆盖会丢掉这里的改动。
+
+           对外文案只写「内部办公系统」，不写「招投标系统」：
+             该系统承载成本价、报价、业绩等涉密信息，入口不该向访客说明它是什么。 -->
+      <div class="footer-staff">
+        <span class="footer-staff-title" data-i18n="footer.staff">员工入口</span>
+        <a class="footer-staff-link" href="oa.html" data-i18n="footer.staffLink">内部办公系统</a>
+      </div>
+
       <p class="footer-copy" data-i18n="footer.copy">© 2026 北京中航华信机电设备安装有限公司 版权所有</p>
       <p class="footer-icp" data-i18n="footer.icp">京ICP备XXXXXXXX号</p>
     </div>

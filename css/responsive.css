@@ -150,6 +150,7 @@
 
   /* 页脚 */
   .footer-links { gap: 26px; }
+  .footer-staff { gap: 10px; margin-bottom: 22px; }
 }
 
 /* ---------- 手机横屏 (16:9) ---------- */

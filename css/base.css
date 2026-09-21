@@ -59,6 +59,8 @@ html[lang="en"] .stat-label { font-size: 13px; letter-spacing: .3px; line-height
 html[lang="en"] .brand-cn { font-size: 16px; letter-spacing: 1px; }
 html[lang="en"] .tab-btn { letter-spacing: .5px; }
 html[lang="en"] .client-item { letter-spacing: 1px; }
+html[lang="en"] .footer-staff-title { letter-spacing: 1px; }
+html[lang="en"] .footer-staff-link { letter-spacing: .5px; }
 html[lang="en"] .btn { letter-spacing: 1px; }
 
 img { max-width: 100%; display: block; }

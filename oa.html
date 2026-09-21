@@ -1,0 +1,3750 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>华信投标决策中枢 · 流程版</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+/* ========== 主题：深空蓝紫，带层次与光晕 ========== */
+:root{
+  --bg:#080a12;
+  --bg2:#0d1020;
+  --panel:rgba(22,26,42,.72);
+  --panel-solid:#161a2a;
+  --panel2:rgba(34,39,60,.62);
+  --line:rgba(120,140,200,.16);
+  --line2:rgba(120,140,200,.28);
+  --tx:#eef1f8; --tx2:#a8b0c8; --tx3:#6d7690;
+  --red:#f2555a; --green:#3ddba0; --amber:#f5b544; --blue:#4d94ff;
+  --purple:#9b7df0; --teal:#2dd4bf; --cyan:#38bdf8;
+  --glow-blue:rgba(77,148,255,.35);
+  --glow-purple:rgba(155,125,240,.30);
+  --glow-green:rgba(61,219,160,.28);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{height:100%}
+body{
+  font-family:"Microsoft YaHei","PingFang SC",-apple-system,system-ui,sans-serif;
+  background:var(--bg); color:var(--tx); font-size:14px; line-height:1.6;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+/* 背景光晕层 */
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(1100px 700px at 12% -8%, rgba(77,148,255,.16), transparent 62%),
+    radial-gradient(900px 620px at 96% 4%, rgba(155,125,240,.14), transparent 60%),
+    radial-gradient(1000px 800px at 50% 108%, rgba(45,212,191,.09), transparent 62%),
+    linear-gradient(180deg,#080a12 0%,#0a0d18 42%,#080a12 100%);
+}
+/* 细网格纹理 */
+body::after{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.34;
+  background-image:
+    linear-gradient(rgba(120,140,200,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120,140,200,.045) 1px, transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(circle at 50% 34%, #000 0%, transparent 78%);
+  -webkit-mask-image:radial-gradient(circle at 50% 34%, #000 0%, transparent 78%);
+}
+.app{position:relative; z-index:1}
+
+/* ========== 登录页 ========== */
+.login-wrap{
+  position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center;
+  background:radial-gradient(900px 600px at 50% 30%, rgba(77,148,255,.18), transparent 60%),
+             linear-gradient(180deg,#070912,#0b0e1c 60%,#070912);
+}
+.login-card{
+  width:392px; background:linear-gradient(180deg, rgba(28,33,54,.94), rgba(18,21,36,.96));
+  border:1px solid var(--line2); border-radius:18px; padding:34px 32px 28px;
+  box-shadow:0 28px 70px rgba(0,0,0,.62), 0 0 0 1px rgba(255,255,255,.035) inset,
+             0 0 90px rgba(77,148,255,.10);
+  backdrop-filter:blur(20px);
+}
+.login-logo{display:flex; align-items:center; gap:11px; margin-bottom:5px}
+.login-logo .mark{
+  width:38px;height:38px;border-radius:11px;flex-shrink:0;
+  background:linear-gradient(135deg,#4d94ff,#9b7df0);
+  display:flex;align-items:center;justify-content:center;font-size:19px;
+  box-shadow:0 6px 20px rgba(77,148,255,.42);
+}
+.login-card h1{font-size:17.5px;font-weight:600;letter-spacing:.5px}
+.login-card .tip{font-size:12px;color:var(--tx3);margin-bottom:24px;padding-left:49px;margin-top:-2px}
+.fld{margin-bottom:15px}
+.fld label{display:block;font-size:12px;color:var(--tx2);margin-bottom:6px}
+.fld input{width:100%;background:rgba(10,13,24,.72);border:1px solid var(--line2);color:var(--tx);
+  padding:11px 13px;border-radius:9px;font-size:13.5px;font-family:inherit;outline:none;transition:.18s}
+.fld input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(77,148,255,.16)}
+.login-btn{width:100%;padding:12px;border-radius:9px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#3d7de8,#6d5fe0);color:#fff;font-size:14px;font-weight:600;
+  font-family:inherit;letter-spacing:1px;margin-top:8px;transition:.18s;
+  box-shadow:0 8px 24px rgba(77,148,255,.34)}
+.login-btn:hover{transform:translateY(-1px);box-shadow:0 12px 30px rgba(77,148,255,.46)}
+.role-row{display:flex;gap:7px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.role-pill{flex:1;text-align:center;font-size:11.5px;padding:7px 4px;border-radius:8px;cursor:pointer;
+  background:var(--panel2);border:1px solid var(--line);color:var(--tx3);transition:.16s}
+.role-pill:hover{border-color:var(--line2);color:var(--tx2)}
+.role-pill.on{background:rgba(77,148,255,.18);border-color:var(--blue);color:#a9caff}
+.sso-note{margin-top:16px;font-size:11px;color:var(--tx3);text-align:center;line-height:1.7}
+.sso-note code{background:rgba(120,140,200,.13);padding:1px 6px;border-radius:5px;color:var(--tx2);font-size:10.5px}
+
+/* ========== 顶栏 ========== */
+.top{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:0 26px; height:60px; border-bottom:1px solid var(--line);
+  background:rgba(11,14,26,.82); backdrop-filter:blur(16px);
+  position:sticky; top:0; z-index:30;
+}
+.brand{display:flex;align-items:center;gap:11px}
+.brand .mark{width:32px;height:32px;border-radius:9px;
+  background:linear-gradient(135deg,#4d94ff,#9b7df0);
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+  box-shadow:0 4px 14px rgba(77,148,255,.36)}
+.brand h1{font-size:15px;font-weight:600;letter-spacing:.4px;line-height:1.25}
+.brand p{font-size:11px;color:var(--tx3);margin-top:1px}
+.top-right{display:flex;align-items:center;gap:14px}
+.proj-chip{font-size:12px;color:var(--tx2);background:var(--panel2);border:1px solid var(--line);
+  padding:6px 13px;border-radius:9px;max-width:330px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.proj-chip b{color:var(--tx)}
+.user-chip{display:flex;align-items:center;gap:9px;padding:5px 13px 5px 5px;border-radius:24px;
+  background:var(--panel2);border:1px solid var(--line)}
+.user-chip .av{width:26px;height:26px;border-radius:50%;
+  background:linear-gradient(135deg,#4d94ff,#9b7df0);display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:600;color:#fff}
+.user-chip .nm{font-size:12.5px}
+.user-chip .rl{font-size:10.5px;color:var(--tx3)}
+
+/* ========== 三栏布局：左 1/3 步骤轨道 + 右 2/3 内容 ========== */
+.shell{display:grid; grid-template-columns:minmax(300px,1fr) 2fr; gap:0; min-height:calc(100vh - 60px)}
+@media(max-width:1080px){.shell{grid-template-columns:1fr}}
+
+/* 左栏：步骤轨道 */
+.rail{
+  border-right:1px solid var(--line); padding:22px 18px 40px;
+  background:rgba(10,13,24,.44); position:relative;
+}
+.rail-head{font-size:11.5px;color:var(--tx3);letter-spacing:1.4px;margin-bottom:5px;text-transform:uppercase}
+.rail-title{font-size:14.5px;font-weight:600;margin-bottom:4px}
+.rail-prog{display:flex;align-items:center;gap:9px;margin:12px 0 20px}
+.rail-prog .track{flex:1;height:5px;background:rgba(120,140,200,.15);border-radius:3px;overflow:hidden}
+.rail-prog .track i{display:block;height:100%;border-radius:3px;
+  background:linear-gradient(90deg,#4d94ff,#3ddba0);transition:width .35s}
+.rail-prog .pct{font-size:12px;color:var(--tx2);font-variant-numeric:tabular-nums;font-weight:500}
+
+/* 步骤条目 */
+.step-item{
+  position:relative; padding:11px 12px 11px 40px; border-radius:11px; cursor:pointer;
+  transition:.16s; margin-bottom:3px; border:1px solid transparent;
+}
+.step-item:hover{background:rgba(120,140,200,.075)}
+.step-item.on{background:rgba(77,148,255,.14);border-color:rgba(77,148,255,.42)}
+.step-item.on .st-num{background:var(--blue);color:#fff;box-shadow:0 0 0 4px rgba(77,148,255,.18)}
+.step-item.done .st-num{background:var(--green);color:#062018}
+.step-item.need .st-num{background:var(--amber);color:#2a1c04}
+.step-item .st-num{
+  position:absolute; left:11px; top:12px; width:20px; height:20px; border-radius:50%;
+  display:flex;align-items:center;justify-content:center; font-size:10.5px; font-weight:600;
+  background:rgba(120,140,200,.20); color:var(--tx3); transition:.16s; z-index:1;
+}
+.step-item .st-name{font-size:13px;font-weight:500;color:var(--tx2)}
+.step-item.on .st-name{color:#cfe2ff}
+.step-item.done .st-name{color:var(--tx)}
+.step-item .st-rec{font-size:11px;color:var(--tx3);margin-top:3px;line-height:1.55;display:none}
+.step-item.has-rec .st-rec{display:block}
+.step-item.has-rec .st-rec b{color:var(--tx2);font-weight:500}
+.step-item .st-rec .void{color:var(--red);text-decoration:line-through;opacity:.65}
+/* 演示跳过标记：始终显示，刺眼，提醒这不是正常通过 */
+.step-item .st-skip{
+  display:block; margin-top:5px; font-size:10.5px; font-weight:600; letter-spacing:.2px;
+  padding:3px 7px; border-radius:6px; color:#ffd48a;
+  background:repeating-linear-gradient(-45deg,rgba(245,181,68,.20),rgba(245,181,68,.20) 6px,rgba(245,181,68,.09) 6px,rgba(245,181,68,.09) 12px);
+  border:1px dashed rgba(245,181,68,.65);
+}
+/* 竖向连接线 */
+.step-item:not(:last-child)::after{
+  content:""; position:absolute; left:20.5px; top:32px; bottom:-3px; width:1px;
+  background:linear-gradient(180deg, rgba(120,140,200,.30), rgba(120,140,200,.10));
+}
+.step-item.done:not(:last-child)::after{background:linear-gradient(180deg, rgba(61,219,160,.52), rgba(120,140,200,.12))}
+
+.rail-foot{margin-top:18px;padding-top:15px;border-top:1px solid var(--line)}
+.rail-foot .mini{font-size:11px;color:var(--tx3);line-height:1.75}
+.rail-foot .mini b{color:var(--tx2);font-weight:500}
+.rail-foot .mini.locks{
+  margin-top:13px; padding:11px 12px; border-radius:10px;
+  background:linear-gradient(135deg,rgba(155,125,240,.13),rgba(77,148,255,.09));
+  border:1px solid rgba(155,125,240,.28);
+}
+.rail-foot .mini.locks>div:first-of-type{margin-top:7px}
+.rail-foot .mini.locks .lock-row{display:flex;gap:7px;align-items:baseline;font-size:10.5px;line-height:1.7}
+.rail-foot .mini.locks .lk{
+  flex:0 0 auto;font-size:10px;font-weight:600;padding:1px 6px;border-radius:5px;
+  background:rgba(155,125,240,.22);border:1px solid rgba(155,125,240,.40);color:#c9b8ff;
+}
+
+/* 右栏：内容区 */
+.main{padding:24px 28px 60px; min-width:0}
+.stage-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:6px;flex-wrap:wrap}
+.stage-head h2{font-size:20px;font-weight:600;letter-spacing:.3px;display:flex;align-items:center;gap:10px}
+.stage-head h2 .stage-no{
+  font-size:12px;font-weight:600;padding:3px 10px;border-radius:8px;
+  background:linear-gradient(135deg,rgba(77,148,255,.26),rgba(155,125,240,.26));
+  border:1px solid rgba(77,148,255,.42);color:#b9d5ff;letter-spacing:.6px}
+.stage-desc{font-size:12.5px;color:var(--tx3);margin-bottom:20px;max-width:760px;line-height:1.75}
+.stage-body{animation:stageIn .3s ease}
+@keyframes stageIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* 底部动作条 */
+.actbar{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  margin-top:24px; padding-top:18px; border-top:1px solid var(--line); flex-wrap:wrap;
+}
+.actbar .hint{font-size:11.5px;color:var(--tx3);line-height:1.6;max-width:520px}
+.actbar .btns{display:flex;gap:9px;flex-wrap:wrap}
+
+/* ========== 面板 ========== */
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:16px;
+  backdrop-filter:blur(10px);box-shadow:0 8px 30px rgba(0,0,0,.24)}
+.panel h3{font-size:14px;font-weight:600;margin-bottom:5px;display:flex;align-items:center;gap:9px}
+.panel h3 .tag{font-size:10.5px;font-weight:400;padding:2px 9px;border-radius:9px;
+  background:rgba(120,140,200,.14);color:var(--tx3);letter-spacing:.2px}
+.sub{font-size:12px;color:var(--tx3);margin-bottom:14px;line-height:1.7}
+.sub b{color:var(--tx2)}
+
+/* 表格 */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-weight:500;color:var(--tx2);font-size:11.5px;letter-spacing:.3px;
+  padding:9px 10px;border-bottom:1px solid var(--line2);background:rgba(120,140,200,.06)}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr{transition:background .14s}
+tbody tr:hover{background:rgba(120,140,200,.05)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+td.c,th.c{text-align:center}
+
+/* 徽标 */
+.b{display:inline-block;font-size:11px;padding:2.5px 9px;border-radius:9px;white-space:nowrap;font-weight:500}
+.b-ok{background:rgba(61,219,160,.15);color:var(--green)}
+.b-no{background:rgba(242,85,90,.15);color:var(--red)}
+.b-q{background:rgba(245,181,68,.15);color:var(--amber)}
+.b-info{background:rgba(77,148,255,.15);color:#8fbfff}
+.b-gray{background:rgba(120,140,200,.13);color:var(--tx3)}
+.b-purple{background:rgba(155,125,240,.16);color:#bda8f7}
+
+/* 数据来源标签 */
+.src{display:inline-block;font-size:10px;padding:1.5px 7px;border-radius:8px;margin-left:6px;font-weight:500}
+.s-real{background:rgba(61,219,160,.14);color:var(--green)}
+.s-ref{background:rgba(245,181,68,.14);color:var(--amber)}
+.s-none{background:rgba(242,85,90,.14);color:var(--red)}
+
+/* 表单 */
+select,input[type=text],input[type=number]{
+  background:rgba(10,13,24,.66);border:1px solid var(--line2);color:var(--tx);
+  padding:6px 9px;border-radius:7px;font-size:12.5px;font-family:inherit;outline:none;width:100%;transition:.16s}
+select:focus,input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(77,148,255,.13)}
+input[type=checkbox]{accent-color:var(--blue);width:15px;height:15px;cursor:pointer}
+label.ck{display:flex;align-items:center;gap:7px;cursor:pointer;font-size:12.5px}
+input[type=range]{width:100%;accent-color:var(--blue);height:5px;cursor:pointer}
+
+/* 按钮 */
+.btn{background:rgba(120,140,200,.11);border:1px solid var(--line2);color:var(--tx2);
+  padding:8px 16px;border-radius:9px;font-size:12.5px;cursor:pointer;font-family:inherit;transition:.16s;font-weight:500}
+.btn:hover{border-color:var(--tx3);color:var(--tx);background:rgba(120,140,200,.17)}
+.btn.pri{background:linear-gradient(135deg,#3d7de8,#6d5fe0);border-color:transparent;color:#fff;
+  box-shadow:0 6px 20px rgba(77,148,255,.30)}
+.btn.pri:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(77,148,255,.42)}
+.btn.ok{background:linear-gradient(135deg,#22a877,#3ddba0);border-color:transparent;color:#04241a;
+  box-shadow:0 6px 20px rgba(61,219,160,.26)}
+.btn.danger{background:rgba(242,85,90,.13);border-color:rgba(242,85,90,.42);color:#f7a2a5}
+/* 演示跳过：刻意做得"不好看"，让人一眼知道这是走后门 */
+.btn.demo{
+  background:repeating-linear-gradient(-45deg,rgba(245,181,68,.20),rgba(245,181,68,.20) 6px,rgba(245,181,68,.10) 6px,rgba(245,181,68,.10) 12px);
+  border:1px dashed rgba(245,181,68,.72); color:#ffd48a; font-weight:600;
+}
+.btn.demo:hover{border-color:var(--amber);background:rgba(245,181,68,.22);color:#fff}
+.actblock{margin-top:20px}
+.actblock:empty{display:none}
+
+/* ========== 招标信息雷达 ========== */
+.radar-cfg{
+  display:grid; grid-template-columns:250px 1fr; gap:16px;
+  padding:14px; border-radius:12px; margin-top:14px;
+  background:rgba(45,212,191,.05); border:1px solid rgba(45,212,191,.20);
+}
+.rc-title{font-size:11.5px;font-weight:600;color:var(--tx2);letter-spacing:.4px}
+.kw-wrap{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;align-items:center}
+.kw{
+  font-size:11.5px;padding:5px 11px;border-radius:20px;cursor:pointer;
+  border:1px solid var(--line2); color:var(--tx3); background:rgba(120,140,200,.06);
+  transition:.15s; user-select:none;
+  font-family:inherit; line-height:1.5; display:inline-flex; align-items:center; gap:6px;
+}
+.kw:hover{border-color:var(--tx3);color:var(--tx2);background:rgba(120,140,200,.13)}
+.kw:active{transform:scale(.96)}
+.kw.on{
+  background:linear-gradient(135deg,rgba(45,212,191,.24),rgba(56,189,248,.16));
+  border-color:rgba(45,212,191,.55); color:#a5f3ea; font-weight:500;
+}
+/* 关键词状态圆点：暗=关，亮=开 */
+.kw-dot{
+  width:6px;height:6px;border-radius:50%;flex:0 0 6px;
+  background:var(--line2); transition:.15s;
+}
+.kw.on .kw-dot{background:var(--teal);box-shadow:0 0 6px rgba(45,212,191,.8)}
+/* 关闭图标 */
+.kw-x{
+  font-size:10px;opacity:.55;margin-left:2px;line-height:1;
+}
+.kw:hover .kw-x{opacity:1;color:#ff8080}
+.kw-in{
+  font-size:11.5px;padding:5px 11px;border-radius:20px;width:110px;
+  background:transparent;border:1px dashed var(--line2);color:var(--tx);font-family:inherit;outline:none;
+}
+.kw-in:focus{border-color:var(--teal);border-style:solid}
+.kw-in::placeholder{color:var(--tx3)}
+
+.rec-head{display:flex;justify-content:space-between;align-items:baseline;margin:18px 0 9px;
+  font-size:11.5px;font-weight:600;color:var(--tx2);letter-spacing:.4px}
+.rec-list{display:flex;flex-direction:column;gap:9px}
+.rec{
+  display:flex;gap:14px;align-items:center;padding:13px 15px;border-radius:12px;
+  background:rgba(120,140,200,.05); border:1px solid var(--line); transition:.16s;
+}
+.rec:hover{border-color:var(--line2);background:rgba(120,140,200,.09)}
+.rec.in-watch{border-color:rgba(61,219,160,.40);background:rgba(61,219,160,.06)}
+.rec-score{
+  flex:0 0 auto;text-align:center;padding:8px 10px;border-radius:10px;min-width:62px;
+}
+.rec-score b{display:block;font-size:19px;line-height:1;font-family:var(--mono,monospace)}
+.rec-score span{font-size:9.5px;color:var(--tx3);letter-spacing:.3px}
+.rec-score.sc-h{background:rgba(61,219,160,.14);border:1px solid rgba(61,219,160,.36)}
+.rec-score.sc-h b{color:var(--green)}
+.rec-score.sc-m{background:rgba(245,181,68,.13);border:1px solid rgba(245,181,68,.34)}
+.rec-score.sc-m b{color:var(--amber)}
+.rec-score.sc-l{background:rgba(120,140,200,.10);border:1px solid var(--line2)}
+.rec-score.sc-l b{color:var(--tx3)}
+.rec-main{flex:1;min-width:0}
+.rec-n{font-weight:500;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rec-meta{display:flex;gap:13px;flex-wrap:wrap;font-size:11px;color:var(--tx3);margin-top:5px}
+.rec-meta b{color:var(--tx2);font-weight:500}
+.kw-hit{font-size:10.5px;color:var(--tx3);margin-top:5px;display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.kh{
+  font-size:10px;padding:1px 7px;border-radius:5px;color:#7fe8dc;
+  background:rgba(45,212,191,.14);border:1px solid rgba(45,212,191,.30);
+}
+.rec-act{display:flex;flex-direction:column;gap:7px;align-items:flex-end;flex:0 0 auto}
+.chk{font-size:11px;color:var(--tx3);display:flex;gap:5px;align-items:center;cursor:pointer;user-select:none}
+.b-rec{background:linear-gradient(135deg,rgba(61,219,160,.22),rgba(45,212,191,.16));
+  border:1px solid rgba(61,219,160,.48);color:#8ef0c8}
+.b-w{background:rgba(61,219,160,.16);border:1px solid rgba(61,219,160,.42);color:#8ef0c8}
+
+.watch-box{margin-top:18px;border-radius:12px;border:1px solid rgba(61,219,160,.28);
+  background:rgba(61,219,160,.04);overflow:hidden}
+.wb-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;
+  padding:12px 15px;background:rgba(61,219,160,.08);border-bottom:1px solid rgba(61,219,160,.20)}
+.wb-head b{font-size:13px}
+.wb-empty{padding:20px 15px;font-size:12px;color:var(--tx3);line-height:1.7}
+.wb-row{display:flex;gap:13px;align-items:center;padding:12px 15px;border-bottom:1px solid var(--line)}
+.wb-row:last-child{border-bottom:none}
+.wb-idx{flex:0 0 auto;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;
+  font-size:11px;font-weight:600;background:rgba(61,219,160,.16);color:#8ef0c8}
+.wb-by{flex:0 0 auto;font-size:10.5px;color:var(--tx3)}
+.wb-days{flex:0 0 auto;font-size:11px;color:var(--tx3);min-width:78px;text-align:right}
+.wb-days.urgent{color:var(--amber);font-weight:600}
+@media(max-width:900px){ .radar-cfg{grid-template-columns:1fr} }
+.btn.tiny{padding:3.5px 10px;font-size:11px}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--tx3)}
+.btn.ghost:hover{color:var(--red);border-color:rgba(242,85,90,.42);background:rgba(242,85,90,.07)}
+.btn:disabled{opacity:.36;cursor:not-allowed;transform:none!important}
+
+/* 网格 */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:900px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+
+/* 指标卡 */
+.kpi{background:linear-gradient(180deg,rgba(120,140,200,.10),rgba(120,140,200,.035));
+  border:1px solid var(--line);border-radius:12px;padding:14px 16px;position:relative;overflow:hidden}
+.kpi .k{font-size:11.5px;color:var(--tx3);margin-bottom:7px;letter-spacing:.2px}
+.kpi .v{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:.2px}
+.kpi .d{font-size:11px;color:var(--tx3);margin-top:5px;line-height:1.6}
+
+/* 动态球 */
+.dial{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0 4px}
+.dial svg{overflow:visible}
+.ball{cursor:grab;filter:drop-shadow(0 3px 10px rgba(61,219,160,.5));transition:filter .15s}
+.ball:active{cursor:grabbing}
+.ball:hover{filter:drop-shadow(0 4px 16px rgba(61,219,160,.8)) brightness(1.15)}
+.dial-hint{font-size:11.5px;color:var(--tx3);margin-top:14px;text-align:center;line-height:1.7}
+
+/* 提示条 */
+.alert{border-radius:10px;padding:12px 15px;font-size:12.5px;margin-bottom:14px;border:1px solid;line-height:1.7}
+.alert b{font-weight:600}
+.a-red{background:rgba(242,85,90,.09);border-color:rgba(242,85,90,.32);color:#f7a8ab}
+.a-amber{background:rgba(245,181,68,.09);border-color:rgba(245,181,68,.32);color:#f3ce8e}
+.a-green{background:rgba(61,219,160,.09);border-color:rgba(61,219,160,.32);color:#8ee9c6}
+.a-blue{background:rgba(77,148,255,.09);border-color:rgba(77,148,255,.32);color:#a3c8ff}
+
+/* 进度条 */
+.bar{height:5px;background:rgba(120,140,200,.14);border-radius:3px;overflow:hidden;margin-top:6px}
+.bar>i{display:block;height:100%;border-radius:3px;transition:width .32s}
+
+/* 顺位建议 */
+.rank{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid var(--line)}
+.rank:last-child{border-bottom:none}
+.rank .no{width:21px;height:21px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:11px;flex-shrink:0;font-weight:600}
+
+/* 导入区 */
+.dropzone{border:1.5px dashed rgba(120,140,200,.36);border-radius:13px;padding:26px 20px;text-align:center;
+  cursor:pointer;transition:.18s;background:linear-gradient(180deg,rgba(77,148,255,.07),rgba(77,148,255,.012))}
+.dropzone:hover,.dropzone.over{border-color:var(--blue);background:rgba(77,148,255,.13);
+  box-shadow:0 0 0 4px rgba(77,148,255,.07) inset}
+.dropzone.parsing{border-color:var(--amber);cursor:progress}
+textarea{width:100%;background:rgba(10,13,24,.66);border:1px solid var(--line2);color:var(--tx);
+  padding:10px 12px;border-radius:9px;font-size:12.5px;font-family:inherit;outline:none;resize:vertical}
+textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(77,148,255,.13)}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid rgba(120,140,200,.28);
+  border-top-color:var(--blue);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px;margin-right:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* 留痕时间线 */
+.tl{position:relative;padding-left:18px}
+.tl::before{content:"";position:absolute;left:4px;top:5px;bottom:5px;width:1px;background:var(--line2)}
+.tl-item{position:relative;padding:0 0 14px 0}
+.tl-item::before{content:"";position:absolute;left:-18px;top:5px;width:9px;height:9px;border-radius:50%;
+  background:var(--bg);border:2px solid var(--blue)}
+.tl-item.ok::before{border-color:var(--green)}
+.tl-item.warn::before{border-color:var(--amber)}
+.tl-item .tt{font-size:12px;font-weight:600;color:var(--tx)}
+.tl-item .tm{font-size:10.5px;color:var(--tx3);margin-left:7px;font-variant-numeric:tabular-nums}
+.tl-item .tc{font-size:11.5px;color:var(--tx2);margin-top:3px;line-height:1.7}
+
+/* 文件树/清单 */
+.tree{font-size:12.5px}
+.tree-row{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:8px;
+  border:1px solid var(--line);margin-bottom:5px;background:rgba(120,140,200,.045)}
+.tree-row .ic{font-size:14px;width:18px;text-align:center;flex-shrink:0}
+.tree-row .fn{flex:1;min-width:0}
+.tree-row .fs{font-size:10.5px;color:var(--tx3)}
+.tree-row.draft{border-color:rgba(245,181,68,.40);background:rgba(245,181,68,.06)}
+
+.mono{font-variant-numeric:tabular-nums}
+.small{font-size:11.5px;color:var(--tx3)}
+.foot{text-align:center;font-size:11px;color:var(--tx3);margin-top:26px;padding-top:16px;
+  border-top:1px solid var(--line);line-height:1.85}
+.hr{height:1px;background:var(--line);margin:16px 0}
+
+/* ========== 模块切换导航（三个平级工作台） ========== */
+.modnav{display:flex;gap:9px;flex:1;justify-content:center;flex-wrap:wrap;margin:0 18px}
+.mod{
+  display:flex;flex-direction:column;gap:1px;align-items:flex-start;
+  padding:8px 15px;border-radius:11px;cursor:pointer;font-family:inherit;text-align:left;
+  background:rgba(120,140,200,.06);border:1px solid var(--line);color:var(--tx3);
+  transition:.17s;position:relative;min-width:132px;
+}
+.mod:hover{border-color:var(--line2);background:rgba(120,140,200,.12);color:var(--tx2)}
+.mod.on{
+  background:linear-gradient(135deg,rgba(77,148,255,.20),rgba(155,125,240,.16));
+  border-color:rgba(77,148,255,.52);color:var(--tx);
+  box-shadow:0 6px 20px rgba(77,148,255,.20);
+}
+.mod .mi{font-size:14px;line-height:1}
+.mod .mt{font-size:12.5px;font-weight:600;letter-spacing:.2px}
+.mod .md{font-size:10px;color:var(--tx3);letter-spacing:.2px}
+.mod.on .md{color:#a7c4f0}
+@media(max-width:1180px){ .modnav{justify-content:flex-start} .mod{min-width:0;padding:7px 11px} .mod .md{display:none} }
+
+/* ========== 独立工作台容器 ========== */
+.modwrap{padding:26px 30px 60px;max-width:1360px;margin:0 auto;min-height:calc(100vh - 60px)}
+.mod-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:6px}
+.mod-head h2{font-size:21px;font-weight:600;letter-spacing:.3px;display:flex;align-items:center;gap:10px}
+.mod-head .mh-tag{
+  font-size:11px;font-weight:600;padding:3px 10px;border-radius:8px;
+  background:rgba(45,212,191,.16);border:1px solid rgba(45,212,191,.38);color:#7fe8dc;letter-spacing:.4px;
+}
+.mod-desc{font-size:12.5px;color:var(--tx3);margin-bottom:22px;max-width:800px;line-height:1.8}
+
+/* ========== 资料库：左目录 + 右表格 ========== */
+.libwrap{display:grid;grid-template-columns:216px 1fr;gap:20px;align-items:start}
+.libnav{position:sticky;top:20px;border-radius:14px;padding:12px;
+  background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(12px)}
+.libnav-t{font-size:10px;font-weight:600;color:var(--tx3);letter-spacing:.9px;padding:4px 9px 9px}
+.libnav-i{
+  display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:9px;cursor:pointer;
+  font-size:12.5px;color:var(--tx2);transition:.15s;margin-bottom:3px;border:1px solid transparent;
+}
+.libnav-i:hover{background:rgba(120,140,200,.10)}
+.libnav-i.on{
+  background:linear-gradient(135deg,rgba(77,148,255,.20),rgba(155,125,240,.13));
+  border-color:rgba(77,148,255,.44);color:var(--tx);font-weight:600;
+}
+.libnav-i .li-ic{font-size:14px}
+.libnav-i .li-n{flex:1}
+.libnav-i .li-c{
+  font-size:10px;font-weight:600;padding:1px 7px;border-radius:20px;
+  background:rgba(120,140,200,.14);color:var(--tx3);
+}
+.libnav-i.on .li-c{background:rgba(77,148,255,.26);color:#b9d5ff}
+
+.libbody{border-radius:14px;padding:20px 22px;background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(12px)}
+.libb-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:4px}
+.libb-head h3{font-size:16px;font-weight:600;display:flex;align-items:center;gap:9px}
+.libb-sub{font-size:12px;color:var(--tx3);margin-bottom:16px;line-height:1.75;max-width:720px}
+.lib-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:11px;margin-bottom:18px}
+.lib-stat{border-radius:11px;padding:12px 14px;background:rgba(120,140,200,.06);border:1px solid var(--line)}
+.lib-stat .ls-k{font-size:10.5px;color:var(--tx3);letter-spacing:.3px}
+.lib-stat .ls-v{font-size:20px;font-weight:600;line-height:1.3}
+.lib-stat .ls-d{font-size:10px;color:var(--tx3)}
+
+/* ========== 平衡环：锁两项算第三项 ========== */
+.solve-bar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;
+  padding:12px 14px;border-radius:12px;margin-top:12px;
+  background:rgba(155,125,240,.06);border:1px solid rgba(155,125,240,.22)}
+.sb-t{font-size:11.5px;font-weight:600;color:var(--tx2);letter-spacing:.3px}
+.sb-btn{
+  display:flex;flex-direction:column;gap:1px;align-items:flex-start;cursor:pointer;
+  padding:8px 14px;border-radius:10px;font-family:inherit;text-align:left;
+  background:rgba(120,140,200,.07);border:1px solid var(--line);color:var(--tx3);transition:.16s;
+}
+.sb-btn:hover{border-color:var(--line2);color:var(--tx2);background:rgba(120,140,200,.13)}
+.sb-btn b{font-size:12.5px;font-weight:600}
+.sb-btn span{font-size:10px;color:var(--tx3)}
+.sb-btn.on{
+  background:linear-gradient(135deg,rgba(155,125,240,.26),rgba(77,148,255,.16));
+  border-color:rgba(155,125,240,.60);color:var(--tx);
+  box-shadow:0 6px 18px rgba(155,125,240,.22);
+}
+.sb-btn.on span{color:#c9b8ff}
+
+/* 三项三角卡片 */
+.vtri{display:flex;flex-direction:column;gap:9px}
+.vcard{
+  display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:12px;
+  background:rgba(120,140,200,.05);border:1px solid var(--line);transition:.18s;
+}
+.vcard.solved{
+  background:linear-gradient(135deg,rgba(155,125,240,.16),rgba(77,148,255,.08));
+  border-color:rgba(155,125,240,.52);box-shadow:0 5px 18px rgba(155,125,240,.16);
+}
+.vc-ic{font-size:17px;flex:0 0 auto}
+.vc-b{flex:1;min-width:0}
+.vc-k{font-size:11px;color:var(--tx3);display:flex;gap:7px;align-items:center}
+.vc-tag{font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:5px;letter-spacing:.3px;
+  background:rgba(155,125,240,.26);border:1px solid rgba(155,125,240,.50);color:#cfc0ff}
+.vc-tag.lock{background:rgba(120,140,200,.12);border-color:var(--line2);color:var(--tx3)}
+.vc-v{font-size:20px;font-weight:600;line-height:1.35;font-variant-numeric:tabular-nums}
+.vcard.solved .vc-v{color:#cfc0ff}
+.vc-s{font-size:10px;color:var(--tx3)}
+
+/* ===== 平衡环：三滑杆 + 三把锁 ===== */
+.lockctl{display:flex;flex-direction:column;gap:11px;margin-top:4px}
+.lrow{border:1px solid var(--line);border-radius:12px;padding:11px 14px;
+  background:rgba(120,140,200,.045);transition:.18s}
+.lrow.solved{border-color:rgba(155,125,240,.50);
+  background:linear-gradient(135deg,rgba(155,125,240,.15),rgba(77,148,255,.07))}
+.lr-head{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.lr-ic{font-size:15px}
+.lr-n{font-size:12.5px;font-weight:600}
+.lr-v{margin-left:auto;font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
+.lrow.solved .lr-v{color:#cfc0ff}
+.lr-lock{font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:7px;cursor:pointer;
+  border:1px solid var(--line2);background:rgba(120,140,200,.10);color:var(--tx2);
+  font-family:inherit;transition:.15s;white-space:nowrap}
+.lr-lock:hover{background:rgba(120,140,200,.20)}
+.lr-lock.on{border-color:rgba(61,219,160,.45);color:var(--green);background:rgba(61,219,160,.10)}
+.lr-lock.off{border-color:rgba(155,125,240,.50);color:#cfc0ff;background:rgba(155,125,240,.16)}
+.lr-range{width:100%;-webkit-appearance:none;appearance:none;height:6px;border-radius:4px;
+  background:rgba(120,140,200,.20);outline:none;cursor:pointer}
+.lr-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:17px;height:17px;
+  border-radius:50%;background:var(--green);border:3px solid #080a12;cursor:grab;
+  box-shadow:0 0 0 1px rgba(61,219,160,.5)}
+.lr-range:active::-webkit-slider-thumb{cursor:grabbing}
+.lr-range:disabled{cursor:not-allowed;background:rgba(155,125,240,.22)}
+.lr-range:disabled::-webkit-slider-thumb{background:#9b7df0;cursor:not-allowed}
+.lr-note{font-size:10.5px;color:var(--tx3);margin-top:6px}
+
+/* ===== 平衡环 · 三个圆盘（每盘带锁 · 每盘可拖） ===== */
+.dials{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px}
+@media(max-width:1080px){ .dials{grid-template-columns:1fr} }
+.dial3{border:1px solid var(--line);border-radius:15px;padding:12px 13px 13px;
+  background:rgba(120,140,200,.045);transition:.18s;display:flex;flex-direction:column;align-items:center}
+.dial3.solved{border-color:rgba(155,125,240,.52);
+  background:linear-gradient(135deg,rgba(155,125,240,.16),rgba(77,148,255,.07))}
+.d3-head{display:flex;align-items:center;gap:7px;width:100%;margin-bottom:6px}
+.d3-ic{font-size:14px}
+.d3-n{font-size:12.5px;font-weight:600}
+.d3-lock{margin-left:auto;font-size:10px;font-weight:600;padding:3px 9px;border-radius:7px;
+  cursor:pointer;border:1px solid var(--line2);background:rgba(120,140,200,.10);color:var(--tx2);
+  font-family:inherit;transition:.15s;white-space:nowrap}
+.d3-lock:hover{background:rgba(120,140,200,.20)}
+.d3-lock.on{border-color:rgba(61,219,160,.45);color:var(--green);background:rgba(61,219,160,.10)}
+.d3-lock.off{border-color:rgba(155,125,240,.50);color:#cfc0ff;background:rgba(155,125,240,.16)}
+.d3-wrap{display:flex;justify-content:center;margin:2px 0 6px}
+.d3-svg{cursor:grab;touch-action:none;user-select:none}
+.d3-svg:active{cursor:grabbing}
+.dial3.solved .d3-svg{cursor:not-allowed}
+.d3-v{font-size:19px;font-weight:600;font-variant-numeric:tabular-nums;text-align:center}
+.dial3.solved .d3-v{color:#cfc0ff}
+.d3-note{font-size:10.5px;color:var(--tx3);margin-top:6px;text-align:center;line-height:1.55}
+
+/* ===== 投标记录：筛选 + 到期/保证金标签 ===== */
+.bid-kpi{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:12px 0}
+@media(max-width:1100px){.bid-kpi{grid-template-columns:repeat(2,1fr)}}
+.bk{border:1px solid var(--line);border-radius:11px;padding:11px 13px;background:rgba(120,140,200,.045)}
+.bk-k{font-size:10.5px;color:var(--tx3);margin-bottom:3px}
+.bk-v{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.3}
+.bk-d{font-size:9.5px;color:var(--tx3);margin-top:2px}
+.bid-filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 10px}
+.bf{font-size:12px;padding:5px 13px;border-radius:8px;cursor:pointer;font-family:inherit;
+  border:1px solid var(--line2);background:rgba(120,140,200,.08);color:var(--tx2);transition:.15s}
+.bf:hover{background:rgba(120,140,200,.16)}
+.bf.on{background:rgba(77,148,255,.18);border-color:rgba(77,148,255,.52);color:#a9cbff;font-weight:600}
+.bf-n{font-size:10px;opacity:.72;margin-left:5px}
+.bid-table td{vertical-align:top}
+.bid-table td:nth-child(n+2){white-space:nowrap}
+.bid-table td:nth-child(3){white-space:nowrap}
+.exp,.dep{font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;white-space:nowrap;
+  display:inline-block;line-height:1.5}
+.exp-blue{background:rgba(77,148,255,.14);color:#7fb4ff;border:1px solid rgba(77,148,255,.30)}
+.exp-amber{background:rgba(245,181,68,.15);color:#f5c46a;border:1px solid rgba(245,181,68,.35)}
+.exp-red{background:rgba(242,85,90,.16);color:#ff8a8e;border:1px solid rgba(242,85,90,.42)}
+.exp-past{background:rgba(120,140,200,.14);color:var(--tx3);border:1px solid var(--line2)}
+.dep-back{background:rgba(61,219,160,.13);color:var(--green);border:1px solid rgba(61,219,160,.30)}
+.dep-due{background:rgba(245,181,68,.13);color:#f5c46a;border:1px solid rgba(245,181,68,.30)}
+.dep-over{background:rgba(242,85,90,.17);color:#ff8a8e;border:1px solid rgba(242,85,90,.45)}
+.bid-legend{margin-top:14px;padding:11px 14px;border-radius:10px;font-size:11.5px;
+  background:rgba(120,140,200,.05);border:1px solid var(--line);line-height:2.1;color:var(--tx2)}
+.bid-legend b{color:var(--tx)}
+
+/* ===== STEP 3 多入口页签 ===== */
+.perftabs{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.pt{display:flex;flex-direction:column;gap:2px;padding:10px 18px;border-radius:11px;cursor:pointer;
+  font-family:inherit;text-align:left;border:1px solid var(--line2);
+  background:rgba(120,140,200,.07);color:var(--tx2);transition:.16s;min-width:150px}
+.pt:hover{background:rgba(120,140,200,.15)}
+.pt.on{background:linear-gradient(135deg,rgba(77,148,255,.20),rgba(155,125,240,.12));
+  border-color:rgba(77,148,255,.55);color:#bed7ff}
+.pt-ic{font-size:15px}
+.pt-n{font-size:13px;font-weight:600}
+.pt-h{font-size:10.5px;opacity:.75}
+.pt.on .pt-h{color:#a9cbff;opacity:1}
+
+/* ===== STEP 4 采购价格录入 ===== */
+.price-in{width:112px;padding:5px 9px;border-radius:7px;font-family:inherit;font-size:12.5px;
+  background:rgba(10,14,26,.72);border:1px solid var(--line2);color:var(--tx);
+  text-align:right;font-variant-numeric:tabular-nums}
+.price-in:focus{outline:none;border-color:rgba(77,148,255,.62);background:rgba(77,148,255,.08)}
+.price-in.over{background:rgba(242,85,90,.14);border-color:rgba(242,85,90,.55);color:#ff9fa2}
+.price-in.ok{background:rgba(61,219,160,.10);border-color:rgba(61,219,160,.42)}
+.rng-bar{position:relative;height:7px;border-radius:5px;background:rgba(120,140,200,.18);margin:5px 0 2px}
+.rng-fill{position:absolute;top:0;bottom:0;background:linear-gradient(90deg,rgba(61,219,160,.55),rgba(245,181,68,.55));border-radius:5px}
+.rng-tick{position:absolute;top:-2px;width:2px;height:11px;background:var(--tx3)}
+.rng-txt{font-size:10px;color:var(--tx3);display:flex;justify-content:space-between}
+.src-chip{font-size:9.5px;font-weight:700;padding:1px 7px;border-radius:5px;letter-spacing:.3px;white-space:nowrap}
+.sc-lib{background:rgba(61,219,160,.15);color:var(--green);border:1px solid rgba(61,219,160,.35)}
+.sc-star{background:rgba(155,125,240,.18);color:#c7b4ff;border:1px solid rgba(155,125,240,.45)}
+.sc-exp{background:rgba(120,140,200,.13);color:var(--tx3);border:1px solid var(--line2)}
+.sc-ai{background:rgba(77,148,255,.15);color:#8fbcff;border:1px solid rgba(77,148,255,.38)}
+.adjusted{background:rgba(245,181,68,.09)!important}
+tr.adj-row td{background:rgba(245,181,68,.075)}
+.reason-in{width:100%;padding:5px 9px;border-radius:7px;font-family:inherit;font-size:11.5px;
+  background:rgba(10,14,26,.72);border:1px solid rgba(245,181,68,.45);color:var(--tx)}
+.reason-in:focus{outline:none;border-color:rgba(245,181,68,.75)}
+.pb-table td,.pb-table th{vertical-align:middle}
+.pb-table tbody tr.adjusted td{background:rgba(245,181,68,.075)}
+.pb-table .adj-row{font-size:10.5px;color:#f3ce8e;margin-top:3px;padding:2px 6px;border-radius:5px;
+  background:rgba(245,181,68,.12);border-left:2px solid rgba(245,181,68,.65);display:inline-block}
+.pb-table .src.s-star{background:rgba(155,125,240,.18);color:#c7b4ff;border:1px solid rgba(155,125,240,.45)}
+
+/* ===== 顶栏到期提醒铃铛 ===== */
+.bell{position:relative;width:38px;height:38px;border-radius:11px;cursor:pointer;font-size:17px;
+  border:1px solid var(--line2);background:rgba(120,140,200,.08);color:var(--tx2);
+  display:flex;align-items:center;justify-content:center;transition:.16s;font-family:inherit}
+.bell:hover{background:rgba(120,140,200,.17)}
+.bell.alert{border-color:rgba(242,85,90,.55);background:rgba(242,85,90,.13);color:#ffb0b3;
+  animation:bellPulse 2.1s ease-in-out infinite}
+.bell.warn{border-color:rgba(245,181,68,.50);background:rgba(245,181,68,.11);color:#f3ce8e}
+@keyframes bellPulse{0%,100%{box-shadow:0 0 0 0 rgba(242,85,90,.34)}
+  50%{box-shadow:0 0 0 7px rgba(242,85,90,0)}}
+.bell-n{position:absolute;top:-5px;right:-5px;min-width:18px;height:18px;padding:0 4px;
+  border-radius:9px;background:var(--red);color:#fff;font-size:10.5px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;font-family:inherit}
+.bell-pop{position:fixed;top:66px;right:16px;width:400px;max-height:540px;overflow-y:auto;
+  background:linear-gradient(170deg,#161b2c,#10141f);border:1px solid var(--line2);
+  border-radius:15px;box-shadow:0 18px 52px rgba(0,0,0,.55);z-index:900;
+  display:none;padding:15px 16px}
+.bell-pop.on{display:block}
+.bp-head{display:flex;justify-content:space-between;align-items:baseline;
+  border-bottom:1px solid var(--line);padding-bottom:9px;margin-bottom:11px}
+.bp-foot{display:flex;gap:8px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}
+.bp-item{display:flex;gap:9px;padding:9px 10px;border-radius:10px;margin-bottom:7px;
+  background:rgba(120,140,200,.06);border-left:3px solid var(--line2)}
+.bp-item.past{border-left-color:var(--red);background:rgba(242,85,90,.075)}
+.bp-item.red{border-left-color:var(--red);background:rgba(242,85,90,.06)}
+.bp-item.amber{border-left-color:var(--amber);background:rgba(245,181,68,.06)}
+.bp-item.blue{border-left-color:var(--blue);background:rgba(77,148,255,.055)}
+.bp-ic{font-size:15px;line-height:1.4}
+.bp-b{flex:1;min-width:0}
+.bp-n{font-size:12.5px;font-weight:600;margin-bottom:2px}
+.bp-d{font-size:11px;color:var(--tx3);line-height:1.6}
+.bp-r{font-size:10.5px;font-weight:700;white-space:nowrap;align-self:flex-start;
+  padding:2px 7px;border-radius:6px}
+.r-past{background:rgba(242,85,90,.20);color:#ff9fa2}
+.r-red{background:rgba(242,85,90,.15);color:#ff9fa2}
+.r-amber{background:rgba(245,181,68,.16);color:#f3ce8e}
+.r-blue{background:rgba(77,148,255,.15);color:#8fbcff}
+/* ========== 演示版标识（发布到公网后必须保留） ========== */
+.demo-warn{
+  font-size:11.5px; line-height:1.8; color:#f3ce8e;
+  background:rgba(245,181,68,.10); border:1px solid rgba(245,181,68,.32);
+  border-radius:9px; padding:9px 12px; margin:0 0 18px;
+}
+.demo-warn b{color:#ffd98a}
+</style>
+</head>
+<body>
+
+<!-- ==================== 登录页 ==================== -->
+<div class="login-wrap" id="loginPage">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="mark">🛡</div>
+      <h1>华信投标决策中枢</h1>
+    </div>
+    <div class="tip">北京中航华信机电设备安装有限公司 · 流程版</div>
+
+    <div class="demo-warn">
+      ⚠ <b>演示版 · 非生产系统</b><br>
+      界面与流程为设计演示，<b>不含任何真实数据</b>，未接入公司数据库。<br>
+      登录不需要口令，任选角色即可进入；留痕为内存演示，<b>刷新即清空</b>。
+    </div>
+
+    <div class="fld">
+      <label>用户名</label>
+      <input type="text" id="lgUser" value="bubu" placeholder="请输入用户名">
+    </div>
+    <div class="fld">
+      <label>密码</label>
+      <input type="password" id="lgPass" value="" placeholder="演示版无需输入">
+    </div>
+    <button class="login-btn" onclick="doLogin()">登 录</button>
+
+    <div class="role-row" id="roleRow">
+      <div class="role-pill" data-r="投标专员" onclick="pickRole(this)">投标专员</div>
+      <div class="role-pill" data-r="审核人" onclick="pickRole(this)">审核人</div>
+      <div class="role-pill on" data-r="管理员" onclick="pickRole(this)">管理员</div>
+    </div>
+    <div class="sso-note">
+      演示版：任选角色即可进入 · 留痕仅内存演示，刷新即清空<br>
+      走完整流程请用「管理员」；「投标专员」「审核人」可看到步骤权限差异<br>
+      V2 接入位：<code>SSO/OAuth2</code> · <code>RBAC 权限表</code>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 主应用 ==================== -->
+<div class="app" id="app" style="display:none">
+  <div class="top">
+    <div class="brand">
+      <div class="mark">🛡</div>
+      <div>
+        <h1>华信投标决策中枢</h1>
+        <p>演示版 · 不含真实数据 ｜ 决策权在人</p>
+      </div>
+    </div>
+
+    <!-- 模块切换：三个平级工作台 -->
+    <div class="modnav" id="modnav">
+      <button class="mod on" data-m="pipeline" onclick="switchMod('pipeline')">
+        <span class="mi">🧭</span><span class="mt">投标决策流程</span>
+        <span class="md">7 步 · 一个标的完整决策</span>
+      </button>
+      <button class="mod" data-m="radar" onclick="switchMod('radar')">
+        <span class="mi">📡</span><span class="mt">招标信息雷达</span>
+        <span class="md">定时检索 · 目标库</span>
+      </button>
+      <button class="mod" data-m="lib" onclick="switchMod('lib')">
+        <span class="mi">🗄</span><span class="mt">资料库</span>
+        <span class="md">人员/施工组织/资质/业绩</span>
+      </button>
+    </div>
+
+    <div class="top-right">
+      <div class="proj-chip" id="topProj">项目：<b>未引入招标文件</b></div>
+      <button class="bell" id="bellBtn" onclick="toggleBell()" title="到期与逾期提醒">
+        🔔<span class="bell-n" id="bellN" style="display:none">0</span>
+      </button>
+      <div class="user-chip">
+        <div class="av" id="topAv">布</div>
+        <div>
+          <div class="nm" id="topName">布布</div>
+          <div class="rl" id="topRole">投标专员</div>
+        </div>
+      </div>
+      <button class="btn tiny" onclick="logout()">退出</button>
+    </div>
+  </div>
+
+  <!-- 到期提醒浮层：登录后常驻，点铃铛展开，不点也在顶栏计数 -->
+  <div class="bell-pop" id="bellPop">
+    <div class="bp-head">
+      <b>到期与逾期提醒</b>
+      <span class="small" id="bellWhen">—</span>
+    </div>
+    <div id="bellBody"></div>
+    <div class="bp-foot">
+      <button class="btn tiny" onclick="gotoLibExpiry()">去资料库处理 →</button>
+      <button class="btn tiny ghost" onclick="toggleBell()">收起</button>
+    </div>
+  </div>
+
+  <!-- ============ 工作台 A：投标决策流程 ============ -->
+  <div class="shell" id="shellPipeline">
+    <aside class="rail">
+      <div class="rail-head">DECISION PIPELINE</div>
+      <div class="rail-title">投标决策流程</div>
+      <div class="rail-prog">
+        <div class="track"><i id="progFill" style="width:0%"></i></div>
+        <span class="pct" id="progPct">0%</span>
+      </div>
+      <div id="railSteps"></div>
+
+      <div class="rail-foot">
+        <div class="mini">
+          <b>留痕规则：</b>每完成一步，该步结论自动冻结存档，<b>只追加、不删除</b>。<br>
+          回改前序步骤，其后所有步骤标记为<b style="color:var(--amber)">需重走</b>，旧记录保留但标灰。
+        </div>
+        <div class="mini locks">
+          <b>升级三锁 · 飞轮不能自己升级自己：</b>
+          <div class="lock-row"><span class="lk">证据锁</span>复核者核验，证据不全不放行</div>
+          <div class="lock-row"><span class="lk">反例锁</span>监察者找反例，找得到就驳回</div>
+          <div class="lock-row"><span class="lk">回归锁</span>机器跑回归集，旧结论被推翻即拦下</div>
+          <div style="margin-top:6px;color:var(--tx3)">三锁齐开才准升级；任一未开，系统只记录、不改判。</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ============ 右 2/3：当前步骤内容 ============ -->
+    <main class="main">
+      <div class="stage-head">
+        <h2><span class="stage-no" id="stageNo">STEP 1</span><span id="stageName">引入招标文件</span></h2>
+      </div>
+      <div class="stage-desc" id="stageDesc"></div>
+      <div class="stage-body" id="stageBody"></div>
+
+      <div class="actblock" id="actBlock"></div>
+      <div class="actbar">
+        <div class="hint" id="actHint"></div>
+        <div class="btns" id="actBtns"></div>
+      </div>
+
+      <div class="foot">
+        华信投标决策中枢 · 流程版 ｜ 演示数据 · 非生产系统 ｜ V2 上云<br>
+        人的红线：投不投 · 报多少 · 让几个点 —— AI 只把账算清摆桌上，这三句话永远由人写
+      </div>
+    </main>
+  </div>
+
+  <!-- ============ 工作台 B：招标信息雷达（独立项目） ============ -->
+  <div class="modwrap" id="modRadar" style="display:none"></div>
+
+  <!-- ============ 工作台 C：资料库（独立项目） ============ -->
+  <div class="modwrap" id="modLib" style="display:none"></div>
+</div>
+
+<script>
+/* =========================================================================
+   华信投标决策中枢 · 流程版
+   架构：左侧步骤轨道（含每步留痕） + 右侧当前步骤内容
+   纪律：每步结论冻结留痕（只追加）；回改前序 → 下游标"需重走"
+   ========================================================================= */
+const fmt = n => Number(n).toLocaleString('zh-CN',{minimumFractionDigits:0,maximumFractionDigits:0});
+const nowStr = () => new Date().toLocaleString('zh-CN',{hour12:false});
+const nowShort = () => {
+  const d = new Date();
+  const p = n => String(n).padStart(2,'0');
+  return `${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+};
+
+/* ================= 登录 / 角色 ================= */
+let USER = {name:'布布', account:'bubu', role:'管理员'};
+const AUDIT = [];   // 审计日志（只追加）
+
+function pickRole(el){
+  document.querySelectorAll('.role-pill').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');
+}
+function doLogin(){
+  const u = (document.getElementById('lgUser').value||'').trim() || 'bubu';
+  const r = document.querySelector('.role-pill.on');
+  const role = r ? r.dataset.r : '管理员';
+  USER = {name: u==='bubu'?'布布':u, account:u, role:role};
+  AUDIT.push({t:nowStr(), who:USER.name, act:'登录系统', detail:'角色：'+role});
+  document.getElementById('topName').textContent = USER.name;
+  document.getElementById('topRole').textContent = role;
+  document.getElementById('topAv').textContent = USER.name.slice(0,1);
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  renderRail(); renderStage();
+  renderBell();                       // ★ 登录后常驻到期提醒
+  setTimeout(()=>{ if(alarmItems().some(x=>x.lvl==='past'||x.lvl==='red')) toggleBell(); }, 700);
+}
+function logout(){
+  AUDIT.push({t:nowStr(), who:USER.name, act:'退出系统', detail:''});
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('loginPage').style.display = 'flex';
+}
+// 权限：某步骤当前角色能否操作
+function canAct(stepIdx){
+  if(USER.role === '管理员') return true;
+  const s = STEPS[stepIdx];
+  if(!s.roles) return true;
+  return s.roles.includes(USER.role);
+}
+
+/* ================= 步骤定义 ================= */
+const STEPS = [
+  {id:'import',  name:'引入招标文件',   short:'引入文件',
+   desc:'一切的入口。把招标文件丢进来，系统自动拆出控制价、工程量清单、资格条款与废标项，后面每一步都基于这个项目。',
+   roles:['投标专员','管理员']},
+  {id:'qual',    name:'资格与废标项自查', short:'资格自查',
+   desc:'逐条比对招标文件的资格要求与废标项：投标保证金是否按期足额、资质是否在有效期、社保人数够不够。漏一条，整份标作废。',
+   roles:['投标专员','审核人','管理员']},
+  {id:'perf',    name:'业绩与资料配备',  short:'业绩资料',
+   desc:'按本标评分办法，从资料库自动挑出最能得分的资源；缺什么材料一并列出，并要求补齐。',
+   roles:['投标专员','管理员']},
+  {id:'cost',    name:'反推成本与报价',  short:'反推成本',
+   desc:'定目标利润率 → 反推成本上限 → 拆到人工、材料等科目 → 采购专员逐项录价，AI 给上下限参考并学习复用。清单项数严格跟随本标招标文件。',
+   roles:['审核人','采购专员','管理员']},
+  {id:'balance', name:'平衡环定档',      short:'平衡环',
+   desc:'三个平衡球分别对应利润率、中标率、成本上限。每个球都可拖动、各带一把锁；锁住两个，由 AI 算出第三个。定下最终报价档位。',
+   roles:['审核人','管理员']},
+  {id:'report',  name:'决策报告与拍板',  short:'决策报告',
+   desc:'汇总前面全部分析与 AI 报告，由领导人工判断「投 / 不投」。系统只给材料和建议，最终结论必须由人签字拍板。',
+   roles:['拍板人','管理员']},
+  {id:'doc',     name:'投标文件制作',    short:'文件制作',
+   desc:'该决定的都在前面定完了，这一步只做组装：列出文件组成部分，并生成投标文件初版草稿（不可直接提交）。',
+   roles:['投标专员','管理员']},
+];
+
+/* 每步的留痕记录：{idx, t, who, text, ok, void} */
+let RECORDS = [];
+let CUR = 0;                 // 当前步骤
+let NEEDREDO = new Set();    // 需要重走的步骤下标
+let DEMO_SKIPPED = new Set();// 演示模式跳过（未通过却继续）的步骤下标 —— 永久留痕
+
+/* ================= 业务数据（沿用并扩充） ================= */
+const notices = [
+  {n:'首都机场中国服务大厦 · 空调管道维修二期',due:'09-24 17:00',open:'10-08 09:30',
+   budget:'≤850,000',verdict:'ok',note:'7 组关键词命中 · 一期我方中标'},
+  {n:'地坛医院 · 消防设施维保服务采购',due:'09-28 16:00',open:'10-12 14:00',
+   budget:'≤420,000',verdict:'q',note:'1 条业绩有效期需核对'},
+  {n:'北京地铁 19 号线 · FAS 系统年度检修',due:'10-09 17:00',open:'10-22 09:30',
+   budget:'≤1,180,000',verdict:'no',note:'要求资质 1 项我方不具备'},
+];
+
+/* ================= 招标信息雷达（第一页） =================
+   RADAR = 系统检索出的候选，只推荐，不替你决定
+   WATCH = 你确认要跟的目标（主要跟进目标库），只有你点了才进 */
+let KW = [
+  {t:'消防设施工程',   on:true,  zone:'行业'},
+  {t:'机电设备安装',   on:true,  zone:'行业'},
+  {t:'空调管道维修',   on:true,  zone:'品类'},
+  {t:'消防维保',       on:true,  zone:'品类'},
+  {t:'远程值守',       on:true,  zone:'差异化'},
+  {t:'首都机场',       on:false, zone:'客户'},
+  {t:'地坛医院',       on:false, zone:'客户'},
+  {t:'FAS 系统',       on:true,  zone:'技术'},
+];
+let RADAR = [
+  {id:'R1', n:'首都机场中国服务大厦 · 空调管道维修二期', src:'cebpubservice',
+   pub:'09-20 09:12', due:'09-24 17:00', open:'10-08 09:30', budget:850000,
+   kwHit:['空调管道维修','机电设备安装','首都机场'], score:92, verdict:'ok',
+   why:'一期我方中标 · 品类完全对口 · 控制价在承接区间'},
+  {id:'R2', n:'地坛医院 · 消防设施维保服务采购', src:'chinabidding',
+   pub:'09-19 16:40', due:'09-28 16:00', open:'10-12 14:00', budget:420000,
+   kwHit:['消防维保','消防设施工程','地坛医院'], score:84, verdict:'q',
+   why:'维保品类对口 · 1 条业绩有效期需核对'},
+  {id:'R3', n:'北京地铁 19 号线 · FAS 系统年度检修', src:'远东招标',
+   pub:'09-19 11:05', due:'10-09 17:00', open:'10-22 09:30', budget:1180000,
+   kwHit:['FAS 系统','消防设施工程'], score:58, verdict:'no',
+   why:'要求资质 1 项我方不具备 · 建议放弃'},
+  {id:'R4', n:'某部委办公楼 · 智慧消防远程值守平台建设', src:'cebpubservice',
+   pub:'09-21 08:30', due:'10-11 17:00', open:'10-25 09:30', budget:2600000,
+   kwHit:['远程值守','消防设施工程'], score:88, verdict:'ok',
+   why:'我方差异化强项（首批单人值守试点）· 金额大需评估垫资'},
+  {id:'R5', n:'朝阳区某中学 · 消防设施改造工程', src:'chinabidding',
+   pub:'09-21 07:50', due:'10-02 16:00', open:'10-15 14:00', budget:360000,
+   kwHit:['消防设施工程'], score:66, verdict:'ok',
+   why:'体量偏小 · 金额低可能不值得投'},
+];
+let WATCH = [];            // 主要跟进目标库
+let WATCH_TICK = 0;        // 已检索次数
+let WATCH_TIMER = null;    // 定时器句柄
+let WATCH_ON = false;      // 定时开关
+let WATCH_NEXT = null;     // 下次检索时间戳（用于倒计时展示）
+
+/* 检索频率预设：真实档（周/天/小时）+ 演示档（秒级，供课堂看效果）
+   单位统一换算成秒。一周按 7 天算。 */
+const WATCH_PRESETS = [
+  {g:'常用（生产）', opts:[
+    {v:604800,  t:'每周一次（推荐）'},
+    {v:1209600, t:'每两周一次'},
+    {v:2592000, t:'每月一次'},
+    {v:86400,   t:'每天一次'},
+  ]},
+  {g:'其他间隔', opts:[
+    {v:43200,   t:'每 12 小时'},
+    {v:21600,   t:'每 6 小时'},
+    {v:3600,    t:'每小时'},
+    {v:1814400, t:'每 3 周'},
+    {v:7776000, t:'每 3 个月'},
+  ]},
+  {g:'演示档（课堂用，勿用于生产）', opts:[
+    {v:5,   t:'每 5 秒'},
+    {v:30,  t:'每 30 秒'},
+    {v:300, t:'每 5 分钟'},
+  ]},
+];
+let WATCH_EVERY = 604800;   // 默认：每周一次（生产口径）
+
+/* 秒 → 中文可读（用于"当前频率"展示） */
+function fmtEvery(sec){
+  sec = Number(sec)||0;
+  if(sec < 60)    return sec + ' 秒';
+  if(sec < 3600)  return Math.round(sec/60) + ' 分钟';
+  if(sec < 86400) return (sec%3600===0 ? (sec/3600)+' 小时' : (sec/3600).toFixed(1)+' 小时');
+  if(sec < 604800){
+    const d = sec/86400;
+    return (d%1===0 ? d+' 天' : d.toFixed(1)+' 天');
+  }
+  const w = sec/604800;
+  return (w%1===0 ? w+' 周' : w.toFixed(1)+' 周');
+}
+function everyLabel(){ return fmtEvery(WATCH_EVERY); }
+/* 下次检索的绝对时间 + 倒计时文案 */
+function nextRunText(){
+  if(!WATCH_ON || !WATCH_NEXT) return '未开启';
+  const left = Math.max(0, Math.round((WATCH_NEXT - Date.now())/1000));
+  const d = new Date(WATCH_NEXT);
+  const p = n => String(n).padStart(2,'0');
+  const stamp = `${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+  return `${stamp}（还有 ${fmtCountdown(left)}）`;
+}
+function fmtCountdown(sec){
+  if(sec >= 86400) return Math.floor(sec/86400) + ' 天 ' + Math.floor(sec%86400/3600) + ' 小时';
+  if(sec >= 3600)  return Math.floor(sec/3600) + ' 小时 ' + Math.floor(sec%3600/60) + ' 分';
+  if(sec >= 60)    return Math.floor(sec/60) + ' 分 ' + (sec%60) + ' 秒';
+  return sec + ' 秒';
+}
+
+const clauses = [
+  {no:'3.1',txt:'投标人须具备消防设施工程专业承包二级及以上资质',by:'资质库 · 第 1 项',
+   st:'ok',cnt:'1 份资质证书'},
+  {no:'3.2',txt:'项目经理须具备一级注册建造师（机电工程）执业资格',by:'人员库 · 一建 15 名',
+   st:'q',cnt:''},
+  {no:'3.4',txt:'近三年（2023 年至今）完成类似项目业绩不少于 2 项',by:'业绩库 · 15 项',
+   st:'ok',cnt:'3 份合同+验收证明'},
+  {no:'3.6',txt:'投标人注册资金不低于人民币 2000 万元',by:'营业执照',
+   st:'ok',cnt:'营业执照副本'},
+  {no:'5.2',txt:'须提供近半年连续缴纳社保证明（不少于 10 人）',by:'社保台账',
+   st:'no',cnt:''},
+  {no:'5.7',txt:'本次不接受联合体投标',by:'企业性质',
+   st:'ok',cnt:'无需材料'},
+];
+
+// 保证金按期缴纳（用户明确点名的检查项）
+let deposit = {amount:17000, due:'09-24 17:00', paid:false, by:'银行回单', note:''};
+
+/* =========================================================================
+   资料库（独立工作台）—— 平台级资产，不属于某一个投标项目
+   六类目录：人员 / 施工组织设计 / 商务标资质 / 历史成交 / 合同页 / 成本
+   s: real=已录入 · ref=参考值 · none=缺口（缺口一律标【待填】，不用假数据顶）
+   ========================================================================= */
+const LIBCATS = [
+  {k:'staff',  ic:'👷', n:'人员资料库',   d:'所有涉及人员的资质、证书、社保、在岗状态'},
+  {k:'sod',    ic:'📐', n:'施工组织设计', d:'各类项目范本 + 专项施工方案'},
+  {k:'qual',   ic:'🏅', n:'商务标资质库', d:'公司资质证书、荣誉、信用、体系认证'},
+  {k:'bid',    ic:'🎯', n:'投标记录',     d:'每一投都留痕：中标/未中标、对手、中标价、保证金往来、合同期与到期'},
+  {k:'deal',   ic:'📊', n:'历史成交资料', d:'历年中标/成交项目与金额、对手、让点'},
+  {k:'contract',ic:'📝',n:'合同页',       d:'合同扫描件、关键条款、履约与结算'},
+  {k:'cost',   ic:'💰', n:'成本与结算',   d:'实际成本、结算额（财务提供后回填飞轮）'},
+];
+
+const LIB = {
+  staff: [
+    {n:'张炯锋',  t:'一级建造师（机电工程）· 高级工程师', c:'建造师证 / 安全B证',
+     k:'在岗 · 法定代表人 · 证书有效期 2027-08', v:'可挂项目经理', s:'real', end:'2027-08-31'},
+    {n:'【一级建造师 14 名】', t:'一级建造师（机电工程）', c:'建造师证 / 安全B证',
+     k:'在岗 · 明细待录入', v:'可挂项目经理', s:'none'},
+    {n:'【一级注册消防工程师 8 名】', t:'一级注册消防工程师', c:'一消证书',
+     k:'在岗 · 明细待录入', v:'可用于消防技术负责人', s:'none'},
+    {n:'【注册造价工程师 3 名】', t:'注册造价工程师', c:'造价师证',
+     k:'在岗 · 明细待录入', v:'可复核报价文件', s:'none'},
+    {n:'【高级职称人员】', t:'副高及以上', c:'职称证 / 评审文件',
+     k:'待录入 —— 涉密信息系统集成资质需 ≥2 名', v:'资质申报关键', s:'none'},
+    {n:'【特种作业人员】', t:'登高 / 有限空间', c:'特种作业操作证',
+     k:'待录入 · 需与在岗人员对应', v:'现场施工必备', s:'none'},
+    {n:'在册人数（按部门口径估算）', t:'参考', c:'',
+     k:'一线作业约 30 余人 —— 仅为口头口径，未与社保名单核对，不作资质申报依据', v:'—', s:'ref'},
+  ],
+  sod: [
+    {n:'空调管道类 · 施工组织设计范本', t:'施工组织设计', c:'2025 版',
+     k:'含吊装 / 动火 / 季节性措施', v:'近 1 年', s:'real'},
+    {n:'消防设施类 · 施工组织设计范本', t:'施工组织设计', c:'2025 版',
+     k:'含调试与验收方案', v:'近 1 年', s:'real'},
+    {n:'【机电安装类 · 施工组织设计范本】', t:'施工组织设计', c:'',
+     k:'待录入', v:'—', s:'none'},
+    {n:'专项方案 · 动火作业', t:'专项施工方案', c:'',
+     k:'待录入', v:'—', s:'none'},
+    {n:'专项方案 · 高处作业', t:'专项施工方案', c:'',
+     k:'待录入', v:'—', s:'none'},
+    {n:'专项方案 · 有限空间作业', t:'专项施工方案', c:'',
+     k:'待录入', v:'—', s:'none'},
+  ],
+  qual: [
+    {n:'消防设施工程专业承包', t:'施工资质', c:'二级',
+     k:'有效期至 2028-06', v:'满足 3.1 条', s:'real', end:'2028-06-30'},
+    {n:'建筑机电安装工程专业承包', t:'施工资质', c:'二级',
+     k:'有效期至 2027-11', v:'常用', s:'real', end:'2027-11-15'},
+    {n:'电子与智能化工程专业承包', t:'施工资质', c:'二级',
+     k:'有效期至 2027-11', v:'常用', s:'real', end:'2027-11-15'},
+    {n:'【其余 3 项施工资质】', t:'施工资质', c:'',
+     k:'名称与有效期待录入', v:'—', s:'none'},
+    {n:'安全生产许可证', t:'安全许可', c:'',
+     k:'待录入 · 有效期需盯 —— 本演示按 2026-12-31 计入提醒', v:'投标必备', s:'real', end:'2026-12-31'},
+    {n:'三项体系认证（质量/环境/职业健康）', t:'体系认证', c:'',
+     k:'待录入', v:'评分加分项', s:'none'},
+    {n:'【涉密信息系统集成资质】', t:'专项资质', c:'',
+     k:'办理中 · 需计算机与软件高级职称 ≥2 名', v:'招投标加分', s:'none'},
+    {n:'北京消防协会 · 首批单人值班试点', t:'行业认定', c:'试点单位',
+     k:'差异化卖点 · 远程值守依据', v:'已取得', s:'real'},
+  ],
+  bid: [
+    /* 每一投都留痕。字段说明：
+       d=开标日期 win=是否中标 amt=我方报价 winner=中标人 wamt=中标金额
+       lo/hi=合同起止（三年期为 lo→lo+3y）
+       dep=投标保证金 {pay:付出额, back:是否收回, backOn:收回日期, due:应收约定日期} */
+    {n:'首都机场中国服务大厦 · 空调管道维修二期', by:'2026 年 · 进行中',
+     d:'2026-08-28', win:null, amt:0, winner:'待开标', wamt:0,
+     lo:'', hi:'', dep:{pay:17000, back:false, backOn:'', due:'2026-10-15'}, s:'real',
+     note:'一期我方中标，二期重点跟踪'},
+    {n:'首都机场中国服务大厦 · 空调管道维修一期', by:'北京中航华信',
+     d:'2024-06-12', win:true, amt:786000, winner:'我方', wamt:786000,
+     lo:'2024-09-01', hi:'2027-08-31', dep:{pay:16000, back:true, backOn:'2024-07-05', due:'2024-07-01'}, s:'real',
+     note:'三年期合同 · 已到期日 2027-08-31，距今约 11 个月'},
+    {n:'北京地铁 19 号线 · FAS 系统及气体灭火', by:'北京中航华信',
+     d:'2023-04-18', win:true, amt:4260000, winner:'我方', wamt:4260000,
+     lo:'2023-06-01', hi:'2026-10-30', dep:{pay:85000, back:true, backOn:'2023-05-12', due:'2023-05-10'}, s:'real',
+     note:'三年期合同 · 即将到期，属红色提醒'},
+    {n:'地坛医院 · 消防设施维保', by:'北京中航华信',
+     d:'2025-03-20', win:true, amt:396000, winner:'我方', wamt:396000,
+     lo:'2025-04-01', hi:'2027-03-31', dep:{pay:8000, back:true, backOn:'2025-04-08', due:'2025-04-05'}, s:'real',
+     note:'两年度服务合同'},
+    {n:'某部队院校 · 消防安防改造', by:'北京中航华信',
+     d:'2024-08-05', win:true, amt:1520000, winner:'我方', wamt:1520000,
+     lo:'2024-10-01', hi:'2027-02-15', dep:{pay:30000, back:true, backOn:'2024-09-06', due:'2024-09-01'}, s:'real',
+     note:'两年半期合同 · 距今约 5 个月，黄色提醒'},
+    {n:'某三甲医院 · 消防设施改造', by:'竞对 A',
+     d:'2025-09-11', win:false, amt:1180000, winner:'北京某消防工程有限公司', wamt:1068000,
+     lo:'2025-11-01', hi:'2026-10-31', dep:{pay:23000, back:true, backOn:'2025-10-02', due:'2025-09-30'}, s:'real',
+     note:'我方高 10.4%，对手让点更深'},
+    {n:'某园区 · 智慧消防平台', by:'竞对 B',
+     d:'2026-02-14', win:false, amt:2450000, winner:'上海某科技公司', wamt:2280000,
+     lo:'2026-04-01', hi:'2027-03-31', dep:{pay:49000, back:false, backOn:'', due:'2026-03-15'}, s:'real',
+     note:'【逾期未收】应退日 2026-03-15 已过约 6 个月，需催'},
+    {n:'某商厦 · 消防改造', by:'竞对 C',
+     d:'2024-11-08', win:false, amt:640000, winner:'天津某安装公司', wamt:598000,
+     lo:'2025-01-01', hi:'2026-09-30', dep:{pay:13000, back:true, backOn:'2024-12-01', due:'2024-11-28'}, s:'real',
+     note:'对手让点约 6.6%'},
+    {n:'【其余历史投标】', by:'',
+     d:'', win:null, amt:0, winner:'', wamt:0,
+     lo:'', hi:'', dep:{pay:0, back:false, backOn:'', due:''}, s:'none',
+     note:'待录入 —— 每补一条，中标概率曲线自动修正'},
+  ],
+  deal: [
+    {n:'首都机场中国服务大厦 · 空调管道维修一期', t:'中标', c:'我方中标',
+     k:'2024 年 · 控制价 786,000', v:'786,000', s:'real'},
+    {n:'北京地铁 19 号线 · FAS 系统及气体灭火', t:'中标', c:'我方中标',
+     k:'2023 年 · 已完工结算', v:'4,260,000', s:'real'},
+    {n:'地坛医院 · 消防设施维保', t:'在管', c:'我方在管',
+     k:'2025 年至今 · 履约中', v:'396,000', s:'real'},
+    {n:'【历年其余成交项目】', t:'成交', c:'',
+     k:'对手 / 让点 / 我方报价 待录入', v:'—', s:'none'},
+    {n:'同类项目让点区间（行业惯例）', t:'参考', c:'',
+     k:'机电安装类多让 5%~9%，作报价起点参考，不作依据', v:'—', s:'ref'},
+    {n:'【开标结果回填】', t:'回归集', c:'',
+     k:'飞轮依赖：每回填 1 条，中标概率曲线自动修正', v:'0 条', s:'none'},
+  ],
+  contract: [
+    {n:'首都机场一期 · 施工合同', t:'施工合同', c:'已签',
+     k:'含工期 / 质保 / 结算条款', v:'2024', s:'real',
+     party:'首都机场集团', amt:786000, begin:'2024-09-01', end:'2027-08-31'},
+    {n:'地铁 19 号线 · 施工合同', t:'施工合同', c:'已签',
+     k:'含变更与索赔条款', v:'2023', s:'real',
+     party:'北京地铁', amt:4260000, begin:'2023-06-01', end:'2026-10-30'},
+    {n:'地坛医院 · 维保服务合同', t:'服务合同', c:'履行中',
+     k:'年度续签 · 服务标准附件', v:'2025', s:'real',
+     party:'地坛医院', amt:396000, begin:'2025-04-01', end:'2027-03-31'},
+    {n:'【合同扫描件原件】', t:'扫描件', c:'',
+     k:'待挂原件索引', v:'—', s:'none'},
+    {n:'【付款与结算凭证】', t:'结算', c:'',
+     k:'待财务提供', v:'—', s:'none'},
+  ],
+  cost: [
+    {n:'历史项目实际成本', t:'成本', c:'',
+     k:'待财务提供 · 飞轮核心输入', v:'—', s:'none'},
+    {n:'历史项目结算额', t:'结算', c:'',
+     k:'待财务提供 · 飞轮核心输入', v:'—', s:'none'},
+    {n:'分科目成本占比（人工/材料/机械…）', t:'成本结构', c:'',
+     k:'待财务提供 · 反推成本依赖', v:'—', s:'none'},
+    {n:'同类项目成本占比（行业经验值）', t:'参考', c:'',
+     k:'机电类约 人工 26% / 材料 38% / 机械 9% —— 仅作缺口期的粗估，不作决策依据', v:'—', s:'ref'},
+  ],
+};
+
+const lib = [
+  {c:'公司资质',n:'消防设施工程专业承包',k:'二级 · 有效期 2028-06',a:'',s:'real'},
+  {c:'公司资质',n:'建筑机电安装工程专业承包',k:'二级 · 有效期 2027-11',a:'',s:'real'},
+  {c:'公司资质',n:'电子与智能化工程专业承包',k:'二级 · 有效期 2027-11',a:'',s:'real'},
+  {c:'公司资质',n:'【其余 3 项资质】',k:'名称待录入',a:'',s:'none'},
+  {c:'人员',n:'一级建造师（机电工程）',k:'15 名 · 均已录入',a:'',s:'real'},
+  {c:'人员',n:'一级注册消防工程师',k:'8 名 · 均已录入',a:'',s:'real'},
+  {c:'人员',n:'注册造价工程师',k:'3 名 · 均已录入',a:'',s:'real'},
+  {c:'业绩',n:'首都机场 · 空调管道维修一期',k:'2024 年 · 已完',a:'786,000',s:'real'},
+  {c:'业绩',n:'北京地铁 19 号线 · FAS 系统及气体灭火',k:'2023 年 · 已完',a:'4,260,000',s:'real'},
+  {c:'业绩',n:'地坛医院 · 消防设施维保',k:'2025 年 · 在管',a:'396,000',s:'real'},
+  {c:'业绩',n:'【其余 12 项工程业绩】',k:'待录入',a:'',s:'none'},
+  {c:'业绩',n:'【11 项在管维保业绩】',k:'待录入',a:'',s:'none'},
+  // ★ 用户要求新增：施工组织设计
+  {c:'施工组织设计',n:'空调管道类 · 施工组织设计范本',k:'2025 版 · 含吊装/动火/季节性措施',a:'',s:'real'},
+  {c:'施工组织设计',n:'消防设施类 · 施工组织设计范本',k:'2025 版 · 含调试与验收方案',a:'',s:'real'},
+  {c:'施工组织设计',n:'【机电安装类 · 施工组织设计范本】',k:'待录入',a:'',s:'none'},
+  {c:'施工组织设计',n:'专项施工方案库（动火/高处/有限空间）',k:'待录入',a:'',s:'none'},
+  {c:'成本',n:'历史项目实际成本',k:'待财务提供',a:'',s:'none'},
+  {c:'成本',n:'历史项目结算额',k:'待财务提供',a:'',s:'none'},
+];
+
+/* ===== STEP 3 取料候选池：四类入口，AI 按本标要求初选 =====
+   每类结构：{id, n(名称), t(类型/证书), a(金额/等级), m(匹配度 0-100), r(理由), u(是否被选中)}
+   m=0 表示硬约束不满足（招标文件要求的最低门槛），一律不可选。 */
+const perf = [
+  {u:true, n:'首都机场 · 空调管道维修一期',t:'机场类',a:'786,000',m:96,
+   r:'同类项目 · 同一甲方 · 一期中标'},
+  {u:true, n:'北京地铁 19 号线 · FAS 系统及气体灭火',t:'轨道交通',a:'4,260,000',m:88,
+   r:'同类系统 · 金额达标 · 评分办法认可'},
+  {u:true, n:'地坛医院 · 消防设施维保',t:'医院类',a:'396,000',m:81,
+   r:'同类服务 · 履约中 · 有甲方评价'},
+  {u:true, n:'某部队院校 · 消防安防改造',t:'院校类',a:'1,520,000',m:84,
+   r:'公共建筑 · 金额达标 · 有验收报告'},
+  {u:false,n:'某商业综合体 · 消防改造',t:'商业',a:'1,120,000',m:64,
+   r:'类型不同 · 本次评分办法不认可'},
+  {u:false,n:'某住宅小区 · 消防管网改造',t:'住宅',a:'880,000',m:58,
+   r:'民用住宅 · 与本标公共建筑属性不符'},
+  {u:false,n:'某厂房 · 消防水系统安装',t:'工业',a:'1,960,000',m:61,
+   r:'工业厂房 · 评分办法未列为类似业绩'},
+  {u:false,n:'某酒店 · 消防设施改造',t:'酒店',a:'720,000',m:55,
+   r:'年限超出「近 3 年」要求'},
+  {u:false,n:'某写字楼 · 消防报警系统',t:'办公',a:'1,340,000',m:52,
+   r:'年限超出「近 3 年」要求'},
+  {u:false,n:'【其余 18 项业绩】',t:'—',a:'',m:0,r:'待录入后自动参与评分'},
+];
+/* 人员：招标文件要求「项目经理须一级建造师（机电）+ 安全 B 证，且近 3 年有同类项目经历」 */
+const staffPool = [
+  {u:true, n:'张炯锋',t:'一级建造师（机电）+ 高级工程师',a:'A 级',m:95,
+   r:'满足全部硬门槛 · 一期原项目经理 · 可挂本项目'},
+  {u:true, n:'李建国',t:'一级建造师（机电）+ 安全 B 证',a:'A 级',m:87,
+   r:'满足硬门槛 · 有同类空调管道项目经历'},
+  {u:true, n:'王海涛',t:'一级注册消防工程师',a:'B 级',m:78,
+   r:'满足技术负责人要求 · 消防系统经验足'},
+  {u:true, n:'赵明宇',t:'注册造价工程师',a:'B 级',m:74,
+   r:'报价文件复核人 · 招标文件要求配置'},
+  {u:false,n:'陈志强',t:'一级建造师（机电）',a:'B 级',m:66,
+   r:'缺安全 B 证 · 不满足招标文件硬门槛'},
+  {u:false,n:'刘伟',t:'二级建造师（机电）',a:'C 级',m:0,
+   r:'【不满足】招标文件要求一级建造师'},
+  {u:false,n:'孙立',t:'一级建造师（建筑工程）',a:'B 级',m:0,
+   r:'【不满足】专业不符，要求机电工程专业'},
+  {u:false,n:'周涛',t:'高级工程师（电气）',a:'B 级',m:62,
+   r:'专业相关性弱 · 备选'},
+  {u:false,n:'吴强',t:'一级建造师（机电）',a:'B 级',m:58,
+   r:'在岗但社保刚满 2 个月 · 资格存疑'},
+  {u:false,n:'【其余 6 名持证人员】',t:'—',a:'',m:0,r:'待录入社保与经历后参与匹配'},
+];
+/* 资质：招标文件要求「消防设施工程专业承包二级及以上」 */
+const qualPool = [
+  {u:true, n:'消防设施工程专业承包',t:'公司资质',a:'二级',m:92,
+   r:'满足招标文件要求 · 有效期至 2028-06'},
+  {u:true, n:'建筑机电安装工程专业承包',t:'公司资质',a:'二级',m:86,
+   r:'与本标机电安装内容直接相关'},
+  {u:true, n:'安全生产许可证',t:'行政许可',a:'有效',m:88,
+   r:'投标必备 · 在有效期内'},
+  {u:false,n:'电子与智能化工程专业承包',t:'公司资质',a:'二级',m:54,
+   r:'与本标内容关联度低 · 可不报'},
+  {u:false,n:'涉密信息系统集成资质',t:'专项资质',a:'办理中',m:0,
+   r:'【不可用】尚未取得证书，不得作为投标依据'},
+  {u:false,n:'【其余 3 项资质】',t:'—',a:'',m:0,r:'名称待录入后参与匹配'},
+];
+
+// 清单分项词库
+const ITEM_POOL = [
+  '镀锌钢管 DN100 安装','镀锌钢管 DN65 安装','镀锌钢管 DN50 安装','无缝钢管 DN150 安装',
+  '电动调节阀 DN100','电动蝶阀 DN80','闸阀 DN100','过滤器 DN100',
+  '橡塑保温（管道）','铝箔保温保护层','管道支架制作安装','管道防腐刷漆',
+  '吊顶拆除与恢复','墙面开孔与封堵','系统调试与试压','管道冲洗消毒',
+  '空调机组检修（甲方自购件）','风机盘管更换','冷媒管安装','冷凝水管安装',
+];
+
+// ★ 清单：初始为空，等导入招标文件后按文件项数生成（不再固定 8 项）
+let listItems = [];
+let listFromFile = false;
+let ITEMS_IN_FILE = 0;      // 招标文件里的清单项数
+
+// 演示用的"招标文件清单"（模拟解析结果，12 项）
+const DEMO_FILE_ITEMS = [
+  {name:'镀锌钢管 DN100 安装',unit:'m',qty:1260},
+  {name:'镀锌钢管 DN65 安装',unit:'m',qty:880},
+  {name:'镀锌钢管 DN50 安装',unit:'m',qty:420},
+  {name:'无缝钢管 DN150 安装',unit:'m',qty:180},
+  {name:'电动调节阀 DN100',unit:'个',qty:24},
+  {name:'电动蝶阀 DN80',unit:'个',qty:16},
+  {name:'闸阀 DN100',unit:'个',qty:12},
+  {name:'橡塑保温（管道）',unit:'m³',qty:62},
+  {name:'管道支架制作安装',unit:'kg',qty:3400},
+  {name:'吊顶拆除与恢复',unit:'m²',qty:1580},
+  {name:'系统调试与试压',unit:'系统',qty:6},
+  {name:'空调机组检修（甲方自购件）',unit:'台',qty:8},
+];
+
+let subjects = [
+  {n:'人工费（安装/焊工/调试）',ref:196000,r:'real',p:1.0,s:'中'},
+  {n:'材料费（管材/阀门/保温）',ref:268000,r:'real',p:1.0,s:'高'},
+  {n:'机械费（吊车/升降车）',ref:62000, r:'ref', p:0.8,s:'中'},
+  {n:'措施费（脚手架/临时用电）',ref:48000,r:'ref', p:0.7,s:'中'},
+  {n:'管理费',ref:56000,r:'ref',p:0.4,s:'低'},
+  {n:'规费与税金',ref:74000,r:'ref',p:0.0,s:'不可压'},
+  {n:'安全文明施工费',ref:26000,r:'ref',p:0.0,s:'不可压'},
+  {n:'其他（损耗/返工预备）',ref:34000,r:'none',p:0.6,s:'中'},
+];
+
+let CTRL = 850000;
+const FLOAT_RATE = 0.075;
+const MARGIN_FLOOR = 0.03;
+let PM = 12.0;                     // 唯一利润率状态（⑤⑦共用）
+let CUR_FILE = null;               // 当前分析对象
+let DEPOSIT_OK = false;            // 保证金是否已确认按期
+
+/* ================= 采购价格库（采购专员录入 · 1 个月保鲜 · 资料库回写） =================
+   规则（用户明确要求）：
+   1) 每个材料项由 AI 给出市场上下限区间（lo~hi），采购专员在区间内填「本次询价」；
+   2) 填过之后写进「采购价格库」，AI 学习：下一次同样项目可「直接引用」（库内价 + 来源标）；
+   3) 库存价满 1 个月自动转「已失效」，不再参与推荐（保持材料价格的市场波动特点）；
+   4) 若专员填的数偏离库内价 / 超出 AI 区间，必须给出调整理由，且该行标底色（人工调整留痕）。 */
+
+const PRICE_LIB_DAYS = 30;         // 保鲜期：30 天 = 1 个月
+
+// AI 给出的市场参考区间（演示：按材料类型给「市场价指引」；真实版接历史询价 + 造价信息网）
+const MATERIAL_MARKET = {
+  '镀锌钢管 DN100 安装': {lo:78, hi:104, unit:'m', base:88},
+  '镀锌钢管 DN65 安装':  {lo:56, hi:76,  unit:'m', base:64},
+  '镀锌钢管 DN50 安装':  {lo:42, hi:58,  unit:'m', base:48},
+  '无缝钢管 DN150 安装': {lo:168,hi:222, unit:'m', base:186},
+  '电动调节阀 DN100':    {lo:1180,hi:1560,unit:'个',base:1280},
+  '电动蝶阀 DN80':       {lo:640, hi:880, unit:'个',base:720},
+  '闸阀 DN100':          {lo:320, hi:430, unit:'个',base:356},
+  '过滤器 DN100':        {lo:280, hi:390, unit:'个',base:318},
+  '橡塑保温（管道）':     {lo:760, hi:1080,unit:'m³',base:880},
+  '铝箔保温保护层':       {lo:26,  hi:40,  unit:'m²',base:31},
+  '管道支架制作安装':     {lo:11.5,hi:17.2,unit:'kg',base:13.6},
+  '管道防腐刷漆':         {lo:18,  hi:27,  unit:'m²',base:21},
+  '吊顶拆除与恢复':       {lo:62,  hi:94,  unit:'m²',base:74},
+  '墙面开孔与封堵':       {lo:86,  hi:132, unit:'处',base:98},
+  '系统调试与试压':       {lo:2600,hi:3800,unit:'系统',base:3100},
+  '管道冲洗消毒':         {lo:9,   hi:16,  unit:'m', base:11.5},
+  '风机盘管更换':         {lo:820, hi:1180,unit:'台',base:940},
+  '冷媒管安装':           {lo:34,  hi:52,  unit:'m', base:41},
+  '冷凝水管安装':         {lo:22,  hi:36,  unit:'m', base:27},
+  '__default':            {lo:0,   hi:0,   unit:'',  base:0},
+};
+
+// 采购价格库：key = 材料名（同一材料跨项目复用）
+// {n, price, unit, date:'YYYY-MM-DD', src:'quote'|'history'|'ai', by, reason, adj}
+let PRICE_LIB = [];
+
+// 已录入的演示数据（其中一条故意做成"3 天前录"→ 新鲜；一条"40 天前"→ 已失效）
+(function seedPriceLib(){
+  const mk = (n, price, days, by, reason, adj)=>({
+    n, price, unit:(MATERIAL_MARKET[n]||MATERIAL_MARKET.__default).unit,
+    date:dateBack(days), src:'quote', by:by||'—', reason:reason||'', adj:!!adj
+  });
+  PRICE_LIB.push(mk('镀锌钢管 DN100 安装', 86.5, 3,  '王采购', '', false));
+  PRICE_LIB.push(mk('镀锌钢管 DN65 安装',  63.0, 6,  '王采购', '', false));
+  PRICE_LIB.push(mk('闸阀 DN100',          352,  11, '王采购', '', false));
+  PRICE_LIB.push(mk('橡塑保温（管道）',     862,  40, '王采购', '', false));   // 已失效
+  PRICE_LIB.push(mk('吊顶拆除与恢复',       96,   2,  '王采购', '本地劳务涨价，乙方报价高于区间上限', true));
+})();
+
+/* 日期工具：N 天前的 'YYYY-MM-DD' */
+function dateBack(days){
+  const d = new Date();
+  d.setDate(d.getDate() - days);
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+/* 库内价是否已失效（满 30 天） */
+function priceStale(e){
+  if(!e || !e.date) return true;
+  const t = new Date(e.date+'T00:00:00');
+  if(isNaN(t.getTime())) return true;
+  return (Date.now() - t.getTime()) / 86400000 > PRICE_LIB_DAYS;
+}
+/* 按材料名找「新鲜的」库内价 —— AI 推荐的候选 */
+function libPriceOf(name){
+  const hit = PRICE_LIB.filter(e=>e.n===name && !priceStale(e));
+  return hit.length ? hit[hit.length-1] : null;
+}
+/* 该材料最近一次录入（含已失效）—— 用于在表格里说明"上次多少、已过期" */
+function libLastOf(name){
+  const hit = PRICE_LIB.filter(e=>e.n===name);
+  return hit.length ? hit[hit.length-1] : null;
+}
+/* 价格录入 */
+function setPrice(name, val, reason){
+  const v = parseFloat(val);
+  const m = MATERIAL_MARKET[name] || MATERIAL_MARKET.__default;
+  const lib = libPriceOf(name);
+  if(isNaN(v) || v<=0){
+    // 清空 → 从库里移除该材料（撤回录入）
+    if(lib){ PRICE_LIB = PRICE_LIB.filter(e=>e!==lib); }
+    renderPriceBoard(); calcCost(); return;
+  }
+  const outOfRange = m.hi>0 && (v < m.lo || v > m.hi);
+  const devFromLib = lib ? Math.abs(v - lib.price)/lib.price : 0;
+  const needReason = outOfRange || devFromLib > 0.08;   // 超区间 或 偏离库内价 >8%
+  if(needReason && !String(reason||'').trim()){
+    alert('【必须说明调整理由】\n\n「'+name+'」的录入值 ¥'+v.toFixed(2)+
+      (outOfRange ? '\n  · 超出 AI 参考区间 ¥'+m.lo+' ~ ¥'+m.hi : '')+
+      (devFromLib>0.08 ? '\n  · 偏离库内价 ¥'+lib.price.toFixed(2)+' 达 '+(devFromLib*100).toFixed(1)+'%' : '')+
+      '\n\n价格异常必须由录入人写明原因（留痕），否则不予入库。');
+    renderPriceBoard(); return;
+  }
+  const rec = {n:name, price:v, unit:m.unit, date:dateBack(0), src:'quote',
+               by:USER.name, reason:String(reason||'').trim(), adj:!!needReason};
+  // 同名材料 → 覆盖为新价（旧价作为历史被替换，但记审计）
+  const old = libLastOf(name);
+  PRICE_LIB = PRICE_LIB.filter(e=>e.n!==name);
+  PRICE_LIB.push(rec);
+  AUDIT.push({t:nowStr(), who:USER.name, act:'采购价格入库',
+    detail:name+' ¥'+v.toFixed(2)+'/m'+(rec.adj?'（人工调整：'+rec.reason+'）':'')+
+           (old?'；原库内价 ¥'+old.price.toFixed(2):'')});
+  renderPriceBoard(); calcCost();
+}
+/* 从库内直接引用（AI 学习的体现：下次同项目一键带出） */
+function useLibPrice(name){
+  const lib = libPriceOf(name);
+  if(!lib){ alert('「'+name+'」在价格库里没有有效记录（可能从未录入或已满 1 个月失效）。'); return; }
+  const m = MATERIAL_MARKET[name] || MATERIAL_MARKET.__default;
+  PRICE_LIB = PRICE_LIB.filter(e=>e.n!==name);
+  PRICE_LIB.push({...lib, date:dateBack(0), src:'quote', by:USER.name,
+                  reason:lib.reason||'', adj:lib.adj});
+  AUDIT.push({t:nowStr(), who:USER.name, act:'引用库内采购价',
+    detail:name+' ¥'+lib.price.toFixed(2)+'（沿用 '+(lib.by||'历史')+' 的记录）'});
+  renderPriceBoard(); calcCost();
+}
+/* 单价状态判定：供清单行着色与推荐使用 */
+function priceStateOf(name){
+  const m = MATERIAL_MARKET[name] || MATERIAL_MARKET.__default;
+  const lib = libPriceOf(name);
+  const last = libLastOf(name);
+  if(lib) return {k:'lib',   v:lib.price, lib, m, stale:false};
+  if(last) return {k:'stale',v:last.price, lib:last, m, stale:true};
+  return {k:'none', v:m.base||0, lib:null, m, stale:false};
+}
+
+function setPm(v, fromSlider){
+  PM = Math.max(0, Math.min(25, v));
+  const sl = document.getElementById('pmSlider');
+  if(sl && !fromSlider) sl.value = PM;
+  calcCost(); dialTick();
+}
+
+/* ================= 留痕 ================= */
+function addRecord(idx, text, ok){
+  // 同一步已有记录 → 追加为新版本，旧版标记失效
+  RECORDS.filter(r=>r.idx===idx && !r.void).forEach(r=>{ r.void = true; });
+  RECORDS.push({idx, t:nowStr(), who:USER.name, text, ok:ok!==false, void:false});
+  AUDIT.push({t:nowStr(), who:USER.name, act:'完成步骤', detail:STEPS[idx].name+'：'+text});
+}
+function recOf(idx){
+  const list = RECORDS.filter(r=>r.idx===idx && !r.void);
+  return list.length ? list[list.length-1] : null;
+}
+function isDone(idx){ return !!recOf(idx); }
+
+/* 回改：把 idx 之后的所有步骤标记为需重走 */
+function markRedoAfter(idx){
+  let hit = false;
+  for(let i=idx+1; i<STEPS.length; i++){
+    if(isDone(i) || NEEDREDO.has(i)){ NEEDREDO.add(i); hit = true; }
+  }
+  return hit;
+}
+function clearRedo(idx){ NEEDREDO.delete(idx); }
+
+/* ================= 左侧轨道 ================= */
+function renderRail(){
+  const doneN = STEPS.filter((s,i)=>isDone(i) && !NEEDREDO.has(i)).length;
+  const pct = Math.round(doneN/STEPS.length*100);
+  document.getElementById('progFill').style.width = pct+'%';
+  document.getElementById('progPct').textContent = pct+'%';
+
+  document.getElementById('railSteps').innerHTML = STEPS.map((s,i)=>{
+    const cls = ['step-item'];
+    if(i===CUR) cls.push('on');
+    if(isDone(i)) cls.push(NEEDREDO.has(i) ? 'need' : 'done');
+    const rec = recOf(i);
+    if(rec) cls.push('has-rec');
+    const num = NEEDREDO.has(i) ? '!' : (DEMO_SKIPPED.has(i) ? '⏭' : (isDone(i) ? '✓' : (i+1)));
+    const oldRec = RECORDS.filter(r=>r.idx===i && r.void).slice(-1)[0];
+    const skipBadge = DEMO_SKIPPED.has(i)
+      ? '<div class="st-skip">⏭ 演示跳过 · 本步未通过</div>' : '';
+    return `<div class="${cls.join(' ')}" onclick="gotoStep(${i})">
+      <div class="st-num">${num}</div>
+      <div class="st-name">${s.name}${!canAct(i)?' <span class="src s-none">无权限</span>':''}</div>
+      ${skipBadge}
+      ${rec?`<div class="st-rec"><b>${rec.t}</b> ${rec.who}：${rec.text}</div>`:''}
+      ${oldRec?`<div class="st-rec"><span class="void">（已失效）${oldRec.t} ${oldRec.text}</span></div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function gotoStep(i){
+  CUR = i;
+  renderRail(); renderStage();
+  document.querySelector('.main').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ================= 右侧舞台调度 ================= */
+function renderStage(){
+  const s = STEPS[CUR];
+  document.getElementById('stageNo').textContent = 'STEP '+(CUR+1);
+  document.getElementById('stageName').textContent = s.name;
+  document.getElementById('stageDesc').innerHTML = s.desc +
+    (NEEDREDO.has(CUR) ? ' <span class="b b-q">需重走：前序步骤已改</span>' : '');
+
+  const RENDER = {import:stageImport, qual:stageQual, perf:stagePerf,
+                  report:stageReport, cost:stageCost, balance:stageBalance, doc:stageDoc};
+  document.getElementById('stageBody').innerHTML = RENDER[s.id]();
+  // 各步的交互绑定
+  if(s.id==='cost'){ renderListRows(); calcCost(); }
+  if(s.id==='balance'){ dialTick(); bindDial(); }
+  if(s.id==='import'){ bindDrop(); }
+  if(s.id==='doc'){ renderTender(); }
+
+  renderActBar();
+  document.getElementById('topProj').innerHTML =
+    '项目：<b>'+(CUR_FILE?CUR_FILE.name:'未引入招标文件')+'</b>';
+}
+
+/* ================= 模块切换（三个平级工作台） ================= */
+let MOD = 'pipeline';
+function switchMod(m){
+  MOD = m;
+  document.querySelectorAll('.mod').forEach(b=>b.classList.toggle('on', b.dataset.m===m));
+  const pipe = document.getElementById('shellPipeline');
+  const rad  = document.getElementById('modRadar');
+  const lib  = document.getElementById('modLib');
+  pipe.style.display = (m==='pipeline') ? '' : 'none';
+  rad.style.display  = (m==='radar')    ? 'block' : 'none';
+  lib.style.display  = (m==='lib')      ? 'block' : 'none';
+  // 雷达/资料库不属于某个投标项目，隐藏项目牌
+  document.getElementById('topProj').style.visibility = (m==='pipeline') ? 'visible' : 'hidden';
+  if(m==='radar') renderRadarMod();
+  if(m==='lib')   renderLibMod();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ================= 工作台 B · 招标信息雷达（独立项目） ================= */
+function renderRadarMod(){
+  document.getElementById('modRadar').innerHTML = `
+    <div class="mod-head">
+      <h2>📡 招标信息雷达 <span class="mh-tag">独立项目 · 不属于某个投标</span></h2>
+    </div>
+    <div class="mod-desc">
+      按关键词定时扫招标平台，命中的自动打分并<b>推荐</b>给你。
+      <b>进不进「主要跟进目标库」，由你点。</b>系统只找、只排序，不替你决定跟谁。
+      确认要跟的项目，再引到「投标决策流程」里去走 7 步。
+    </div>
+    ${radarPanel()}`;
+}
+
+/* ================= 工作台 C · 资料库（独立项目） ================= */
+let LIBCAT = 'staff';       // 当前选中的类目
+/* ===== 到期提醒引擎（依据今天实时计算，不写死活） ===== */
+function parseD(s){
+  if(!s) return null;
+  const m = String(s).match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if(!m) return null;
+  return new Date(+m[1], +m[2]-1, +m[3]);
+}
+function today0(){ const t=new Date(); return new Date(t.getFullYear(),t.getMonth(),t.getDate()); }
+/* 返回 {days, lvl, txt}  lvl: red(<3月) / amber(3-6月) / blue(>6月) / past(已过期) / none */
+function expiryOf(endStr){
+  const e = parseD(endStr);
+  if(!e) return {days:null, lvl:'none', txt:'—'};
+  const days = Math.round((e - today0())/86400000);
+  if(days < 0)  return {days, lvl:'past',  txt:'已到期 ' + Math.abs(days) + ' 天'};
+  if(days < 90) return {days, lvl:'red',   txt:'剩 ' + days + ' 天'};
+  if(days < 180)return {days, lvl:'amber', txt:'剩 ' + days + ' 天'};
+  return             {days, lvl:'blue',  txt:'剩 ' + days + ' 天'};
+}
+/* 保证金账龄：返回 {st, txt}  st: back=已收回 / due=应收未逾期 / over=逾期未收 */
+function depState(dep, decided){
+  if(!dep || !dep.pay) return {st:'na', txt:'无'};
+  if(dep.back) return {st:'back', txt:'已收回' + (dep.backOn ? ' · '+dep.backOn : '')};
+  const due = parseD(dep.due);
+  if(!due) return {st:'due', txt:'应收未约定'};
+  const od = Math.round((today0() - due)/86400000);
+  if(od > 0) return {st:'over', txt:'逾期 ' + od + ' 天'};
+  return {st:'due', txt:'待退 · 应退 ' + dep.due};
+}
+/* 中标统计（飞轮输入：真实开标结果） */
+function bidStats(){
+  const closed = LIB.bid.filter(x=>x.d && x.s==='real');
+  const won = closed.filter(x=>x.win===true);
+  const rate = closed.length ? Math.round(won.length/closed.length*100) : 0;
+  const depOut = LIB.bid.filter(x=>x.dep && x.dep.pay && !x.dep.back)
+                       .reduce((a,x)=>a+x.dep.pay, 0);
+  return {total:closed.length, won:won.length, lost:closed.length-won.length,
+          rate, depOut};
+}
+
+/* ================= 全局到期 / 逾期提醒（登录后常驻，不依赖当前工作台） =================
+   汇总三类事项：①合同到期（合同页 + 投标记录里的合同期）②资质/证书到期 ③保证金逾期未收
+   规则：登录即算一次，顶栏铃铛常驻计数；红色（<3 月）与逾期（past）会脉冲提醒。 */
+function alarmItems(){
+  const out = [];
+  // ① 合同到期（合同页）
+  (LIB.contract||[]).forEach(c=>{
+    const e = expiryOf(c.end);
+    if(e.lvl==='none') return;
+    out.push({ic:'📝', n:'合同到期 · '+(c.n||'—'), d:(c.party?c.party+' · ':'')+
+      (c.amt?('¥'+fmt(c.amt)+' · '):'')+'到期日 '+(c.end||'—'), lvl:e.lvl, txt:e.txt,
+      who:'contract', badge:'合同'});
+  });
+  // ② 合同期（投标记录里的三年期合同）
+  (LIB.bid||[]).forEach(b=>{
+    if(!b.end) return;
+    const e = expiryOf(b.end);
+    if(e.lvl==='none') return;
+    out.push({ic:'🎯', n:'合同到期 · '+(b.n||'—'), d:'我方中标项目合同期 '+(b.begin||'—')+
+      ' ~ '+b.end+' · '+(b.amt?('¥'+fmt(b.amt)):'—'), lvl:e.lvl, txt:e.txt,
+      who:'bid', badge:'合同'});
+  });
+  // ③ 资质 / 证书到期（商务标资质库 + 人员证书）
+  (LIB.qual||[]).forEach(q=>{
+    const e = expiryOf(q.end);
+    if(e.lvl==='none') return;
+    out.push({ic:'🏅', n:'资质到期 · '+(q.n||'—'), d:(q.c||'')+
+      ' · 有效期至 '+(q.end||'—'), lvl:e.lvl, txt:e.txt, who:'qual', badge:'资质'});
+  });
+  (LIB.staff||[]).forEach(s=>{
+    const e = expiryOf(s.end);
+    if(e.lvl==='none') return;
+    out.push({ic:'👷', n:'证书到期 · '+(s.n||'—'), d:(s.t||'')+
+      ' · 有效期至 '+(s.end||'—'), lvl:e.lvl, txt:e.txt, who:'staff', badge:'证书'});
+  });
+  // ④ 保证金逾期未收
+  (LIB.bid||[]).forEach(b=>{
+    const st = depState(b.dep, b.d);
+    if(st.st!=='over') return;
+    out.push({ic:'💰', n:'保证金逾期未收 · '+(b.n||'—'),
+      d:'投标保证金 ¥'+fmt((b.dep&&b.dep.pay)||0)+' · '+(st.txt||''),
+      lvl:'past', txt:st.txt, who:'bid', badge:'保证金'});
+  });
+  const rank = {past:0, red:1, amber:2, blue:3};
+  out.sort((a,b)=>(rank[a.lvl]??9)-(rank[b.lvl]??9));
+  return out;
+}
+function renderBell(){
+  const items = alarmItems();
+  const n = items.length;
+  const btn = document.getElementById('bellBtn');
+  const num = document.getElementById('bellN');
+  if(!btn) return;
+  const worst = n ? items[0].lvl : 'none';
+  btn.classList.toggle('alert', worst==='past' || worst==='red');
+  btn.classList.toggle('warn',  worst==='amber');
+  if(num){ num.style.display = n? 'flex':'none'; num.textContent = n; }
+  const body = document.getElementById('bellBody');
+  const when = document.getElementById('bellWhen');
+  if(when) when.textContent = '今天 ' + nowStr().slice(0,10);
+  if(!body) return;
+  if(n===0){
+    body.innerHTML = `<div class="bp-item blue">
+      <div class="bp-ic">✅</div><div class="bp-b">
+        <div class="bp-n">近期无到期或逾期事项</div>
+        <div class="bp-d">合同、资质证书、保证金往来都没有进入提醒区间。</div>
+      </div></div>`;
+    return;
+  }
+  const lbl = {past:'已到期', red:'3 月内', amber:'3–6 月', blue:'半年以上'};
+  const cls = {past:'r-past', red:'r-red', amber:'r-amber', blue:'r-blue'};
+  body.innerHTML = `<div class="small" style="color:var(--tx3);margin-bottom:9px">
+      共 <b style="color:var(--tx)">${n}</b> 项待处理 —— 红色与「已到期」优先处理：
+    </div>` + items.map(it=>`
+    <div class="bp-item ${it.lvl}">
+      <div class="bp-ic">${it.ic}</div>
+      <div class="bp-b">
+        <div class="bp-n">${it.n}</div>
+        <div class="bp-d">${it.d}</div>
+      </div>
+      <div class="bp-r ${cls[it.lvl]||'r-blue'}">${lbl[it.lvl]||''} · ${it.txt}</div>
+    </div>`).join('');
+}
+function toggleBell(){
+  const p = document.getElementById('bellPop');
+  if(!p) return;
+  p.classList.toggle('on');
+  if(p.classList.contains('on')) renderBell();
+}
+function gotoLibExpiry(){
+  const p = document.getElementById('bellPop');
+  if(p) p.classList.remove('on');
+  LIBCAT = 'bid';
+  switchMod('lib');
+}
+/* 点浮层外部自动收起 */
+document.addEventListener('click', e=>{
+  const p = document.getElementById('bellPop');
+  if(!p || !p.classList.contains('on')) return;
+  if(p.contains(e.target) || (e.target.closest && e.target.closest('#bellBtn'))) return;
+  p.classList.remove('on');
+});
+
+function renderLibMod(){
+  const cat = LIBCATS.find(c=>c.k===LIBCAT) || LIBCATS[0];
+  const rows = LIB[cat.k] || [];
+  const real = rows.filter(x=>x.s==='real').length;
+  const gap  = rows.filter(x=>x.s==='none').length;
+
+  const nav = LIBCATS.map(c=>{
+    const r = LIB[c.k] || [];
+    const tot = r.length, ok = r.filter(x=>x.s==='real').length;
+    return `<div class="libnav-i ${c.k===LIBCAT?'on':''}" onclick="pickLibCat('${c.k}')">
+      <span class="li-ic">${c.ic}</span><span class="li-n">${c.n}</span>
+      <span class="li-c">${ok}/${tot}</span>
+    </div>`;}).join('');
+
+  const totalAll = Object.values(LIB).reduce((a,r)=>a+r.length,0);
+  const realAll  = Object.values(LIB).reduce((a,r)=>a+r.filter(x=>x.s==='real').length,0);
+  const pct = Math.round(realAll/totalAll*100);
+
+  document.getElementById('modLib').innerHTML = `
+    <div class="mod-head">
+      <h2>🗄 资料库 <span class="mh-tag">独立项目 · 平台级资产</span></h2>
+    </div>
+    <div class="mod-desc">
+      公司所有可复用的"底数"都在这里：人员、施工组织设计、商务标资质、历史成交、合同页、成本。
+      <b>投标流程的每一步都从这里取料</b>——但资料库本身不属于任何一个投标项目。
+    </div>
+
+    <div class="lib-stats">
+      <div class="lib-stat"><div class="ls-k">全库完整度</div>
+        <div class="ls-v" style="color:${pct>=70?'var(--green)':pct>=40?'var(--amber)':'var(--red)'}">${pct}%</div>
+        <div class="ls-d">${realAll} 项已录入 / 共 ${totalAll} 项</div></div>
+      <div class="lib-stat"><div class="ls-k">当前类目</div>
+        <div class="ls-v" style="font-size:15px">${cat.n}</div>
+        <div class="ls-d">${cat.d}</div></div>
+      <div class="lib-stat"><div class="ls-k">本类已录入</div>
+        <div class="ls-v" style="color:var(--green)">${real}</div>
+        <div class="ls-d">条</div></div>
+      <div class="lib-stat"><div class="ls-k">本类缺口</div>
+        <div class="ls-v" style="color:${gap?'var(--amber)':'var(--tx2)'}">${gap}</div>
+        <div class="ls-d">待填，不用假数据顶</div></div>
+    </div>
+
+    <div class="libwrap">
+      <div class="libnav">
+        <div class="libnav-t">资料库目录</div>
+        ${nav}
+      </div>
+      <div class="libbody">
+        ${cat.k==='bid' ? bidPanel() : `
+        <div class="libb-head">
+          <h3>${cat.ic} ${cat.n}</h3>
+          <button class="btn tiny" onclick="libAddHint('${cat.k}')">+ 录入新条目</button>
+        </div>
+        <div class="libb-sub">${cat.d}。每条挂原件索引；缺口一律标 <span class="src s-none">缺口</span>，
+          <b>系统不用估算值填它——空着比填假的更安全</b>。</div>
+        <table>
+          <thead><tr>
+            <th>名称 / 人员</th><th style="width:190px">类型 / 证书</th>
+            <th style="width:280px">关键信息</th><th style="width:120px">用途</th>
+            <th style="width:88px" class="c">原件</th>
+          </tr></thead>
+          <tbody>${rows.map(x=>{
+            const tag = x.s==='real' ? '<span class="src s-real">已录入</span>'
+                      : x.s==='ref'  ? '<span class="src s-ref">参考值</span>'
+                      : '<span class="src s-none">缺口</span>';
+            return `<tr>
+              <td>${x.n} ${tag}</td>
+              <td class="small">${x.t||'—'}</td>
+              <td class="small">${x.k||'—'}</td>
+              <td class="small">${x.v||'—'}</td>
+              <td class="c">${x.s==='none'
+                ? '<span class="small" style="color:var(--red)">缺</span>'
+                : '<button class="btn tiny">打开</button>'}</td>
+            </tr>`;}).join('')}</tbody>
+        </table>
+        <div class="alert a-amber" style="margin-top:15px">
+          <b>资料库的作用：</b>投标流程 STEP 2（资格自查）、STEP 3（业绩配备）、STEP 7（生成标书）
+          都从这里自动取料。资料越全，自动分析越准；缺口越多，系统就越频繁地来找你要材料。
+        </div>`}
+      </div>
+    </div>`;
+}
+
+/* ================= 投标记录面板（筛选 + 到期提醒 + 保证金账龄） ================= */
+let BIDF = 'all';        // all | won | lost | soon
+function setBidF(f){ BIDF = f; renderLibMod(); }
+
+function bidPanel(){
+  const st = bidStats();
+  const all = LIB.bid.filter(x=>x.s==='real');
+  /* 筛选 */
+  let list = all;
+  if(BIDF==='won')  list = all.filter(x=>x.win===true);
+  if(BIDF==='lost') list = all.filter(x=>x.win===false);
+  if(BIDF==='soon') list = all.filter(x=>{ const e=expiryOf(x.hi);
+                        return e.lvl==='red'||e.lvl==='amber'||e.lvl==='past'; });
+  /* 到期提醒汇总 */
+  const soonAll = all.map(x=>({x, e:expiryOf(x.hi)}))
+                     .filter(o=>o.e.lvl!=='none' && o.e.lvl!=='blue');
+  const overDep = all.filter(x=>depState(x.dep).st==='over');
+
+  const fbtn = (k,lab,n)=>`<button class="bf ${BIDF===k?'on':''}" onclick="setBidF('${k}')">
+      ${lab}<span class="bf-n">${n}</span></button>`;
+
+  const rows = list.map(x=>{
+    const e = expiryOf(x.hi);
+    const d = depState(x.dep);
+    const winTag = x.win===true ? '<span class="src s-real">中标</span>'
+                 : x.win===false ? '<span class="src s-none">未中标</span>'
+                 : '<span class="src s-ref">进行中</span>';
+    const expTag = e.lvl==='none' ? '<span class="small" style="color:var(--tx3)">—</span>'
+      : `<span class="exp exp-${e.lvl}">${e.txt}</span>`;
+    const depTag = d.st==='na' ? '<span class="small" style="color:var(--tx3)">无</span>'
+      : `<span class="dep dep-${d.st}">${d.txt}</span>`;
+    return `<tr>
+      <td>${x.n} ${winTag}<div class="small" style="color:var(--tx3);margin-top:2px">${x.note||''}</div></td>
+      <td class="small mono">${x.d||'—'}</td>
+      <td class="small">${x.win===true ? '我方' : (x.winner||'—')}</td>
+      <td class="num mono">${x.wamt?('¥'+fmt(x.wamt)):'—'}</td>
+      <td class="small mono">${x.lo&&x.hi ? x.lo+' ~ '+x.hi : '—'}</td>
+      <td>${expTag}</td>
+      <td class="num mono">${x.dep&&x.dep.pay?('¥'+fmt(x.dep.pay)):'—'}</td>
+      <td>${depTag}</td>
+    </tr>`;}).join('');
+
+  return `
+    <div class="libb-head">
+      <h3>🎯 投标记录 <span class="tag">每一投都留痕</span></h3>
+      <button class="btn tiny" onclick="libAddHint('bid')">+ 补录投标记录</button>
+    </div>
+    <div class="libb-sub">中标和没中标<b>都记</b>。没中标的要写清<b>谁中了、中标金额多少</b>——
+      这些是对手的真实出价，比任何估算都值钱。我方中标的记<b>合同起止</b>，系统按今天实时算到期。</div>
+
+    <div class="bid-kpi">
+      <div class="bk"><div class="bk-k">投标总数</div><div class="bk-v">${st.total}</div></div>
+      <div class="bk"><div class="bk-k">中标</div><div class="bk-v" style="color:var(--green)">${st.won}</div></div>
+      <div class="bk"><div class="bk-k">未中标</div><div class="bk-v" style="color:var(--red)">${st.lost}</div></div>
+      <div class="bk"><div class="bk-k">中标率</div><div class="bk-v" style="color:var(--blue)">${st.rate}%</div>
+        <div class="bk-d">真实开标数据，直接喂飞轮</div></div>
+      <div class="bk"><div class="bk-k">保证金在外</div>
+        <div class="bk-v" style="color:${st.depOut?'var(--amber)':'var(--tx2)'}">¥${fmt(st.depOut)}</div>
+        <div class="bk-d">已付出未收回</div></div>
+    </div>
+
+    ${soonAll.length||overDep.length ? `<div class="alert a-red" style="margin:12px 0">
+      <b>需要盯的：</b>
+      ${overDep.length?`<br>💰 <b>${overDep.length} 笔投标保证金逾期未收回</b>：`+
+        overDep.map(x=>x.n.slice(0,14)+'…（'+depState(x.dep).txt+'）').join('、'):''}
+      ${soonAll.length?`<br>⏰ <b>${soonAll.length} 个合同临近/已过到期</b>：`+
+        soonAll.map(o=>o.x.n.slice(0,14)+'…（'+o.e.txt+'）').join('、'):''}
+    </div>`:''}
+
+    <div class="bid-filters">
+      ${fbtn('all','全部', all.length)}
+      ${fbtn('won','只看中标', st.won)}
+      ${fbtn('lost','只看未中标', st.lost)}
+      ${fbtn('soon','临近到期', soonAll.length)}
+    </div>
+
+    <table class="bid-table">
+      <thead><tr>
+        <th>项目</th><th style="width:88px">开标日</th><th style="width:132px">中标人</th>
+        <th style="width:104px" class="num">中标金额</th>
+        <th style="width:172px">合同期</th><th style="width:100px">到期</th>
+        <th style="width:84px" class="num">保证金</th><th style="width:142px">保证金状态</th>
+      </tr></thead>
+      <tbody>${rows || '<tr><td colspan="8" class="small" style="text-align:center;color:var(--tx3);padding:22px">该筛选下暂无记录</td></tr>'}</tbody>
+    </table>
+
+    <div class="bid-legend">
+      <b>到期提醒口径（按合同到期日算，每天自动重算）：</b>
+      <span class="exp exp-blue">🔵 半年以上</span>
+      <span class="exp exp-amber">🟡 3–6 个月</span>
+      <span class="exp exp-red">🔴 低于 3 个月</span>
+      <span class="exp exp-past">⚫ 已到期</span>
+      <br><b>保证金三态：</b>
+      <span class="dep dep-back">已收回</span>
+      <span class="dep dep-due">应收未到期</span>
+      <span class="dep dep-over">逾期未收</span>
+      <span class="small" style="color:var(--tx3)">—— 账龄按应退约定日与实际收回日实时计算</span>
+    </div>`;
+}
+
+function pickLibCat(k){
+  LIBCAT = k;
+  renderLibMod();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function libAddHint(k){
+  const cat = LIBCATS.find(c=>c.k===k);
+  alert('录入新条目 · '+cat.n+'\n\n演示版暂不提供录入表单。\n\n正式版这里会是：上传原件 → 系统自动抽取字段 → 存进资料库，并挂上原件索引。\n\n凡系统抽取不准的字段，一律标「存疑」等你人工核对 —— 不会假装看懂了。');
+}
+
+function renderActBar(){
+  const s = STEPS[CUR], allow = canAct(CUR);
+  const btns = [];
+  // 上一步
+  if(CUR>0) btns.push(`<button class="btn" onclick="gotoStep(${CUR-1})">← 上一步</button>`);
+
+  // 本步的提交动作（各步不同）
+  const blkNo = clauses.filter(c=>c.st==='no').length;
+  const blkQ  = clauses.filter(c=>c.st==='q').length;
+  const qualBlocked = blkNo>0 || blkQ>0 || !deposit.paid;
+  const ACTION = {
+    import:  CUR_FILE ? `<button class="btn ok" onclick="commit(0)">确认本项目，进入下一步 →</button>` : '',
+    qual:    `<button class="btn ok" onclick="commitQual()">确认自查结果，进入下一步 →</button>` +
+             (qualBlocked ? `<button class="btn demo" onclick="demoSkipQual()">⏭ 演示跳过（资格未通过）</button>` : ''),
+    perf:    `<button class="btn ok" onclick="commit(2)">确认业绩与资料配备，进入下一步 →</button>`,
+    cost:    `<button class="btn ok" onclick="commit(3)">确认成本与报价方案，进入下一步 →</button>`,
+    balance: `<button class="btn ok" onclick="commit(4)">确认报价档位 ${PM.toFixed(1)}% ，进入下一步 →</button>`,
+    report:  `<button class="btn ok" onclick="commit(5)">领导拍板：同意投标（留痕签字） →</button>`,
+    doc:     isDone(6) ? `<button class="btn pri" onclick="genTender()">重新生成投标文件初版</button>` : '',
+  };
+  if(ACTION[s.id]) btns.push(ACTION[s.id]);
+
+  document.getElementById('actBtns').innerHTML = btns.join('');
+  const hint = allow
+    ? (NEEDREDO.has(CUR) ? '⚠️ 本步需重走：前序步骤的改动可能影响本步结论，请复核后重新确认。' : '')
+    : `⚠️ 当前角色「${USER.role}」无权操作本步（需：${(s.roles||[]).join(' / ')}）。可查看，不可提交。`;
+  const skipHint = (s.id==='qual' && qualBlocked)
+    ? `<div class="alert a-red" style="margin:0;width:100%;text-align:left">
+         <b>流程已阻断：</b>${blkNo>0?`红标 ${blkNo} 条（不满足）`:''}${blkNo>0&&(blkQ>0||!deposit.paid)?' · ':''}${blkQ>0?`存疑未确认 ${blkQ} 条`:''}${(blkQ>0)&&(!deposit.paid)?' · ':''}${!deposit.paid?'保证金未确认按期':''}。
+         按规则<b>不得进入下一步</b>。课堂演示可点「演示跳过」，该动作会永久留痕。
+       </div>` : '';
+  document.getElementById('actHint').innerHTML = hint;
+  document.getElementById('actBlock').innerHTML = skipHint;
+}
+
+/* ================= STEP 1 · 引入招标文件 ================= */
+function stageImport(){
+  return `
+  <div class="panel" style="border-color:rgba(77,148,255,.44)">
+    <h3>引入招标文件 <span class="tag">一切的入口</span></h3>
+    <div class="sub">系统所有分析都从这一步开始。丢进招标文件 → 自动拆出「控制价 / 工程量清单 / 资格条款 / 废标项」→ 流进后面每一步。</div>
+
+    <div id="dropZone" class="dropzone">
+      <div style="font-size:24px;margin-bottom:7px">📄</div>
+      <div style="font-size:13.5px;font-weight:600">把招标文件拖进来，或点这里选文件</div>
+      <div class="small" style="margin-top:6px">支持 .pdf / .docx / .xlsx / .txt ｜ 也可直接粘贴公告正文</div>
+      <input type="file" id="fileInput" accept=".pdf,.docx,.doc,.xlsx,.xls,.txt" multiple style="display:none">
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:13px;align-items:center">
+      <button class="btn pri" onclick="demoImport()">用示例招标文件试一下</button>
+      <button class="btn" onclick="togglePaste()">粘贴公告正文</button>
+      <span class="small" style="color:var(--tx3)">本地解析，文件不上传</span>
+    </div>
+
+    <div id="pasteBox" style="display:none;margin-top:13px">
+      <textarea id="pasteTxt" rows="4" placeholder="把招标公告正文粘贴到这里，系统会尝试抽出关键词与金额…"></textarea>
+      <div style="margin-top:9px"><button class="btn pri" onclick="parsePaste()">解析这段文字</button></div>
+    </div>
+
+    <div id="importResult" style="display:none;margin-top:18px">
+      <div class="alert a-green" id="importHead"></div>
+      <div class="grid2" style="margin-top:4px">
+        <div>
+          <div style="font-size:12px;font-weight:600;color:var(--tx2);margin-bottom:9px">系统从文件里抽出了什么</div>
+          <table><tbody id="importExtract"></tbody></table>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:600;color:var(--tx2);margin-bottom:9px">当前分析对象</div>
+          <div class="panel" style="margin:0;background:rgba(120,140,200,.06)">
+            <div id="curTarget"></div>
+          </div>
+        </div>
+      </div>
+      <div class="alert a-amber" style="margin-top:13px">
+        <b>解析不是万能的：</b>自动抽取会有遗漏和误读。凡标 <span class="b b-q">存疑</span>
+        的字段，都必须你点开原件核对后手动改正——系统不会假装自己看懂了。
+      </div>
+    </div>
+  </div>
+
+  ${WATCH.length===0 ? '' : `
+  <div class="panel" style="border-color:rgba(45,212,191,.32)">
+    <h3>从目标库引入 <span class="tag" style="background:rgba(45,212,191,.16);color:#7fe8dc">${WATCH.length} 条待跟</span></h3>
+    <div class="sub">这些是你之前在主跟进目标库里确认要跟的项目。点「引入」直接开始走本流程。</div>
+    <table>
+      <thead><tr><th>项目</th><th style="width:110px">控制价</th>
+        <th style="width:110px">报名截止</th><th style="width:96px"></th></tr></thead>
+      <tbody>${WATCH.map(w=>`<tr>
+        <td><div style="font-weight:500">${w.n}</div>
+            <div class="small" style="margin-top:2px">加入：${w.by}</div></td>
+        <td class="num mono small">¥${fmt(w.budget)}</td>
+        <td class="mono small">${w.due}</td>
+        <td><button class="btn tiny pri" onclick="importWatch('${w.id}')">引入</button></td>
+      </tr>`).join('')}</tbody>
+    </table>
+  </div>`}`;
+}
+function togglePaste(){
+  const b = document.getElementById('pasteBox');
+  b.style.display = b.style.display==='none' ? 'block' : 'none';
+}
+
+/* ================= 招标信息雷达（第一页） ================= */
+function radarPanel(){
+  const onKw = KW.filter(k=>k.on).length;
+  const rec  = RADAR.filter(r=>r.score>=75 && r.verdict!=='no');
+  const unknown = RADAR.filter(r=>!r.decided).length;
+  return `
+  <div class="panel" style="border-color:rgba(45,212,191,.36)">
+    <h3>招标信息雷达 <span class="tag" style="background:rgba(45,212,191,.16);color:#7fe8dc">定时 · 关键词 · 只推荐不代决</span></h3>
+    <div class="sub">系统按关键词定时扫招标平台，命中的自动打分并<b>推荐</b>给你。
+      <b>进不进「主要跟进目标库」，由你点。</b>系统只负责找和排序，不替你决定跟谁。</div>
+
+    <!-- 定时 + 关键词配置 -->
+    <div class="radar-cfg">
+      <div class="rc-left">
+        <div class="rc-title">定时检索</div>
+        <div style="display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:8px">
+          <button class="btn ${WATCH_ON?'ok':''}" onclick="toggleWatch()">${WATCH_ON?'● 运行中 · 点此暂停':'▶ 开启定时检索'}</button>
+        </div>
+        <div style="display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:10px">
+          <label class="small" style="color:var(--tx3)">频率</label>
+          <select id="watchEvery" onchange="setWatchEvery(this.value)"
+                  style="background:var(--panel-solid);color:var(--tx);border:1px solid var(--line2);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:12px;flex:1;min-width:130px">
+            ${WATCH_PRESETS.map(g=>`<optgroup label="${g.g}">
+              ${g.opts.map(o=>`<option value="${o.v}" ${WATCH_EVERY===o.v?'selected':''}>${o.t}</option>`).join('')}
+            </optgroup>`).join('')}
+          </select>
+        </div>
+        <div class="small" style="color:var(--tx3);margin-top:9px;line-height:1.75">
+          下次检索：<b class="mono" style="color:var(--teal)" id="nextRun">—</b><br>
+          已检索 <b class="mono">${WATCH_TICK}</b> 次 · 当前频率 <b class="mono">${everyLabel()}</b>
+        </div>
+        <div class="small" style="color:var(--tx3);margin-top:8px;border-top:1px solid var(--line);padding-top:8px">
+          <b>演示提示：</b>真实场景按周跑（每周一 09:00 扫一次足够）。<br>
+          课堂演示想看"跑起来"，把频率切到 <b>演示档</b> 的 5 秒即可。
+        </div>
+      </div>
+      <div class="rc-right">
+        <div class="rc-title">关键词
+          <span class="small" style="color:var(--tx3);font-weight:400">（点一下开启 / 再点一下关闭 · 已启用 ${onKw}/${KW.length}）</span>
+          ${onKw>0?`<button class="btn ghost tiny" style="margin-left:8px" onclick="kwAll(false)">全部关闭</button>`:''}
+          ${onKw<KW.length?`<button class="btn ghost tiny" style="margin-left:6px" onclick="kwAll(true)">全部开启</button>`:''}
+        </div>
+        <div class="kw-wrap">
+          ${KW.map((k,i)=>`<button type="button" class="kw ${k.on?'on':''}"
+            onclick="toggleKw(${i})" title="${k.zone} · 点击${k.on?'关闭':'开启'}"
+            aria-pressed="${k.on}">
+            <span class="kw-dot"></span>${k.t}${k.on?'<span class="kw-x">✕</span>':''}
+          </button>`).join('')}
+          <input class="kw-in" id="kwNew" placeholder="+ 加关键词" onkeydown="if(event.key==='Enter')addKw()">
+        </div>
+        <div class="small" style="color:var(--tx3);margin-top:9px">
+          命中判定：公告标题/品类命中<b class="mono" style="color:var(--teal)">${onKw}</b> 个启用关键词才进候选池。
+          ${onKw===0?'<span style="color:var(--amber)">当前一个都没开，检索不会命中任何公告。</span>':''}
+        </div>
+      </div>
+    </div>
+
+    <div class="alert a-blue" style="margin-top:14px">
+      检索完成 · 命中 <b class="mono">${RADAR.length}</b> 条候选 ｜
+      系统推荐 <b class="mono" style="color:var(--green)">${rec.length}</b> 条（评分 ≥75 且非资格不符）｜
+      待你决定 <b class="mono" style="color:var(--amber)">${unknown}</b> 条 ｜
+      已进目标库 <b class="mono">${WATCH.length}</b> 条
+    </div>
+
+    <!-- 候选列表：推荐 + 你决定 -->
+    <div class="rec-head">
+      <span>候选公告</span>
+      <span class="small" style="color:var(--tx3)">勾选后点「加入主要跟进目标库」才会跟进</span>
+    </div>
+    <div class="rec-list">
+      ${RADAR.map(r=>{
+        const vb = r.verdict==='ok' ? '<span class="b b-ok">可投</span>'
+                 : r.verdict==='q'  ? '<span class="b b-q">存疑</span>'
+                 : '<span class="b b-no">资格不符</span>';
+        const rec = r.score>=75 && r.verdict!=='no';
+        const inW = WATCH.some(w=>w.id===r.id);
+        const scoreCls = r.score>=85?'sc-h':(r.score>=70?'sc-m':'sc-l');
+        return `<div class="rec ${inW?'in-watch':''}">
+          <div class="rec-score ${scoreCls}">
+            <b>${r.score}</b><span>推荐分</span>
+          </div>
+          <div class="rec-main">
+            <div class="rec-n">${r.n}
+              ${rec?'<span class="b b-rec">★ 系统推荐</span>':''}
+              ${inW?'<span class="b b-w">✓ 已跟进</span>':''}
+            </div>
+            <div class="small" style="margin-top:3px">${r.why}</div>
+            <div class="rec-meta">
+              <span class="src s-bid">${r.src}</span>
+              <span>发布 ${r.pub}</span><span>报名截止 <b>${r.due}</b></span>
+              <span>开标 ${r.open}</span><span class="mono">控制价 ¥${fmt(r.budget)}</span>
+            </div>
+            <div class="kw-hit">命中：${r.kwHit.map(k=>`<span class="kh">${k}</span>`).join('')}</div>
+          </div>
+          <div class="rec-act">
+            ${vb}
+            ${inW
+              ? `<button class="btn tiny danger" onclick="dropFromWatch('${r.id}')">移出目标库</button>`
+              : `<label class="chk"><input type="checkbox" id="pk_${r.id}" ${r.decided?'checked':''}
+                   onchange="markDecide('${r.id}',this.checked)"> 选中</label>`}
+            <button class="btn tiny pri" onclick="importRadar('${r.id}')">引入分析</button>
+          </div>
+        </div>`;}).join('')}
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center">
+      <button class="btn ok" onclick="addSelectedToWatch()">→ 加入主要跟进目标库</button>
+      <span class="small" style="color:var(--tx3)">勾选多条可一次加入 · 加入动作留痕</span>
+    </div>
+
+    <!-- 主要跟进目标库 -->
+    <div class="watch-box">
+      <div class="wb-head">
+        <b>主要跟进目标库</b>
+        <span class="small" style="color:var(--tx3)">只有你确认过的项目在这里 ｜ 共 ${WATCH.length} 条</span>
+      </div>
+      ${WATCH.length===0
+        ? `<div class="wb-empty">还没有跟进目标。系统推荐的项目不会自动进来 —— 勾选候选后点「加入主要跟进目标库」。</div>`
+        : WATCH.map((w,i)=>{
+            const days = Math.max(0, Math.round((new Date(w.due.replace(/-/,'/')) - new Date())/86400000));
+            return `<div class="wb-row">
+              <div class="wb-idx">${i+1}</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-weight:500">${w.n}</div>
+                <div class="small" style="margin-top:2px">控制价 ¥${fmt(w.budget)} · 报名截止 ${w.due} · 开标 ${w.open}</div>
+              </div>
+              <div class="wb-by">${w.by}</div>
+              <div class="wb-days ${days<=3?'urgent':''}">${days<=0?'已截止':(days+' 天后截止')}</div>
+              <button class="btn tiny pri" onclick="importWatch('${w.id}')">引入分析</button>
+            </div>`;}).join('')}
+    </div>
+
+    <div class="alert a-amber" style="margin-top:14px">
+      <b>系统只推荐，不代决。</b>推荐分是「关键词命中 + 品类对口 + 我方资质/业绩匹配 + 历史中标」的加权，
+      不是中标概率，也不等于你该投。最终跟不跟，由你在目标库里点。
+    </div>
+  </div>`;
+}
+
+/* --- 雷达交互 --- */
+/* 雷达是独立工作台（renderRadarMod 渲染），所有交互必须重绘雷达面板，
+   不能调 renderStage()——否则点了没反应（第十二轮修的关键词点不动 bug）。 */
+function radarRedraw(keepInput){
+  const el = document.getElementById('kwNew');
+  const keep = keepInput && el ? el.value : '';
+  renderRadarMod();
+  // 重绘后立刻补上倒计时文本（否则要等最多 1 秒才刷新）
+  const nr = document.getElementById('nextRun');
+  if(nr) nr.textContent = nextRunText();
+  if(keepInput){
+    const n = document.getElementById('kwNew');
+    if(n){ n.value = keep; n.focus(); }
+  }
+}
+function toggleKw(i){
+  if(!KW[i]) return;
+  KW[i].on = !KW[i].on;
+  AUDIT.push({t:nowStr(), who:USER.name, act:(KW[i].on?'启用':'停用')+'关键词',
+    detail:KW[i].t+'（'+KW[i].zone+'）'});
+  radarRedraw(false);
+}
+function kwAll(b){
+  let n = 0;
+  KW.forEach(k=>{ if(k.on!==b){ k.on = b; n++; } });
+  if(n){
+    AUDIT.push({t:nowStr(), who:USER.name, act:(b?'全部启用':'全部停用')+'关键词', detail:'共 '+n+' 个'});
+  }
+  radarRedraw(false);
+}
+function addKw(){
+  const el = document.getElementById('kwNew');
+  const v = (el.value||'').trim();
+  if(!v) return;
+  if(KW.some(k=>k.t===v)){ alert('关键词「'+v+'」已存在。'); return; }
+  KW.push({t:v, on:true, zone:'自定义'});
+  AUDIT.push({t:nowStr(), who:USER.name, act:'新增关键词', detail:v});
+  radarRedraw(false);   // 输入框里已消费掉，清空
+}
+/* 检索频率：默认按生产口径「每周一次」 */
+function setWatchEvery(v){
+  WATCH_EVERY = parseInt(v) || 604800;
+  WATCH_NEXT = WATCH_ON ? Date.now() + WATCH_EVERY*1000 : null;  // 运行中才重排下次
+  if(WATCH_ON) startWatchTimer();
+  AUDIT.push({t:nowStr(), who:USER.name, act:'调整检索频率', detail:everyLabel()});
+  radarRedraw(false);
+}
+function startWatchTimer(){
+  if(WATCH_TIMER) clearInterval(WATCH_TIMER);
+  WATCH_NEXT = Date.now() + WATCH_EVERY*1000;
+  WATCH_TIMER = setInterval(watchTick, WATCH_EVERY*1000);
+  startCountdown();
+}
+/* 每秒刷新倒计时：只改 #nextRun 文本，不整体重绘（否则输入框会被清空）。
+   离开雷达工作台后自停，不留后台定时器。 */
+let COUNT_TIMER = null;
+function startCountdown(){
+  if(COUNT_TIMER) clearInterval(COUNT_TIMER);
+  COUNT_TIMER = setInterval(()=>{
+    const el = document.getElementById('nextRun');
+    if(!el){                       // 已离开雷达页 → 自停，不再空转
+      clearInterval(COUNT_TIMER); COUNT_TIMER = null; return;
+    }
+    el.textContent = nextRunText();
+  }, 1000);
+}
+function toggleWatch(){
+  WATCH_ON = !WATCH_ON;
+  if(WATCH_ON){
+    startWatchTimer();
+    AUDIT.push({t:nowStr(), who:USER.name, act:'开启定时检索', detail:'间隔 '+everyLabel()});
+  }else{
+    clearInterval(WATCH_TIMER); WATCH_TIMER = null;
+    WATCH_NEXT = null;
+    AUDIT.push({t:nowStr(), who:USER.name, act:'暂停定时检索', detail:''});
+  }
+  radarRedraw(false);
+}
+/* 每次定时触发：模拟扫到公告，追加候选，重算推荐分 */
+let RADAR_POOL = [
+  {n:'丰台区某医院 · 消防设施年度检测服务', src:'cebpubservice', budget:280000,
+   kwHit:['消防设施工程'], why:'检测服务类 · 与消防维保相邻品类'},
+  {n:'海淀区某园区 · 机电设备安装工程', src:'chinabidding', budget:1450000,
+   kwHit:['机电设备安装'], why:'机电安装对口 · 金额偏大需评估垫资'},
+  {n:'某部队营区 · 消防远程值守系统采购', src:'远东招标', budget:960000,
+   kwHit:['远程值守','消防设施工程'], why:'远程值守是我方差异化强项'},
+  {n:'通州区某写字楼 · 空调系统节能改造', src:'cebpubservice', budget:620000,
+   kwHit:['空调管道维修'], why:'空调品类对口 · 节能改造经验需核实'},
+];
+function watchTick(){
+  WATCH_TICK++;
+  if(RADAR_POOL.length){
+    const t = RADAR_POOL.shift();
+    const id = 'R' + (RADAR.length + 1);
+    const hitOn = t.kwHit.filter(k=>KW.some(x=>x.t===k && x.on));
+    const score = Math.min(96, 45 + hitOn.length*14 + (t.budget<=900000?6:0));
+    RADAR.unshift({id, n:t.n, src:t.src, pub:nowShort(), due:'10-18 17:00',
+      open:'10-30 09:30', budget:t.budget, kwHit:t.kwHit, score,
+      verdict: score>=70?'ok':'q', why:t.why, follow:false, decided:false});
+    // 新公告进审计
+    AUDIT.push({t:nowStr(), who:'系统', act:'定时检索命中', detail:t.n+'（推荐分 '+score+'）'});
+  }
+  WATCH_NEXT = Date.now() + WATCH_EVERY*1000;   // 本轮跑完，排下一轮
+  radarRedraw(false);
+}
+function markDecide(id, checked){
+  const r = RADAR.find(x=>x.id===id);
+  if(r) r.decided = checked;
+}
+function addSelectedToWatch(){
+  const picked = RADAR.filter(r=>r.decided && !WATCH.some(w=>w.id===r.id));
+  if(!picked.length){ alert('还没有勾选任何候选。\n\n在候选右侧勾「选中」，再点这个按钮。'); return; }
+  picked.forEach(r=>{
+    r.follow = true;
+    WATCH.push({id:r.id, n:r.n, budget:r.budget, due:r.due, open:r.open,
+                by:USER.name+' '+nowShort()});
+    AUDIT.push({t:nowStr(), who:USER.name, act:'加入主要跟进目标库', detail:r.n});
+  });
+  radarRedraw(false);
+  alert('已加入主要跟进目标库 '+picked.length+' 条。\n\n该动作已留痕（谁、何时、哪条）。');
+}
+function dropFromWatch(id){
+  const w = WATCH.find(x=>x.id===id);
+  if(!w) return;
+  if(!confirm('把「'+w.n+'」移出主要跟进目标库？\n\n移出后该项目的跟进状态不保留。')) return;
+  WATCH = WATCH.filter(x=>x.id!==id);
+  const r = RADAR.find(x=>x.id===id);
+  if(r){ r.follow = false; r.decided = false; }
+  AUDIT.push({t:nowStr(), who:USER.name, act:'移出主要跟进目标库', detail:w.n});
+  radarRedraw(false);
+}
+function importRadar(id){
+  const r = RADAR.find(x=>x.id===id);
+  if(!r) return;
+  if(!confirm('把「'+r.n+'」作为本次分析对象？\n\n将进入 STEP 1 的引入流程（控制价 ¥'+fmt(r.budget)+'）。')) return;
+  // 复用既有演示引入逻辑
+  const fakeIdx = notices.findIndex(n=>n.n.indexOf(r.n.split(' · ')[1]||'')>=0);
+  demoRadarImport(r);
+}
+function importWatch(id){
+  const w = WATCH.find(x=>x.id===id);
+  if(!w) return;
+  const r = RADAR.find(x=>x.id===id);
+  if(!confirm('把「'+w.n+'」作为本次分析对象？\n\n将进入 STEP 1 的引入流程。')) return;
+  demoRadarImport(r || {n:w.n, budget:w.budget});
+}
+
+/* ================= STEP 2 · 资格与废标项自查 ================= */
+function stageQual(){
+  const ok = clauses.filter(c=>c.st==='ok').length;
+  const no = clauses.filter(c=>c.st==='no').length;
+  const q  = clauses.filter(c=>c.st==='q').length;
+  const depositRow = `
+    <div class="panel" style="margin:0 0 16px;background:${deposit.paid?'rgba(61,219,160,.06)':'rgba(245,181,68,.07)'};
+         border-color:${deposit.paid?'rgba(61,219,160,.34)':'rgba(245,181,68,.34)'}">
+      <h3>投标保证金按期缴纳 <span class="tag">漏了直接废标</span></h3>
+      <div class="grid4" style="margin:12px 0">
+        <div class="kpi"><div class="k">应缴金额</div><div class="v mono">¥${fmt(deposit.amount)}</div><div class="d">按控制价 2% 估</div></div>
+        <div class="kpi"><div class="k">缴纳截止</div><div class="v mono" style="font-size:16px">${deposit.due}</div><div class="d">招标文件写明</div></div>
+        <div class="kpi"><div class="k">当前状态</div>
+          <div class="v" style="font-size:16px;color:${deposit.paid?'var(--green)':'var(--amber)'}">${deposit.paid?'已缴，按期':'未确认'}</div>
+          <div class="d">${deposit.paid?('凭证：'+deposit.by):'必须人工核对银行回单'}</div></div>
+        <div class="kpi"><div class="k">谁确认的</div>
+          <div class="v" style="font-size:16px">${deposit.paid?deposit.note:'—'}</div>
+          <div class="d">确认动作进审计日志</div></div>
+      </div>
+      ${deposit.paid
+        ? '<div class="alert a-green" style="margin:0">已确认按期足额缴纳。此确认已冻结留痕。</div>'
+        : `<button class="btn ok" onclick="confirmDeposit()">我已核对银行回单，确认按期足额缴纳</button>`}
+    </div>`;
+
+  return depositRow + `
+  <div class="panel">
+    <h3>废标项逐条自查 <span class="tag">三态判定，不许默认通过</span></h3>
+    <div class="sub">系统把招标文件逐条拆开，自动对照公司资料判断三态。黄色「存疑」<b>必须人工确认</b>后才能定案。</div>
+    <div class="grid3" style="margin-bottom:15px">
+      <div class="kpi"><div class="k">满足</div><div class="v" style="color:var(--green)">${ok}</div><div class="d">可直接引用证明材料</div></div>
+      <div class="kpi"><div class="k">不满足</div><div class="v" style="color:var(--red)">${no}</div><div class="d">缺什么已写明</div></div>
+      <div class="kpi"><div class="k">存疑待确认</div><div class="v" style="color:var(--amber)">${q}</div><div class="d">必须人工确认，不许默认通过</div></div>
+    </div>
+    <table>
+      <thead><tr>
+        <th style="width:52px" class="c">条款</th><th>要求原文</th><th style="width:170px">比对依据</th>
+        <th class="c" style="width:88px">判定</th><th style="width:80px" class="c">确认</th>
+      </tr></thead>
+      <tbody>${clauses.map((c,i)=>{
+        const b = c.st==='ok' ? '<span class="b b-ok">满足</span>'
+                : c.st==='q'  ? '<span class="b b-q">存疑</span>'
+                : '<span class="b b-no">不满足</span>';
+        const ck = c.st==='q'
+          ? `<button class="btn tiny" onclick="confirmClause(${i})">确认</button>`
+          : '<span class="small">已定</span>';
+        return `<tr>
+          <td class="c mono">${c.no}</td>
+          <td>${c.txt}</td>
+          <td class="small">${c.by}${c.cnt?'<br><span style="color:var(--green)">'+c.cnt+'</span>':''}</td>
+          <td class="c">${b}</td>
+          <td class="c">${ck}</td>
+        </tr>`;}).join('')}</tbody>
+    </table>
+    <div class="alert a-red" style="margin-top:15px">
+      <b>红线：</b>存疑项未清零，本步不得判定通过。系统不会替你「大概率没问题」。
+    </div>
+  </div>`;
+}
+function confirmDeposit(){
+  deposit.paid = true; deposit.note = USER.name+' '+nowShort();
+  AUDIT.push({t:nowStr(), who:USER.name, act:'确认保证金', detail:'¥'+fmt(deposit.amount)+' 按期'});
+  renderStage();
+}
+function confirmClause(i){
+  if(!canAct(CUR)){ alert('当前角色无权限修改判定。'); return; }
+  clauses[i].st = 'ok';
+  clauses[i].cnt = '人工确认 · '+nowShort();
+  AUDIT.push({t:nowStr(), who:USER.name, act:'确认条款', detail:'第 '+clauses[i].no+' 条'});
+  renderStage();
+}
+
+/* ================= STEP 3 · 业绩与资料配备（多入口取料 + AI 初选） ================= */
+let PERFTAB = 'perf';   // perf | staff | qual
+function pickTab(k){ PERFTAB = k; renderStage(); }
+function togglePick(pool, i){
+  const it = pool[i];
+  if(it.m<=0){ alert('「'+it.n+'」不满足招标文件要求：\n\n'+it.r+'\n\n硬门槛不达标项不可选入 —— 报上去也是废标。'); return; }
+  it.u = !it.u;
+  renderStage();
+}
+function poolOf(k){ return k==='staff'?staffPool : k==='qual'?qualPool : perf; }
+function stagePerf(){
+  const TABS = [
+    {k:'perf',  ic:'📊', n:'历史业绩', tag:'评分办法：每项 3 分，最多 9 分'},
+    {k:'staff', ic:'👷', n:'人员配备', tag:'硬门槛：一建(机电)+安全B证'},
+    {k:'qual',  ic:'🏅', n:'资质证书', tag:'硬门槛：消防专业承包二级及以上'},
+  ];
+  const pick = ()=>perf.filter(p=>p.u&&p.m>0).length;
+  const pickS= ()=>staffPool.filter(p=>p.u&&p.m>0).length;
+  const pickQ= ()=>qualPool.filter(p=>p.u&&p.m>0).length;
+  const score = Math.min(pick()*3, 9);
+  const active = TABS.find(t=>t.k===PERFTAB) || TABS[0];
+  const pool = poolOf(PERFTAB);
+  const realN = pool.filter(x=>x.m>0).length;      // 可参与匹配的总数
+  const selN  = pool.filter(x=>x.u&&x.m>0).length; // 被选中的
+
+  return `
+  <div class="panel">
+    <h3>AI 初选 <span class="tag">四个入口取料 · 按本标要求自动挑</span></h3>
+    <div class="sub">本步不再让你手填，而是<b>从资料库四个入口取料</b>，AI 按本标招标文件的要求
+      <b>先勾出一批</b>，你再增删。<b>低于招标文件硬门槛的一律不可选</b>——报上去就是废标。</div>
+
+    <div class="grid4" style="margin:14px 0">
+      <div class="kpi"><div class="k">历史业绩</div><div class="v">${pick()}<span style="font-size:13px;color:var(--tx3)">/${perf.filter(x=>x.m>0).length}</span></div>
+        <div class="d">已选 / 可匹配 · 预计 ${score}/9 分</div></div>
+      <div class="kpi"><div class="k">人员配备</div><div class="v">${pickS()}<span style="font-size:13px;color:var(--tx3)">/${staffPool.filter(x=>x.m>0).length}</span></div>
+        <div class="d">已选 / 可匹配</div></div>
+      <div class="kpi"><div class="k">资质证书</div><div class="v">${pickQ()}<span style="font-size:13px;color:var(--tx3)">/${qualPool.filter(x=>x.m>0).length}</span></div>
+        <div class="d">已选 / 可匹配</div></div>
+      <div class="kpi"><div class="k">硬门槛校验</div>
+        <div class="v" style="color:var(--green);font-size:16px">通过</div>
+        <div class="d">无「不满足」项被选入</div></div>
+    </div>
+
+    <div class="perftabs">
+      ${TABS.map(t=>`<button class="pt ${PERFTAB===t.k?'on':''}" onclick="pickTab('${t.k}')">
+        <span class="pt-ic">${t.ic}</span><span class="pt-n">${t.n}</span>
+        <span class="pt-h">${t.k==='perf'?pick()+' 项':t.k==='staff'?pickS()+' 人':pickQ()+' 项'}</span>
+      </button>`).join('')}
+    </div>
+    <div class="small" style="color:var(--tx3);margin:10px 0">
+      ${active.tag} ｜ 本类可参与匹配 <b>${realN}</b> 条，AI 初选 <b>${selN}</b> 条
+      ${active.k==='perf'?'（评分办法封顶 9 分，选满即止）':active.k==='staff'?'（项目经理 + 技术负责人 + 造价复核人，至少 3 人）':'（硬门槛项必须选，加分项按需选）'}
+    </div>
+
+    <table>
+      <thead><tr>
+        <th class="c" style="width:50px">选用</th>
+        <th style="width:${PERFTAB==='perf'?'260px':'130px'}">${PERFTAB==='staff'?'姓名':PERFTAB==='qual'?'资质名称':'业绩名称'}</th>
+        <th style="width:190px">${PERFTAB==='staff'?'证书 / 职称':PERFTAB==='qual'?'类别':'项目类型'}</th>
+        <th class="num" style="width:96px">${PERFTAB==='staff'?'评级':PERFTAB==='qual'?'等级':'合同额'}</th>
+        <th class="c" style="width:74px">匹配度</th>
+        <th>AI 判断依据</th>
+      </tr></thead>
+      <tbody>${pool.map((p,i)=>{
+        const hardFail = p.m<=0;
+        const dim = hardFail ? 'opacity:.52' : '';
+        return `<tr style="${dim}">
+          <td class="c"><label class="ck"><input type="checkbox" ${p.u?'checked':''}
+            ${hardFail?'disabled':''} onchange="togglePick(poolOf('${PERFTAB}'), ${i})"></label></td>
+          <td>${p.n}${hardFail?' <span class="src s-none">不可选</span>':''}</td>
+          <td class="small">${p.t}</td>
+          <td class="num mono">${p.a||'—'}</td>
+          <td class="c mono" style="color:${p.m>=85?'var(--green)':p.m>=70?'var(--amber)':'var(--tx3)'}">${p.m||'—'}${p.m?'%':''}</td>
+          <td class="small" style="${hardFail?'color:var(--red)':''}">${p.r}</td>
+        </tr>`;}).join('')}</tbody>
+    </table>
+
+    <div class="alert a-amber" style="margin-top:14px">
+      <b>AI 只做初选，不替你决定。</b>它可以勾出建议项，但<b>报不报你说了算</b>。
+      带 <span class="src s-none">不可选</span> 的是硬门槛不达标项（如专业不符、缺安全 B 证、
+      资质未取得），系统直接锁死 —— 这类项报上去会当场废标。
+    </div>
+  </div>
+
+  <div class="panel" style="border-color:rgba(155,125,240,.34)">
+    <h3>取料来源 <span class="tag" style="background:rgba(155,125,240,.16);color:#bda8f7">资料库是独立工作台</span></h3>
+    <div class="sub">本步所有料都从「资料库」自动取，不在这里手填。资料库是平台级资产，天天维护；
+      本步只是按这个标的评分办法去挑。</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:14px 0">
+      <button class="btn pri" onclick="switchMod('lib')">🗄 打开资料库</button>
+      <span class="small" style="color:var(--tx3)">人员 · 施工组织设计 · 资质 · 历史成交 · 合同页 · 成本</span>
+    </div>
+    <table>
+      <thead><tr>
+        <th style="width:110px">入口</th><th>库内可用</th><th style="width:110px" class="num">已录入</th>
+        <th style="width:110px" class="num">缺口</th><th style="width:92px" class="c">本步已取</th>
+      </tr></thead>
+      <tbody>
+        ${[['👷 人员资料库','staff',pickS()],['🏅 商务标资质库','qual',pickQ()],
+           ['📊 历史成交/业绩','deal',pick()],['📐 施工组织设计','sod',3],
+           ['📝 合同页','contract',0],['💰 成本与结算','cost',0]].map(([nm,k,used])=>{
+          const arr = LIB[k]||[];
+          const real = arr.filter(x=>x.s==='real').length;
+          const gap = arr.filter(x=>x.s==='none').length;
+          return `<tr>
+            <td>${nm}</td>
+            <td class="small">${arr.length} 条</td>
+            <td class="num mono" style="color:var(--green)">${real}</td>
+            <td class="num mono" style="color:${gap?'var(--amber)':'var(--tx3)'}">${gap}</td>
+            <td class="c mono">${used}</td>
+          </tr>`;}).join('')}
+      </tbody>
+    </table>
+    <div class="alert a-amber" style="margin-top:13px">
+      <b>诚实标注：</b>缺口项系统不会用估算值填它——空着比填假的更安全。
+      全库完整度 <b class="mono">${Math.round(Object.values(LIB).flat().filter(x=>x.s==='real').length/Object.values(LIB).flat().length*100)}%</b>。
+      资料越全，AI 初选越准。
+    </div>
+  </div>`;
+}
+
+/* ================= STEP 6 · 决策报告与拍板（领导人工判断） ================= */
+function stageReport(){
+  const ok = clauses.filter(c=>c.st==='ok').length;
+  const no = clauses.filter(c=>c.st==='no').length;
+  const q  = clauses.filter(c=>c.st==='q').length;
+  const maxBid = CTRL*(1-FLOAT_RATE);
+  return `
+  <div class="panel">
+    <h3>决策报告 <span class="tag">给材料，不给结论</span></h3>
+    <div class="sub">报告必须同时给出四项。缺任何一项即判定不完整。</div>
+    <div class="grid2">
+      <div class="panel" style="margin:0;background:rgba(120,140,200,.06)">
+        <h3 style="font-size:13px">一、资格匹配</h3>
+        <div style="margin-top:10px">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:9px">
+            <span class="b b-ok">满足 ${ok} 条</span>
+            <span class="b b-no">不满足 ${no} 条</span>
+            <span class="b b-q">存疑 ${q} 条</span>
+          </div>
+          <div class="small">不满足项：第 5.2 条「近半年连续缴纳社保证明（≥10 人）」——缺材料，需人力补齐后重判。<br>
+          保证金：${deposit.paid?'<span style="color:var(--green)">已确认按期足额</span>':'<span style="color:var(--amber)">未确认</span>'}</div>
+        </div>
+      </div>
+      <div class="panel" style="margin:0;background:rgba(120,140,200,.06)">
+        <h3 style="font-size:13px">二、同类项目历史对标</h3>
+        <div style="margin-top:10px">
+          <table><tbody>
+            <tr><td class="small">同类项目历史中标价</td><td class="num mono">728,000 ~ 806,000</td></tr>
+            <tr><td class="small">历史下浮率区间</td><td class="num mono">6.5% ~ 9.2%</td></tr>
+            <tr><td class="small">样本数</td><td class="num mono">3 条</td></tr>
+          </tbody></table>
+          <div class="small" style="margin-top:9px;color:var(--amber)">样本刚过下限，仅供参考</div>
+        </div>
+      </div>
+      <div class="panel" style="margin:0;background:rgba(120,140,200,.06)">
+        <h3 style="font-size:13px">三、本公司成本与毛利</h3>
+        <div style="margin-top:10px">
+          <table><tbody>
+            <tr><td class="small">本公司成本区间</td><td class="num mono">642,000 ~ 718,000</td></tr>
+            <tr><td class="small">对应毛利率</td><td class="num mono">9.8% ~ 19.4%</td></tr>
+            <tr><td class="small">当前方案成本上限</td><td class="num mono" style="color:var(--amber)">¥${fmt(maxBid*(1-PM/100))}</td></tr>
+            <tr><td class="small">成本样本</td><td class="num mono">2 项 <span class="src s-ref">偏少</span></td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <div class="panel" style="margin:0;background:rgba(120,140,200,.06)">
+        <h3 style="font-size:13px">四、样本诚实性</h3>
+        <div style="margin-top:10px">
+          <div class="b b-q" style="margin-bottom:9px">样本偏少</div>
+          <div class="small">历史对标样本 3 条（下限 3 条）｜ 成本样本 2 项（建议 ≥5 项）。<br>
+          结论：本次对标结果<b>仅供参考</b>，不足以支撑独立决策。</div>
+        </div>
+      </div>
+    </div>
+    <div class="alert a-red" style="margin-top:17px">
+      <b>红线检查（零容忍）：</b>本报告不输出「投 / 不投」「建议报价」「让 X 个点」任何形式的结论。
+      出现即判定不通过。决策由具名人签字，签字动作本身进审计日志。
+    </div>
+  </div>`;
+}
+
+/* ================= STEP 4 · 反推成本与报价（含采购专员录价） ================= */
+function stageCost(){
+  const maxBid = CTRL*(1-FLOAT_RATE);
+  return `
+  <div class="panel">
+    <h3>本标工程量清单 <span class="tag" id="listTag">${listItems.length} 项</span></h3>
+    <div class="sub">清单项来自本标招标文件 —— <b>文件里有几项，这里就是几行</b>，不写死。
+      可下拉切换分项、可直接改工程量、可增删行。改完立刻重算下方全部结果。</div>
+    <div style="display:flex;gap:9px;flex-wrap:wrap;margin-bottom:13px;align-items:center">
+      <button class="btn pri" onclick="rebuildFromFile()">按招标文件重建清单</button>
+      <button class="btn" onclick="addListRow()">+ 手工增一行</button>
+      <span class="small" style="color:var(--tx3)" id="listSource">${
+        listFromFile ? '当前：来自 <b>'+CUR_FILE.name+'</b> · 共 '+listItems.length+' 项'
+                     : '当前：尚未引入招标文件（清单为空）'}</span>
+    </div>
+    <table>
+      <thead><tr>
+        <th class="c" style="width:44px">计入</th><th style="width:190px">清单分项（可下拉/可改）</th>
+        <th style="width:72px">单位</th><th class="num" style="width:88px">工程量</th>
+        <th class="num" style="width:104px">目标单价上限</th><th class="num" style="width:104px">目标合价</th>
+        <th style="width:100px">数据来源</th><th class="c" style="width:44px"></th>
+      </tr></thead>
+      <tbody id="listBody"></tbody>
+      <tfoot><tr style="background:rgba(120,140,200,.06)">
+        <td colspan="5" style="text-align:right;font-weight:600;padding-right:14px">合计（计入项）</td>
+        <td class="num" style="font-weight:600" id="listSum">—</td><td colspan="2"></td>
+      </tr></tfoot>
+    </table>
+    <div class="small" style="margin-top:10px">
+      注：清单合计应当 ≤ 成本上限。若超出，说明按这个利润率做不下来 —— 要么压成本，要么降利润目标。
+      <span id="listCheck"></span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>反推：目标利润 → 成本上限 → 拆到科目 <span class="tag">与⑥平衡环同一个数</span></h3>
+    <div class="sub">拖下面的滑块设定目标利润率，系统立刻反推每一项的成本上限。<b>这里的利润率与⑥平衡球是同一个数</b>——拖球，这里也变。</div>
+    <div style="display:flex;align-items:center;gap:16px;margin:16px 0 6px">
+      <span class="small" style="width:96px">目标利润率</span>
+      <input type="range" id="pmSlider" min="0" max="25" step="0.5" value="${PM}" style="flex:1"
+        oninput="setPm(parseFloat(this.value), true)">
+      <span class="mono" style="font-size:19px;font-weight:600;width:76px;text-align:right" id="pmVal">${PM.toFixed(1)}%</span>
+    </div>
+    <div class="grid3" style="margin:16px 0">
+      <div class="kpi"><div class="k">招标控制价</div><div class="v mono">¥${fmt(CTRL)}</div><div class="d">本标预算上限</div></div>
+      <div class="kpi"><div class="k">可报上限</div><div class="v mono">¥${fmt(maxBid)}</div><div class="d">控制价 ×(1−下浮率 ${(FLOAT_RATE*100).toFixed(1)}%)</div></div>
+      <div class="kpi"><div class="k">成本上限</div><div class="v mono" style="color:var(--amber)" id="kCost">—</div><div class="d">反推得出，超过即达不到目标</div></div>
+    </div>
+    <table>
+      <thead><tr>
+        <th>成本科目</th><th class="num" style="width:110px">目标上限</th><th class="num" style="width:110px">参考值</th>
+        <th class="num" style="width:96px">须压缩</th><th style="width:92px" class="c">可压性</th>
+      </tr></thead>
+      <tbody id="subjectBody"></tbody>
+    </table>
+  </div>
+
+  <div class="panel" style="border-color:rgba(61,219,160,.34)">
+    <h3>采购专员录价 <span class="tag" style="background:rgba(61,219,160,.14);color:#8ee9c6">AI 给区间 · 专员填数 · 库内保鲜 30 天</span></h3>
+    <div class="sub">
+      清单里每一项材料，<b>AI 先给一个市场参考区间（上下限）</b>；采购专员去询价，把真实拿到的<b>单价填进来</b>。
+      填过的价<b>写进资料库「采购价格库」</b>——下次同类项目，AI 直接推荐库内价，一键引用，不必重新询价。
+      库内价<b>满 1 个月自动失效</b>，不再参与推荐，以保持材料价格随市场波动。
+    </div>
+    <div class="grid4" style="margin:15px 0 6px">
+      <div class="kpi"><div class="k">清单项</div><div class="v mono" id="pbTotal">—</div><div class="d">本标需询价材料</div></div>
+      <div class="kpi"><div class="k">已录价</div><div class="v mono" style="color:var(--green)" id="pbDone">—</div><div class="d">专员已填真实价</div></div>
+      <div class="kpi"><div class="k">库内有效</div><div class="v mono" style="color:var(--blue)" id="pbLib">—</div><div class="d">30 天内 · 可一键引用</div></div>
+      <div class="kpi"><div class="k">已失效</div><div class="v mono" style="color:var(--amber)" id="pbStale">—</div><div class="d">满 1 个月 · 不参与推荐</div></div>
+    </div>
+    <table class="pb-table">
+      <thead><tr>
+        <th style="width:200px">材料项</th>
+        <th style="width:96px">单位</th>
+        <th style="width:150px">AI 参考区间</th>
+        <th class="num" style="width:118px">录入单价（专员）</th>
+        <th class="num" style="width:96px">库内价</th>
+        <th style="width:104px">来源</th>
+        <th style="width:112px">录入日期</th>
+        <th class="num" style="width:96px">合价影响</th>
+        <th style="width:130px">操作</th>
+      </tr></thead>
+      <tbody id="priceBody"></tbody>
+    </table>
+    <div class="alert a-blue" style="margin-top:15px">
+      <b>AI 怎么学：</b>同一种材料第二次出现时，系统不再从零询价 —— 库里有新鲜记录的，直接给出「库内价 ¥X（王采购 · 3 天前）」并标 <span class="src s-star">★ 库内复用</span>，
+      专员确认即可；<b>只有当库内价失效（>30 天）或市场明显变了</b>，才需要重新录，并填写调整理由。
+      这样既省事，又不会拿三个月前的老价去报今天的标。
+    </div>
+    <div class="alert a-amber" style="margin-top:11px">
+      <b>为什么必须带区间：</b>采购报数最怕「拍脑袋」。AI 给的不是一个数，而是一个<b>合理区间</b>——
+      低于下限要问是否有猫腻（以次充好），高于上限要问为什么贵（拿不到集采价）。专员填的每一个字都留痕。
+    </div>
+  </div>`;
+}
+
+/* ---- 采购录价表格渲染 ---- */
+function renderPriceBoard(){
+  const tb = document.getElementById('priceBody');
+  if(!tb) return;
+  const rows = listItems.filter(x=>x.on);
+  if(rows.length===0){
+    tb.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:26px;color:var(--tx3)">
+      清单为空。请回 <b>STEP 1</b> 引入招标文件，或点上方的「按招标文件重建清单」。</td></tr>`;
+  }else{
+    tb.innerHTML = rows.map((x)=>{
+      const i = listItems.indexOf(x);
+      const m = MATERIAL_MARKET[x.name] || MATERIAL_MARKET.__default;
+      const st = priceStateOf(x.name);
+      const lib = st.lib;
+      const hasRange = m.hi>0;
+      const rangeTxt = hasRange
+        ? `<span class="mono">¥${m.lo}</span> <span style="color:var(--tx3)">~</span> <span class="mono">¥${m.hi}</span>`
+        : '<span class="small" style="color:var(--amber)">AI 无此项历史数据<br>需专员首次定价</span>';
+      // 录入框：偏离区间 → 加 .over / .ok 底色
+      const cur = (st.k==='lib') ? st.lib.price : (st.k==='stale' ? '' : '');
+      const outOfRange = hasRange && cur!=='' && (cur < m.lo || cur > m.hi);
+      const cls = cur==='' ? '' : (outOfRange ? 'over' : 'ok');
+      // 来源标签
+      let src = '<span class="src s-none">未录</span>';
+      if(st.k==='lib'){
+        src = `<span class="src s-star">★ 库内复用</span>`;
+      }else if(st.k==='stale'){
+        src = `<span class="src s-ref">已失效</span>`;
+      }
+      const dateCell = lib
+        ? `<span class="small ${st.k==='stale'?'':'mono'}">${lib.date}${st.k==='stale'?'<br><span style="color:var(--amber)">满 30 天 · 已失效</span>':''}</span>`
+        : '<span class="small" style="color:var(--tx3)">—</span>';
+      const libCell = lib
+        ? `<span class="mono" style="color:${st.k==='stale'?'var(--tx3)':'var(--blue)'}">¥${lib.price.toFixed(2)}</span>`
+        : '<span class="small" style="color:var(--tx3)">—</span>';
+      const adjBadge = (lib && lib.adj)
+        ? `<div class="adj-row small" style="margin-top:4px">⚠ 人工调整：${lib.reason||'未说明'}</div>` : '';
+      const impact = cur!=='' ? `¥${fmt(cur*x.qty)}` : '—';
+      const refBtn = (st.k==='lib')
+        ? `<button class="btn ghost tiny" onclick="useLibPrice('${x.name}')" title="AI 学习：直接带出库内价">引用</button>`
+        : (st.k==='stale'
+            ? `<button class="btn ghost tiny" onclick="useLibPrice('${x.name}')" title="失效价仅作参考，引用后需复核">重新录</button>`
+            : `<button class="btn ghost tiny" onclick="focusPrice(${i})">去录入</button>`);
+      return `<tr class="${(lib&&lib.adj)?'adjusted':''}">
+        <td>${x.name}${adjBadge}</td>
+        <td class="small">${x.unit}</td>
+        <td>${rangeTxt}</td>
+        <td class="num"><input type="number" class="price-in ${cls}" step="0.01"
+          value="${cur===''?'':Number(cur).toFixed(2)}" placeholder="${hasRange?m.base:'?'}"
+          onchange="priceInput(${i}, this.value)"></td>
+        <td class="num">${libCell}</td>
+        <td>${src}</td>
+        <td>${dateCell}</td>
+        <td class="num mono">${impact}</td>
+        <td>${refBtn}</td>
+      </tr>`;
+    }).join('');
+  }
+  // KPI
+  const on = listItems.filter(x=>x.on);
+  const done = on.filter(x=>priceStateOf(x.name).k==='lib').length;
+  const libN = on.filter(x=>priceStateOf(x.name).k==='lib').length;
+  const staleN = on.filter(x=>priceStateOf(x.name).k==='stale').length;
+  const f=(id,v)=>{const e=document.getElementById(id); if(e) e.textContent=v;};
+  f('pbTotal', on.length); f('pbDone', done); f('pbLib', libN); f('pbStale', staleN);
+}
+function priceInput(i, val){
+  const it = listItems[i]; if(!it) return;
+  const m = MATERIAL_MARKET[it.name] || MATERIAL_MARKET.__default;
+  const lib = libPriceOf(it.name);
+  const v = parseFloat(val)||0;
+  const outOfRange = m.hi>0 && (v < m.lo || v > m.hi);
+  const dev = lib ? Math.abs(v-lib.price)/(lib.price||1) : 0;
+  if(v>0 && (outOfRange || dev>0.08)){
+    // 必须填理由
+    const r = prompt('【价格异常 · 必须说明调整理由】\n\n材料：'+it.name+
+      '\n录入：¥'+v.toFixed(2)+' / '+it.unit+
+      (outOfRange?'\nAI 区间：¥'+m.lo+' ~ ¥'+m.hi+'（超出）':'')+
+      (dev>0.08&&lib?'\n库内价：¥'+lib.price.toFixed(2)+'（偏离 '+(dev*100).toFixed(1)+'%）':'')+
+      '\n\n请写明原因（如：本地劳务涨价 / 拿不到集采价 / 改用同等国产件）：', '');
+    if(!String(r||'').trim()){
+      alert('未说明理由，本次录入被拒绝。\n\n价格异常必须留痕说明，否则不具备入库条件。');
+      renderPriceBoard(); return;
+    }
+    setPrice(it.name, v, r);
+  }else{
+    setPrice(it.name, v, '');
+  }
+}
+function focusPrice(i){
+  const el = document.querySelector('.pb-table input.price-in[onchange*="('+i+',"]');
+  if(el){ el.focus(); el.scrollIntoView({block:'center',behavior:'smooth'}); }
+}
+
+function renderListRows(){
+  const tb = document.getElementById('listBody');
+  if(!tb) return;
+  if(listItems.length===0){
+    tb.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:30px;color:var(--tx3)">
+      还没有清单项。<br><br>
+      <span style="color:var(--tx2)">请回到 <b>STEP 1</b> 引入招标文件，或在左侧点「引入招标文件」后回来 —— 系统会按文件的项数自动生成清单行。</span><br>
+      <span class="small">（也可点上方「+ 手工增一行」自己维护，但正式使用应以招标文件为准）</span>
+    </td></tr>`;
+    document.getElementById('listSum').textContent = '¥0';
+    const lc0 = document.getElementById('listCheck'); if(lc0) lc0.innerHTML = '';
+    return;
+  }
+  tb.innerHTML = listItems.map((x,i)=>`
+    <tr>
+      <td class="c"><label class="ck"><input type="checkbox" ${x.on?'checked':''}
+        onchange="listItems[${i}].on=this.checked;calcCost()"></label></td>
+      <td><select onchange="listItems[${i}].name=this.value;calcCost()">
+        ${ITEM_POOL.map(p=>`<option${p===x.name?' selected':''}>${p}</option>`).join('')}
+        ${ITEM_POOL.includes(x.name)?'':`<option selected>${x.name}</option>`}
+      </select></td>
+      <td><input type="text" value="${x.unit}" style="width:54px;text-align:center"
+        onchange="listItems[${i}].unit=this.value;calcCost()"></td>
+      <td><input type="number" value="${x.qty}" style="text-align:right"
+        onchange="listItems[${i}].qty=parseFloat(this.value)||0;calcCost()"></td>
+      <td class="num mono" id="lu${i}">—</td>
+      <td class="num mono" id="lt${i}">—</td>
+      <td class="small">${x.on?'<span class="src s-real">'+(x.src==='self'?'甲方自购':'本标清单')+'</span>':'<span class="src s-ref">不计入</span>'}</td>
+      <td class="c"><button class="btn ghost tiny" onclick="delListRow(${i})">×</button></td>
+    </tr>`).join('');
+}
+function addListRow(){
+  listItems.push({on:true, name:ITEM_POOL[0], unit:'m', qty:100, src:'man'});
+  if(CUR===4) renderListRows();
+  calcCost();
+}
+function delListRow(i){
+  if(listItems.length<=1){ alert('至少留一项。如需清空，请重新引入招标文件。'); return; }
+  listItems.splice(i,1);
+  if(CUR===4) renderListRows();
+  calcCost();
+}
+
+/* 按招标文件项数重建清单 —— ★ 用户要求：文件里几项就几行 */
+function rebuildFromFile(){
+  if(!CUR_FILE){
+    alert('还没有引入招标文件。\n\n请先回 STEP 1 引入一份招标文件，系统才能知道清单有几项。');
+    gotoStep(0); return;
+  }
+  const src = CUR_FILE.items || DEMO_FILE_ITEMS;
+  listItems = src.map((it,i)=>({
+    on: i < src.length-1,
+    name: it.name, unit: it.unit, qty: it.qty,
+    src: i === src.length-1 ? 'self' : 'bid'
+  }));
+  listFromFile = true;
+  ITEMS_IN_FILE = src.length;
+  if(CUR===3){ renderListRows(); calcCost(); }
+  renderRail();
+  AUDIT.push({t:nowStr(), who:USER.name, act:'重建清单',
+              detail:'按招标文件生成 '+src.length+' 行'});
+  if(CUR!==3){ gotoStep(3); }
+}
+
+function calcCost(){
+  const pm = PM/100;
+  const pv = document.getElementById('pmVal');
+  if(pv) pv.textContent = PM.toFixed(1)+'%';
+  const sl = document.getElementById('pmSlider');
+  if(sl && Math.abs(parseFloat(sl.value)-PM)>0.01) sl.value = PM;
+
+  const maxBid = CTRL*(1-FLOAT_RATE);
+  const costCap = maxBid*(1-pm);
+  const kc = document.getElementById('kCost');
+  if(kc){
+    kc.textContent = '¥'+fmt(costCap);
+    kc.style.color = PM/100 < MARGIN_FLOOR ? 'var(--red)' : 'var(--amber)';
+  }
+
+  const totalQty = listItems.filter(x=>x.on).reduce((a,b)=>a+b.qty,0)||1;
+  let sum = 0;
+  listItems.forEach((x,i)=>{
+    const el1 = document.getElementById('lu'+i), el2 = document.getElementById('lt'+i);
+    if(!el1) return;
+    if(!x.on){ el1.textContent='—'; el2.textContent='—'; return; }
+    const share = costCap*(x.qty/totalQty);
+    el1.textContent = fmt(share/x.qty);
+    el2.textContent = fmt(share);
+    sum += share;
+  });
+  const ls = document.getElementById('listSum');
+  if(ls) ls.textContent = '¥'+fmt(sum);
+  const lc = document.getElementById('listCheck');
+  if(lc){
+    const diff = sum - costCap;
+    lc.innerHTML = listItems.length===0 ? ''
+      : Math.abs(diff)<1 ? ' <span style="color:var(--green)">✓ 当前已闭合（差额 0）</span>'
+      : diff>0 ? ` <span style="color:var(--red)">超出 ¥${fmt(diff)}，做不下来</span>`
+               : ` <span style="color:var(--amber)">尚有 ¥${fmt(-diff)} 余量</span>`;
+  }
+
+  // 科目表（不可压科目锁原值）
+  const flexTotal = subjects.filter(s=>s.p>0).reduce((a,b)=>a+b.ref,0);
+  const fixedTotal = subjects.filter(s=>s.p===0).reduce((a,b)=>a+b.ref,0);
+  const flexCap = Math.max(0, costCap - fixedTotal);
+  const k = flexTotal>0 ? flexCap/flexTotal : 0;
+  const sb = document.getElementById('subjectBody');
+  if(sb) sb.innerHTML = subjects.map(s=>{
+    const cap = s.p===0 ? s.ref : s.ref*k;
+    const must = s.ref-cap;
+    const tag = s.r==='real' ? '<span class="src s-real">历史数据</span>'
+              : s.r==='ref'  ? '<span class="src s-ref">参考值</span>'
+              : '<span class="src s-none">缺口</span>';
+    const pct = s.p===0 ? 'var(--red)' : s.p>=0.9 ? 'var(--green)' : s.p>=0.6 ? 'var(--amber)' : 'var(--tx3)';
+    const mustCell = s.p===0
+      ? '<span class="small" style="color:var(--red)">不可压</span>'
+      : (must<=0 ? '<span class="mono" style="color:var(--green)">无需压</span>'
+                 : `<span class="mono" style="color:var(--red)">−${fmt(must)}</span>`);
+    const capCell = s.p===0
+      ? `<span class="mono">${fmt(s.ref)}</span>`
+      : `<span class="mono">${fmt(Math.max(cap,0))}</span>`;
+    return `<tr>
+      <td>${s.n}${tag}</td><td class="num">${capCell}</td>
+      <td class="num mono" style="color:var(--tx3)">${fmt(s.ref)}</td>
+      <td class="num">${mustCell}</td>
+      <td class="c"><span class="b" style="background:transparent;color:${pct};border:1px solid var(--line2)">${s.s}</span></td>
+    </tr>`;
+  }).join('');
+
+  // 压缩建议
+  const cand = subjects.filter(s=>s.p>0).map(s=>{
+    const cap = s.ref*k, must = s.ref-cap;
+    return {...s, must, score:(must>0?must:0)*(s.p)};
+  }).sort((a,b)=> b.score-a.score);
+  const cols = ['background:#5c2424;color:#f7a8ab','background:#5c4820;color:#f3ce8e',
+                'background:#1f5040;color:#8ee9c6','background:#22273c;color:#6d7690'];
+  const rb = document.getElementById('rankBody');
+  if(rb) rb.innerHTML = cand.map((s,i)=>{
+    const act = s.must>0
+      ? `建议压缩 <b class="mono" style="color:var(--red)">¥${fmt(s.must)}</b>（可压性 ${s.s}）`
+      : `<span style="color:var(--green)">已在目标内，无需压缩</span>`;
+    return `<div class="rank">
+      <div class="no" style="${cols[i]||cols[3]}">${i+1}</div>
+      <div style="flex:1">
+        <div style="font-size:13px">${s.n}</div>
+        <div class="small" style="margin-top:2px">${act}</div>
+        <div class="bar"><i style="width:${Math.min(s.p*100,100)}%;background:${
+          s.p>=0.9?'var(--green)':s.p>=0.6?'var(--amber)':'var(--tx3)'}"></i></div>
+      </div>
+      <div class="small" style="width:74px;text-align:right">可压性<br><span class="mono">${Math.round(s.p*100)}%</span></div>
+    </div>`;
+  }).join('') + `<div class="rank" style="opacity:.72">
+      <div class="no" style="${cols[3]}">—</div>
+      <div style="flex:1"><div style="font-size:13px">规费与税金 · 安全文明施工费</div>
+      <div class="small" style="margin-top:2px">法定计提，<b>不建议也不允许压缩</b>（¥${fmt(fixedTotal)} 已锁定）</div></div>
+      <div class="small" style="width:74px;text-align:right">可压性<br><span class="mono">0%</span></div>
+    </div>`;
+  const rch = document.getElementById('rankCapHint');
+  if(rch) rch.textContent = fmt(costCap);
+
+  // 采购录价表（同页联动）
+  renderPriceBoard();
+}
+
+/* ================= STEP 5 · 平衡环（三球三锁 · 任意两项 → AI 自动算第三项） =================
+   三个量：利润率 PM% · 中标率 WIN% · 成本上限 CAP
+   恒等式：CAP = 控制价 ×(1−下浮率) ×(1−利润率)
+   市场曲线：WIN = f(利润率)   ——  由历史数据拟合（当前为假设曲线）
+   锁两项 → 反解第三项：拖动时另外两项中的一个被"钉住"，系统算出剩下的
+   ============================================================================== */
+const R_OUT=124, R_MID=98, CX=160, CY=160, PMAX=25;
+const angOf = pm => (pm/PMAX)*300 - 150;
+let dragging=false, rafId=0, pendingPm=null;
+
+/* 哪个量是"被 AI 算出来的" */
+let SOLVE = 'cap';                       // cap=算成本上限（默认）| win=算中标率 | pm=算利润率
+const VAR_NAME = {pm:'利润率', win:'中标率', cap:'成本上限'};
+const VAR_UNIT = {pm:'%', win:'%', cap:'¥'};
+
+/* 市场曲线：利润率 → 中标率（演示用假设曲线） */
+function winOfPm(pm){
+  let w = 88 - pm*3.6 + Math.max(0,(pm-14))*1.2;
+  return Math.max(4, Math.min(92, w));
+}
+/* 反解：已知中标率 → 需要的利润率（数值求解，单调区间内二分） */
+function pmOfWin(target){
+  let lo = 0, hi = PMAX;
+  // winOfPm 在 [0,PMAX] 上单调递减，可直接二分
+  for(let i=0;i<60;i++){
+    const mid=(lo+hi)/2;
+    if(winOfPm(mid) > target) lo = mid; else hi = mid;
+  }
+  return (lo+hi)/2;
+}
+/* 成本上限 */
+function capOfPm(pm){
+  return CTRL*(1-FLOAT_RATE)*(1-pm/100);
+}
+/* 反解：已知成本上限 → 需要的利润率 */
+function pmOfCap(cap){
+  const maxBid = CTRL*(1-FLOAT_RATE);
+  if(maxBid<=0) return 0;
+  return Math.max(0, Math.min(PMAX, (1 - cap/maxBid)*100));
+}
+
+function stageBalance(){
+  const sel = (v)=>SOLVE===v ? 'on' : '';
+  return `
+  <div class="panel">
+    <h3>平衡环 <span class="tag">任意锁两项 · AI 算第三项</span></h3>
+    <div class="sub">三个数互锁：<b>利润率 · 中标率 · 成本上限</b>。
+      你<b>锁定两个</b>，系统把剩下的那个算出来 —— 比如锁定「利润率 + 中标率」，
+      它就直接算出<b>成本必须压到多少</b>。改任意一项，其余跟着重算。</div>
+
+    <div class="alert a-blue" style="margin-bottom:8px">
+      当前分析对象：<b id="dialTarget">${CUR_FILE?CUR_FILE.name:'未引入招标文件（显示示例）'}</b>
+      ｜ 控制价 <b class="mono" id="dialCtrl">¥${fmt(CTRL)}</b>
+      ｜ 可报上限 <b class="mono">¥${fmt(CTRL*(1-FLOAT_RATE))}</b>
+      ｜ <b id="dialState" style="color:var(--green)">当前处于盈利区</b>
+    </div>
+
+    <!-- ★ 三个圆盘 · 每个盘各自带锁、各自可拖 · 锁住两项 → AI 算第三项 -->
+    <div class="dials" id="dials"></div>
+
+    <div class="grid2" style="align-items:start;margin-top:16px">
+      <div>
+        <!-- 三项卡片：被"算"的那项高亮 + 不可改 -->
+        <div class="vtri" id="vtri"></div>
+        <div id="dialAlerts" style="margin-top:11px"></div>
+      </div>
+      <div>
+        <div class="kpi" style="margin-bottom:11px">
+          <div class="k">锁定两项后，AI 算出的第三项</div>
+          <div class="v mono" id="dialSolve" style="color:var(--purple)">—</div>
+          <div class="d" id="dialSolveD">—</div>
+        </div>
+        <div class="kpi">
+          <div class="k">约束校验</div>
+          <div id="dialCheck" class="small" style="line-height:1.85"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid2" style="margin-top:16px">
+      <div>
+        <div class="kpi" style="margin-bottom:11px">
+          <div class="k">期望毛利（中标率 × 单标毛利）</div>
+          <div class="v mono" style="color:var(--green)" id="dialExpect">—</div>
+          <div class="d">这个数才是真正该最大化的</div>
+        </div>
+      </div>
+      <div>
+        <table>
+          <thead><tr><th>报价档位</th><th class="num">利润率</th><th class="num">中标率</th><th class="num">期望毛利</th></tr></thead>
+          <tbody id="dialTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="alert a-amber" style="margin-top:17px">
+      <b>样本诚实性：</b>中标率曲线目前基于 <b class="mono">0</b> 条真实开标数据，是<b>演示用假设曲线</b>。
+      资料库「投标记录」里已录 <b class="mono" id="dialSample">0</b> 条真实开标结果（含未中标方的中标价）。
+      每回填一条，曲线自动修正；真实数据不足 3 条前，本曲线<b>不得作为决策依据</b>；
+      但「锁两项算第三项」的<b>算式本身是硬的</b>——它只是恒等式，不依赖假设曲线。
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>压缩优先顺序建议 <span class="tag">定档之后，钱从哪省、哪不能动</span></h3>
+    <div class="sub">档位定完了，就要落到「这 ¥<span id="rankCapHint">—</span> 的成本上限，靠压哪几项实现」。
+      不是所有科目都能压 —— 税率、规费、安全文明施工费是硬的，压不动；材料、机械台班、措施费是弹性区。
+      <b>顺序按"能省多少 × 好不好压"排</b>，不是按金额大小排。</div>
+    <div id="rankBody" style="margin-top:6px"></div>
+    <div class="alert a-red" style="margin-top:17px">
+      <b>红线：</b>压不动的不许硬压。系统不会建议「把人工单价降到市场水平以下」这类做不到的事——
+      那些建议在纸面上好看，在工地上没人执行。
+    </div>
+  </div>`;
+}
+
+/* 切换"算哪一项"（仍保留按钮式切换，供外部调用） */
+function setSolve(v){
+  SOLVE = v;
+  renderStage();
+}
+
+/* ===== 三滑杆 + 三把锁 =====
+   规则：始终锁两项、放开一项。点锁头把某项钉住/解开；
+   拖任何一个"没锁"的滑杆 → 系统按恒等式重算被锁定的第三项。 */
+const VAR_MIN = {pm:0,    win:4,   cap:0};
+const VAR_MAX = {pm:25,   win:92,  cap:850000*0.925};
+function varVal(k){
+  if(k==='pm')  return PM;
+  if(k==='win') return winOfPm(PM);
+  return capOfPm(PM);
+}
+/* 点锁头：把 k 从"可拖"变成"锁"，并自动挑一个新项放开 */
+function toggleLock(k){
+  if(SOLVE===k){
+    // 当前已被算（放开状态）→ 不能再锁死这一项，提示
+    alert('「'+VAR_NAME[k]+'」是由另两项算出来的，不能同时锁住。\n\n请改锁另外两项中的一项。');
+    return;
+  }
+  SOLVE = k;          // 把 k 设为"被算项" = 另两项锁住
+  renderStage();
+}
+/* 拖动某项滑杆 → 更新真实值，被锁的项自动重算 */
+function dragVar(k, v){
+  v = Number(v);
+  if(k==='pm'){
+    PM = Math.max(VAR_MIN.pm, Math.min(VAR_MAX.pm, v));
+  }else if(k==='win'){
+    // 中标率可拖 → 反解出对应利润率
+    PM = pmOfWin(v);
+  }else if(k==='cap'){
+    // 成本上限可拖 → 反解出对应利润率
+    PM = pmOfCap(v);
+  }
+  PM = Math.round(PM*10)/10;
+  const sl = document.getElementById('pmSlider');
+  if(sl) sl.value = PM;
+  renderDials();
+  dialTick();
+}
+/* ===== 三个圆盘 · 每盘带锁 · 每盘可拖 =====
+   用户要求：三个滑动（圆盘），每个盘旁边一个锁；最多锁定两项，剩下那项由 AI 计算。
+   - 被算的那项：盘面画成紫色「AI 算出」，不可拖，盘上锁头显示 🔓
+   - 另两项：锁住，可拖（拖动即改这一项，被算项跟着重算），盘上锁头显示 🔒
+   ========================================================================= */
+function renderDials(){
+  const el = document.getElementById('dials');
+  if(!el) return;
+  const maxBid = CTRL*(1-FLOAT_RATE);
+  const R = 74, SW = 12, C = 90;                 // 小圆盘半径 / 环宽 / 圆心
+  const CIRC = 2*Math.PI*R;
+  const defs = [
+    {k:'pm',  ic:'💹', col:'#3ddba0', tcol:'#eef1f8',
+     frac: Math.max(0,Math.min(1, PM/25)),
+     disp: PM.toFixed(1)+'%', raw:PM,
+     note:'自己的要价 · 0 ~ 25%'},
+    {k:'win', ic:'🎯', col:'#4d94ff', tcol:'#9cc8ff',
+     frac: Math.max(0,Math.min(1,(winOfPm(PM)-4)/88)),
+     disp: winOfPm(PM).toFixed(0)+'%', raw:winOfPm(PM),
+     note:'市场给的赢面 · 4 ~ 92%'},
+    {k:'cap', ic:'💰', col:'#f5b544', tcol:'#ffd28a',
+     frac: Math.max(0,Math.min(1, capOfPm(PM)/maxBid)),
+     disp:'¥'+fmt(capOfPm(PM)), raw:capOfPm(PM),
+     note:'成本必须压到这条线以下'},
+  ];
+  el.innerHTML = defs.map(d=>{
+    const solved = SOLVE===d.k;
+    const arc = CIRC*d.frac;
+    const angle = d.frac*360 - 90;
+    const a = angle*Math.PI/180;
+    const bx = C + R*Math.cos(a), by = C + R*Math.sin(a);
+    const fill = solved ? '#9b7df0' : d.col;
+    return `<div class="dial3 ${solved?'solved':''}" data-k="${d.k}">
+      <div class="d3-head">
+        <span class="d3-ic">${d.ic}</span>
+        <span class="d3-n">${VAR_NAME[d.k]}</span>
+        <button class="d3-lock ${solved?'off':'on'}" onclick="dialLock('${d.k}')"
+          title="${solved?'让系统自动算这项':'锁住这项'}">${solved?'🔓 系统算':'🔒 已锁'}</button>
+      </div>
+      <div class="d3-wrap">
+        <svg width="${C*2}" height="${C*2}" viewBox="0 0 ${C*2} ${C*2}"
+          class="d3-svg" data-k="${d.k}">
+          <circle cx="${C}" cy="${C}" r="${R}" fill="none" stroke="rgba(120,140,200,.20)" stroke-width="${SW}"/>
+          <circle cx="${C}" cy="${C}" r="${R}" fill="none" stroke="${fill}" stroke-width="${SW}"
+            stroke-linecap="round" stroke-dasharray="${arc} 9999"
+            transform="rotate(-90 ${C} ${C})" opacity="${solved?.72:1}"/>
+          <circle class="d3-knob" cx="${bx}" cy="${by}" r="9"
+            fill="${fill}" stroke="#080a12" stroke-width="2.5"/>
+          <text x="${C}" y="${C-6}" text-anchor="middle" fill="#6d7690" font-size="10">${VAR_NAME[d.k]}</text>
+          <text x="${C}" y="${C+20}" text-anchor="middle" fill="${solved?'#cfc0ff':d.tcol}"
+            font-size="${solved?19:21}" font-weight="600">${solved?'AI 算':d.disp}</text>
+        </svg>
+      </div>
+      <div class="d3-v mono" id="d3v_${d.k}">${d.disp}</div>
+      <div class="d3-note">${solved
+        ? '<span style="color:var(--purple)">由另两项推算 · 不可拖</span>'
+        : d.note}</div>
+    </div>`;
+  }).join('');
+  defs.forEach(d=>bindDial3(d.k));
+}
+/* 盘上拖动：转盘 → 改本项 → 被锁项重算（SOLVE 之外的项可拖） */
+function bindDial3(k){
+  if(k===SOLVE) return;                       // 被算项不可拖
+  const svg = document.querySelector('.d3-svg[data-k="'+k+'"]');
+  if(!svg || svg._bound) return;
+  svg._bound = true;
+  let on = false;
+  const setFrom = (e)=>{
+    const r = svg.getBoundingClientRect();
+    const sx = (2*90)/r.width, sy = (2*90)/r.height;
+    const x = (e.clientX-r.left)*sx - 90, y = (e.clientY-r.top)*sy - 90;
+    let deg = Math.atan2(y, x)*180/Math.PI + 90;
+    if(deg < 0) deg += 360;
+    const frac = Math.max(0, Math.min(1, deg/360));
+    if(k==='pm')      dragVar('pm',  frac*25);
+    else if(k==='win') dragVar('win', 4 + frac*88);
+    else               dragVar('cap', frac*(CTRL*(1-FLOAT_RATE)));
+  };
+  svg.addEventListener('pointerdown', e=>{
+    on = true; svg.setPointerCapture(e.pointerId); e.preventDefault();
+    document.body.style.userSelect='none'; setFrom(e);
+  });
+  svg.addEventListener('pointermove', e=>{ if(on) setFrom(e); });
+  svg.addEventListener('pointerup', e=>{
+    if(!on) return; on = false; document.body.style.userSelect='';
+    const sl = document.getElementById('pmSlider'); if(sl) sl.value = PM;
+    calcCost(); dialTick();
+  });
+}
+/* 盘上锁头：点一下 → 把这一项变成"被 AI 算"的那项（=另两项锁住） */
+function dialLock(k){ toggleLock(k); }
+
+/* 三项三角卡片（高亮被算项） */
+function renderVtri(){
+  const el = document.getElementById('vtri');
+  if(!el) return;
+  const cap = capOfPm(PM);
+  const win = winOfPm(PM);
+  const items = [
+    {k:'pm',  v:PM.toFixed(1)+'%',  sub:'锁住 · 可拖滑杆改',     ic:'💹'},
+    {k:'win', v:win.toFixed(0)+'%', sub:'市场曲线 f(利润率)',    ic:'🎯'},
+    {k:'cap', v:'¥'+fmt(cap),       sub:'＝可报上限×(1−利润率)', ic:'💰'},
+  ];
+  el.innerHTML = items.map(it=>{
+    const isSolved = SOLVE===it.k;
+    return `<div class="vcard ${isSolved?'solved':''}">
+      <div class="vc-ic">${it.ic}</div>
+      <div class="vc-b">
+        <div class="vc-k">${VAR_NAME[it.k]}
+          ${isSolved?'<span class="vc-tag">AI 算出</span>':'<span class="vc-tag lock">锁定</span>'}</div>
+        <div class="vc-v">${it.v}</div>
+        <div class="vc-s">${it.sub}</div>
+      </div>
+    </div>`;}).join('');
+}
+
+function dialTick(){
+  const pm = PM;
+  const maxBid = CTRL*(1-FLOAT_RATE);
+  const win = winOfPm(pm);
+  const cap = capOfPm(pm);
+
+  /* ---- 三项三角卡片 + 三圆盘：哪项被"算出来"，由 SOLVE 决定 ---- */
+  renderVtri();
+  renderDials();
+  const st0 = document.getElementById('dialState');
+  if(st0){
+    if(pm<MARGIN_FLOOR*100){ st0.textContent='低于保本线 —— 亏损区，禁止报价'; st0.style.color='var(--red)'; }
+    else if(pm<6){ st0.textContent='薄利区 —— 中标率高，但抗风险能力弱'; st0.style.color='var(--amber)'; }
+    else { st0.textContent='当前处于盈利区'; st0.style.color='var(--green)'; }
+  }
+  const dsEl = document.getElementById('dialSample');
+  if(dsEl){ try{ dsEl.textContent = bidStats().total; }catch(e){} }
+
+  /* ---- 锁定两项 → 反解第三项 ---- */
+  const sv = document.getElementById('dialSolve');
+  const svd = document.getElementById('dialSolveD');
+  if(sv && svd){
+    if(SOLVE==='cap'){
+      sv.textContent = '¥'+fmt(cap);
+      svd.textContent = `锁：利润率 ${pm.toFixed(1)}% + 中标率 ${win.toFixed(0)}% → 成本必须压到 ¥${fmt(cap)}`;
+    }else if(SOLVE==='win'){
+      // 锁【利润率 + 成本上限】→ 反解中标率。
+      // 演示版里成本上限由 PM 推出，故 win 与 PM 一一对应；正式版此处换成读取真实历史开标分布。
+      sv.textContent = win.toFixed(0)+'%';
+      svd.textContent = `锁：利润率 ${pm.toFixed(1)}% + 成本上限 ¥${fmt(cap)} → 需达到中标率 ${win.toFixed(0)}% 才平衡`;
+    }else{
+      // 锁【中标率 + 成本上限】→ 反解利润率
+      const needPm = pmOfCap(cap);
+      sv.textContent = needPm.toFixed(1)+'%';
+      svd.textContent = `锁：中标率 ${win.toFixed(0)}% + 成本上限 ¥${fmt(cap)} → 利润率须压到 ${needPm.toFixed(1)}%`;
+    }
+  }
+
+  /* ---- 约束校验（诚实地说明算式与曲线的区别） ---- */
+  const ck = document.getElementById('dialCheck');
+  if(ck){
+    const rows = [];
+    rows.push(`恒等式 <b class="mono">成本上限 ¥${fmt(cap)} = ¥${fmt(maxBid)} ×(1−${pm.toFixed(1)}%)</b> —— 硬的，不依赖假设`);
+    if(pm < MARGIN_FLOOR*100)
+      rows.push(`<span style="color:var(--red)">✕ 利润率 ${pm.toFixed(1)}% 低于保本线 ${(MARGIN_FLOOR*100).toFixed(0)}%，该组合不可报</span>`);
+    else
+      rows.push(`<span style="color:var(--green)">✓ 利润率高于保本线</span>`);
+    if(win < 15)
+      rows.push(`<span style="color:var(--amber)">⚠ 中标率仅 ${win.toFixed(0)}%，低于 15%，基本等于陪标</span>`);
+    else
+      rows.push(`<span style="color:var(--green)">✓ 中标率在可接受区间</span>`);
+    rows.push(`<span style="color:var(--tx3)">中标率来自假设曲线（0 条真实数据），仅供参考</span>`);
+    ck.innerHTML = rows.join('<br>');
+  }
+
+  const st = document.getElementById('dialState');
+  if(pm < MARGIN_FLOOR*100){ st.textContent='低于保本线 —— 亏损区，禁止报价'; st.style.color='var(--red)'; }
+  else if(pm < 6){ st.textContent='薄利区 —— 中标率高，但抗风险能力弱'; st.style.color='var(--amber)'; }
+  else { st.textContent='当前处于盈利区'; st.style.color='var(--green)'; }
+
+  document.getElementById('dialExpect').textContent = '¥'+fmt(maxBid*pm/100*win/100);
+
+  document.getElementById('dialTable').innerHTML = [3,6,9,12,15].map(b=>{
+    const w = winOfPm(b);
+    const e = maxBid*b/100*w/100;
+    const isCur = Math.abs(b-pm)<0.26;
+    return `<tr style="${isCur?'background:rgba(77,148,255,.11)':''}">
+      <td>${b}% 利润${isCur?' <span class="src s-real">当前</span>':''}</td>
+      <td class="num mono">${b}%</td><td class="num mono">${w.toFixed(0)}%</td>
+      <td class="num mono" style="color:${isCur?'var(--green)':'var(--tx2)'}">¥${fmt(e)}</td>
+    </tr>`;
+  }).join('');
+
+  const alerts = [];
+  if(pm<MARGIN_FLOOR*100) alerts.push(['a-red','当前利润率低于保本线。这个价位拿下项目，亏的是自己的钱。']);
+  else if(pm<6) alerts.push(['a-amber','薄利区。中标率高，但任何一个意外（返工、工期延误）都会吃掉全部利润。']);
+  else alerts.push(['a-green','盈利区。当前报价与预期中标率处于可接受区间。']);
+  if(pm>18) alerts.push(['a-amber','高利润区。中标率已明显下降，需要有"陪标也不心疼"的心理准备。']);
+  alerts.push(['a-blue','期望毛利 = 中标率 × 单标毛利。它衡量的是「长期来看这个策略划不划算」，而不是「这一单赚多少」。']);
+  document.getElementById('dialAlerts').innerHTML = alerts.map(([c,t])=>`<div class="alert ${c}">${t}</div>`).join('');
+}
+
+/* 旧的单盘拖拽已由 renderDials/bindDial3 取代（三盘各拖各的），保留空函数以兼容旧调用 */
+function bindDial(){}
+
+/* ================= STEP 7 · 投标文件制作 + AI 初版 ================= */function stageDoc(){
+  const ok = isDone(4);
+  const parts = [
+    {ic:'📋', n:'商务标',      d:'投标函 · 法定代表人身份证明 · 授权委托书 · 投标保证金凭证', s:'ok'},
+    {ic:'⚙️', n:'资格文件',    d:'营业执照 · 资质证书 · 人员证书 · 社保证明 · 财务报表', s: deposit.paid?'ok':'q'},
+    {ic:'📐', n:'技术标',      d:'施工组织设计 · 专项施工方案 · 质量与安全保证措施', s:'q'},
+    {ic:'💰', n:'报价文件',    d:'已标价工程量清单 · 报价汇总表 · 单价分析表', s:'ok'},
+    {ic:'📎', n:'其他附件',    d:'业绩证明材料 · 履约评价 · 信用证明', s:'ok'},
+  ];
+  const sb = n => n==='ok' ? '<span class="b b-ok">资料齐备</span>'
+                 : n==='q'  ? '<span class="b b-q">部分待补</span>'
+                 : '<span class="b b-no">缺失</span>';
+  return `
+  <div class="panel">
+    <h3>投标文件组成 <span class="tag">该决定的都在前面定完了</span></h3>
+    <div class="sub">这一步不再做判断，只做组装。前面 STEP 1–6 的结论逐条落到文件结构里。</div>
+    <div class="tree">
+      ${parts.map(p=>`<div class="tree-row">
+        <div class="ic">${p.ic}</div>
+        <div class="fn"><div style="font-weight:500">${p.n}</div>
+          <div class="fs">${p.d}</div></div>
+        ${sb(p.s)}
+      </div>`).join('')}
+    </div>
+    <div class="alert a-blue" style="margin-top:15px">
+      <b>来源追溯：</b>报价文件 ← STEP 5 平衡环定档 ¥${fmt(CTRL*(1-FLOAT_RATE)*(1-PM/100))} 成本上限
+      ｜ 技术标 ← 资料库「施工组织设计」范本 ｜ 资格文件 ← STEP 2 自查结果
+      ｜ 决策依据 ← STEP 6 领导拍板结论
+    </div>
+  </div>
+
+  <div class="panel" style="border-color:rgba(155,125,240,.40)">
+    <h3>AI 生成投标文件初版 <span class="tag" style="background:rgba(155,125,240,.16);color:#bda8f7">草稿 · 不可直接提交</span></h3>
+    <div class="sub">基于前面全部分析 + 判断 + 资料库（含施工组织设计），生成投标文件初版。
+      <b>AI 只出草稿，必须人工增删改并盖章后才能提交。</b></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+      <button class="btn pri" onclick="genTender()">生成投标文件初版</button>
+      <span class="small" style="color:var(--tx3)">
+        依赖：${isDone(0)?'✅ 招标文件':'❌ 未引入'} ·
+        ${deposit.paid?'✅':'❌'} 保证金 ·
+        ${isDone(4)?'✅ 报价档位':'❌ 未定档'} ·
+        ${isDone(5)?'✅ 领导拍板':'❌ 未拍板'}
+      </span>
+    </div>
+    <div id="tenderOut">
+      <div class="alert a-amber" style="margin:0">
+        还没有生成。点上方按钮，系统会按当前已完成的步骤组装初版草稿。
+      </div>
+    </div>
+  </div>`;
+}
+
+let TENDER = null;
+function genTender(){
+  const miss = [];
+  if(!isDone(0)) miss.push('STEP 1 招标文件未引入');
+  if(!deposit.paid) miss.push('STEP 2 投标保证金未确认');
+  if(!isDone(4)) miss.push('STEP 5 报价档位未定');
+  if(!isDone(5)) miss.push('STEP 6 领导未拍板');
+  const t = nowStr();
+  TENDER = {t, by:USER.name, miss, pm:PM,
+            costCap: CTRL*(1-FLOAT_RATE)*(1-PM/100),
+            items: listItems.filter(x=>x.on).length, nItems: listItems.length};
+  AUDIT.push({t, who:USER.name, act:'生成投标文件初版', detail:'缺 '+miss.length+' 项前置'});
+  renderTender();
+}
+function renderTender(){
+  const el = document.getElementById('tenderOut');
+  if(!el || !TENDER) return;
+  const T = TENDER;
+  el.innerHTML = `
+    <div class="alert ${T.miss.length?'a-amber':'a-green'}" style="margin-bottom:13px">
+      <b>${T.miss.length?'初版已生成，但有 '+T.miss.length+' 项前置未完成：':'初版已生成，前置齐备。'}</b>
+      ${T.miss.length? T.miss.join(' ｜ ')+'<br><span class="small">这些缺口在草稿里以【待补】标出。</span>' : ''}
+    </div>
+    <div style="font-size:12px;color:var(--tx3);margin-bottom:10px">
+      生成时间 ${T.t} ｜ 操作人 ${T.by} ｜ 报价档位 ${T.pm.toFixed(1)}% ｜ 成本上限 ¥${fmt(T.costCap)}
+    </div>
+    <div class="tree">
+      <div class="tree-row draft">
+        <div class="ic">📕</div>
+        <div class="fn"><div style="font-weight:600">投标文件初版（草稿）.docx</div>
+          <div class="fs">共 5 部分 · 清单 ${T.items}/${T.nItems} 项计入 · 生成于 ${T.t}</div></div>
+        <span class="b b-q">草稿</span>
+      </div>
+      <div class="tree-row"><div class="ic">📄</div>
+        <div class="fn"><div>① 投标函与承诺书</div><div class="fs">按招标文件格式，套用本项目名称与控制价</div></div>
+        <span class="b b-ok">已生成</span></div>
+      <div class="tree-row"><div class="ic">⚙️</div>
+        <div class="fn"><div>② 资格文件索引表</div><div class="fs">${deposit.paid?'含保证金缴纳凭证索引':'<span style="color:var(--amber)">保证金凭证【待补】</span>'}</div></div>
+        <span class="b ${deposit.paid?'b-ok':'b-q'}">${deposit.paid?'已生成':'待补'}</span></div>
+      <div class="tree-row"><div class="ic">📐</div>
+        <div class="fn"><div>③ 技术标 · 施工组织设计</div>
+          <div class="fs">基于资料库范本「空调管道类」自动套用，含吊装/动火/季节性措施</div></div>
+        <span class="b b-q">待人工审改</span></div>
+      <div class="tree-row"><div class="ic">💰</div>
+        <div class="fn"><div>④ 报价文件 · 已标价工程量清单</div>
+          <div class="fs">按 STEP 5 清单 ${T.nItems} 项逐项填价，成本上限 ¥${fmt(T.costCap)}</div></div>
+        <span class="b b-ok">已生成</span></div>
+      <div class="tree-row"><div class="ic">📎</div>
+        <div class="fn"><div>⑤ 业绩与附件</div><div class="fs">首都机场一期 · 地铁19号线 · 地坛医院 三项证明材料索引</div></div>
+        <span class="b b-ok">已生成</span></div>
+    </div>
+    <div class="alert a-red" style="margin-top:14px">
+      <b>红线（零容忍）：</b>这份是初版草稿，<b>不得直接提交</b>。
+      施工组织设计必须由技术负责人审改签字；报价必须由造价工程师复核；
+      最终文件须经具名人确认盖章。任何 AI 生成内容在未人工确认前进入正式标书，视为流程违规。
+    </div>
+    <div style="margin-top:13px;display:flex;gap:9px;flex-wrap:wrap">
+      <button class="btn pri" onclick="exportTender('doc')">⬇ 导出 Word 草稿（.doc）</button>
+      <button class="btn" onclick="exportTender('txt')">⬇ 导出纯文本（.txt）</button>
+      <button class="btn" onclick="exportTender('html')">⬇ 导出网页（.html）</button>
+      <button class="btn danger" onclick="if(confirm('作废这份初版草稿？')){TENDER=null;renderTender();}">作废重生成</button>
+    </div>
+    <div class="small" style="color:var(--tx3);margin-top:9px">
+      导出的文件里，所有 AI 生成内容都带【草稿】水印与「不可直接提交」声明；
+      缺口处标【待补】，由人工补齐并盖章后才算正式文件。
+    </div>`;
+}
+
+/* ===== 真正导出可下载文件 ===== */
+function tenderText(){
+  const T = TENDER || {};
+  const nm = (CUR_FILE ? CUR_FILE.name : '未命名项目');
+  const L = [];
+  L.push('【投标文件初版 · 草稿】');
+  L.push('『本文件由 AI 依据前序分析自动生成，未经人工审改签字盖章，不得直接提交』');
+  L.push('');
+  L.push('项目名称：' + nm);
+  L.push('生成时间：' + (T.t || nowStr()) + '　操作人：' + (T.by || USER.name));
+  L.push('报价档位：' + (T.pm!=null?T.pm.toFixed(1):PM.toFixed(1)) + '%');
+  L.push('成本上限：¥' + fmt(T.costCap!=null?T.costCap:CTRL*(1-FLOAT_RATE)*(1-PM/100)));
+  L.push('清单项数：' + (T.items||0) + '/' + (T.nItems||0) + ' 项计入');
+  if(T.miss && T.miss.length){
+    L.push('');
+    L.push('【前置缺口 ' + T.miss.length + ' 项，须补齐】');
+    T.miss.forEach(m => L.push('  · ' + m));
+  }
+  L.push('');
+  L.push('———————— 文件组成 ————————');
+  L.push('① 投标函与承诺书　　　　［已生成］套用本项目名称与控制价');
+  L.push('② 资格文件索引表　　　　［' + (deposit.paid?'已生成':'待补：保证金凭证') + '］');
+  L.push('③ 技术标 · 施工组织设计　［待人工审改］基于资料库「空调管道类」范本');
+  L.push('④ 报价文件 · 已标价清单　［已生成］按清单逐项填价');
+  L.push('⑤ 业绩与附件　　　　　　［已生成］项目业绩证明材料索引');
+  L.push('');
+  L.push('———————— 红线（零容忍） ————————');
+  L.push('施工组织设计必须由技术负责人审改签字；');
+  L.push('报价必须由造价工程师复核；');
+  L.push('最终文件须经具名人确认盖章。');
+  L.push('任何 AI 生成内容在未人工确认前进入正式标书，视为流程违规。');
+  return L.join('\n');
+}
+function exportTender(kind){
+  if(!TENDER){ alert('请先点「生成投标文件初版」。'); return; }
+  const nm = (CUR_FILE ? CUR_FILE.name : '未命名项目').replace(/[\\/:*?"<>|]/g,'');
+  const stamp = nowStr().replace(/[^\d]/g,'').slice(0,12);
+  let content, fname, mime;
+  if(kind==='txt'){
+    content = tenderText();
+    fname = '投标文件初版_' + nm + '_' + stamp + '.txt';
+    mime = 'text/plain;charset=utf-8';
+  } else if(kind==='html'){
+    content = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>投标文件初版 · 草稿</title>'
+      + '<style>body{font-family:"Microsoft YaHei",sans-serif;max-width:820px;margin:40px auto;'
+      + 'line-height:1.9;padding:0 24px;color:#222}h1{font-size:20px;border-bottom:2px solid #c00;'
+      + 'padding-bottom:10px}.warn{background:#fff4f4;border-left:4px solid #c00;padding:12px 16px;'
+      + 'margin:18px 0;color:#900;font-weight:600}pre{white-space:pre-wrap;font-family:inherit}</style>'
+      + '</head><body><h1>投标文件初版 · 草稿</h1>'
+      + '<div class="warn">本文件由 AI 依据前序分析自动生成，未经人工审改签字盖章，不得直接提交。</div>'
+      + '<pre>' + tenderText().replace(/[<>&]/g, c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])) + '</pre></body></html>';
+    fname = '投标文件初版_' + nm + '_' + stamp + '.html';
+    mime = 'text/html;charset=utf-8';
+  } else {
+    /* .doc：Word 可直接打开 HTML 内容，兼容性最好且无需依赖库 */
+    const body = tenderText().replace(/[<>&]/g, c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+    content = '<html xmlns:o="urn:schemas-microsoft-com:office:office" '
+      + 'xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">'
+      + '<head><meta charset="utf-8"><title>投标文件初版</title>'
+      + '<style>@page{size:A4;margin:2.4cm}body{font-family:"Microsoft YaHei",SimSun;font-size:11pt;'
+      + 'line-height:1.85}h1{font-size:15pt;color:#c00}p{white-space:pre-wrap;margin:0}</style></head>'
+      + '<body><h1>【投标文件初版 · 草稿 —— 不可直接提交】</h1><p>' + body + '</p></body></html>';
+    fname = '投标文件初版_' + nm + '_' + stamp + '.doc';
+    mime = 'application/msword;charset=utf-8';
+  }
+  const blob = new Blob(['\ufeff' + content], {type:mime});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = fname;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  AUDIT.push({t:nowStr(), who:USER.name, act:'导出投标文件初版', detail:fname});
+  alert('已导出：\n\n' + fname + '\n\n文件已保存到浏览器默认下载目录。\n内容为草稿，须人工审改盖章后方可提交。');
+}
+
+/* ================= 提交某一步 ================= */
+function commit(idx){
+  if(!canAct(idx)){ alert('当前角色「'+USER.role+'」无权提交本步。'); return; }
+  const txt = {0:'已引入《'+(CUR_FILE?CUR_FILE.name:'—')+'》，控制价 ¥'+fmt(CTRL),
+               2:'业绩与资料配备 '+(typeof picked!=='undefined'?(picked.size||0):0)+' 项',
+               3:'成本上限 ¥'+fmt(CTRL*(1-FLOAT_RATE)*(1-PM/100))+'，清单 '+listItems.length+' 项，采购专员已录价',
+               4:'报价档位定为 '+PM.toFixed(1)+'%，成本上限 ¥'+fmt(CTRL*(1-FLOAT_RATE)*(1-PM/100)),
+               5:'领导已拍板：同意投标（决策报告四项已阅）'}[idx] || '已完成';
+  addRecord(idx, txt, true);
+  markRedoAfter(idx);
+  // 自动前进
+  if(idx+1 < STEPS.length){ CUR = idx+1; }
+  renderRail(); renderStage();
+}
+function commitQual(){
+  if(!canAct(1)){ alert('当前角色「'+USER.role+'」无权提交本步。'); return; }
+  const q = clauses.filter(c=>c.st==='q').length;
+  const no = clauses.filter(c=>c.st==='no').length;
+
+  // 红线一：红标（不满足）存在 → 硬拦截，流程到此为止
+  if(no>0){
+    const bad = clauses.filter(c=>c.st==='no').map(c=>'第 '+c.no+' 条「'+c.txt+'」').join('\n    · ');
+    alert('【流程阻断】资格审查发现 '+no+' 条红标（不满足）。\n\n    · '+bad+
+          '\n\n红标 = 直接废标项，本标不具备投标条件。\n'+
+          '流程不得继续 —— 要么补齐材料后重判，要么放弃本标。\n\n'+
+          '（课堂演示需要继续往下走，请用底部的「演示跳过」按钮，该动作会明确留痕。）');
+    // 记为不通过，但不前进
+    const bt = `自查未通过：红标 ${no} 条 —— ` + clauses.filter(c=>c.st==='no').map(c=>'第'+c.no+'条').join('、');
+    addRecord(1, bt, false);
+    markRedoAfter(1);
+    renderRail(); renderStage();
+    return;
+  }
+
+  // 红线二：存疑未清零
+  if(q>0){ alert('还有 '+q+' 条「存疑」未确认。\n\n存疑项未清零，本步不得判定通过 —— 这是红线，不是提醒。'); return; }
+  // 红线三：保证金未确认
+  if(!deposit.paid){ alert('投标保证金还没确认按期缴纳。\n\n保证金漏缴直接废标，必须先核对银行回单。'); return; }
+
+  const txt = `自查完成：满足 ${clauses.filter(c=>c.st==='ok').length} 条 / 不满足 0 条 / 存疑 0 条；保证金 ¥${fmt(deposit.amount)} 已确认按期`;
+  addRecord(1, txt, true);
+  markRedoAfter(1);
+  CUR = 2; renderRail(); renderStage();
+}
+
+/* ---------- 演示跳过（仅在红标阻断时出现，动作强制留痕） ---------- */
+function demoSkipQual(){
+  if(!canAct(1)){ alert('当前角色「'+USER.role+'」无权操作本步。'); return; }
+  const no = clauses.filter(c=>c.st==='no').length;
+  const q  = clauses.filter(c=>c.st==='q').length;
+  if(no===0 && q===0 && deposit.paid){
+    alert('当前没有红标或存疑项，无需跳过。请直接点「确认自查结果」。');
+    return;
+  }
+  const reasons = [];
+  if(no>0) reasons.push('红标 '+no+' 条（第 '+clauses.filter(c=>c.st==='no').map(c=>c.no).join('、')+' 条）');
+  if(q>0)  reasons.push('存疑未确认 '+q+' 条');
+  if(!deposit.paid) reasons.push('保证金未确认按期');
+  if(!confirm('【演示跳过 · 高风险动作】\n\n本步存在未解决的问题：\n    · '+reasons.join('\n    · ')+
+              '\n\n跳过仅用于课堂/内部演示，不代表资格审查通过。\n'+
+              '系统会把这次跳过永久记入留痕，后序每一步都会带着「前序未通过」的标记。\n\n确定要跳过吗？')) return;
+
+  const txt = '【演示跳过】资格审查未通过即继续。未解决：' + reasons.join('；');
+  addRecord(1, txt, false);
+  DEMO_SKIPPED.add(1);
+  AUDIT.push({t:nowStr(), who:USER.name, act:'演示跳过资格审查', detail:reasons.join('；')});
+  markRedoAfter(1);
+  CUR = 2; renderRail(); renderStage();
+}
+
+/* ================= 招标文件导入 ================= */
+function bindDrop(){
+  const dz = document.getElementById('dropZone');
+  const fi = document.getElementById('fileInput');
+  if(!dz || dz._bound) return;
+  dz._bound = true;
+  dz.addEventListener('click',()=>fi.click());
+  fi.addEventListener('change',e=>{
+    const f = e.target.files && e.target.files[0];
+    if(f) importFile(f);
+  });
+  ['dragenter','dragover'].forEach(ev=>dz.addEventListener(ev,e=>{
+    e.preventDefault(); e.stopPropagation(); dz.classList.add('over');
+  }));
+  ['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{
+    e.preventDefault(); e.stopPropagation(); dz.classList.remove('over');
+  }));
+  dz.addEventListener('drop',e=>{
+    const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if(f) importFile(f);
+  });
+}
+
+function demoImport(){
+  const dz = document.getElementById('dropZone');
+  if(!dz) return;
+  dz.classList.add('parsing');
+  dz.innerHTML = '<div class="spin"></div><div style="font-size:13.5px;margin-top:8px">正在解析《首都机场空调管道二期招标文件.pdf》…</div>' +
+                 '<div class="small" style="margin-top:5px">抽取正文 → 识别章节 → 找工程量清单 → 抠控制价 → 比对资格条款</div>';
+  setTimeout(()=>{
+    CUR_FILE = {name:'首都机场中国服务大厦 · 空调管道维修二期',
+                from:'《…二期招标文件.pdf》', date:nowStr(), ctrl:850000,
+                src:'file', items:DEMO_FILE_ITEMS,
+                itemCount:DEMO_FILE_ITEMS.length};
+    // 控制价进来 → 覆盖
+    CTRL = 850000;
+    deposit.amount = Math.round(CTRL*0.02);
+    renderStage();          // 重绘本步（结果区出现）
+    // 顺手把清单按文件项数建好（用户要求：文件几项就几行）
+    listItems = DEMO_FILE_ITEMS.map((it,i)=>({
+      on: i < DEMO_FILE_ITEMS.length-1, name: it.name, unit: it.unit, qty: it.qty,
+      src: i === DEMO_FILE_ITEMS.length-1 ? 'self' : 'bid'
+    }));
+    listFromFile = true;
+    ITEMS_IN_FILE = DEMO_FILE_ITEMS.length;
+    fillImportResult({file:'《…二期招标文件.pdf》', ctrl:850000, ndays:11,
+                      items:DEMO_FILE_ITEMS.length, clauses:clauses.length, doubts:1, pages:24});
+    renderRail();
+  }, 1400);
+}
+
+function importFromNotice(i){
+  const x = notices[i];
+  const ctrl = parseInt((x.budget||'').replace(/[^\d]/g,'')) || 0;
+  CUR_FILE = {name:x.n, from:'主动分析命中', date:nowStr(), ctrl:ctrl,
+              src:'notice', items:DEMO_FILE_ITEMS, itemCount:DEMO_FILE_ITEMS.length};
+  if(ctrl){ CTRL = ctrl; deposit.amount = Math.round(ctrl*0.02); }
+  // 清单严格跟随招标文件项数，不截断
+  listItems = DEMO_FILE_ITEMS.map((it,k)=>({
+    on: k < DEMO_FILE_ITEMS.length-1, name: it.name, unit: it.unit, qty: it.qty,
+    src: k===DEMO_FILE_ITEMS.length-1 ? 'self' : 'bid'
+  }));
+  listFromFile = true; ITEMS_IN_FILE = DEMO_FILE_ITEMS.length;
+  renderStage();
+  fillImportResult({file:x.n, ctrl:ctrl, ndays:14, items:DEMO_FILE_ITEMS.length,
+                    clauses:clauses.length, doubts:1, pages:'—'});
+  renderRail();
+  AUDIT.push({t:nowStr(), who:USER.name, act:'引入公告', detail:x.n});
+}
+
+/* 从雷达候选/目标库引入分析对象 */
+function demoRadarImport(r){
+  const ctrl = r.budget || 0;
+  CUR_FILE = {name:r.n, from:'招标雷达命中', date:nowStr(), ctrl:ctrl,
+              src:'radar', items:DEMO_FILE_ITEMS, itemCount:DEMO_FILE_ITEMS.length};
+  if(ctrl){ CTRL = ctrl; deposit.amount = Math.round(ctrl*0.02); }
+  listItems = DEMO_FILE_ITEMS.map((it,k)=>({
+    on: k < DEMO_FILE_ITEMS.length-1, name: it.name, unit: it.unit, qty: it.qty,
+    src: k===DEMO_FILE_ITEMS.length-1 ? 'self' : 'bid'
+  }));
+  listFromFile = true; ITEMS_IN_FILE = DEMO_FILE_ITEMS.length;
+  // 从雷达引入 → 自动回到 STEP 1 并落定
+  CUR = 0;
+  addRecord(0, `已从招标雷达引入《${r.n}》，控制价 ¥${fmt(ctrl)}`, true);
+  markRedoAfter(0);
+  renderRail(); renderStage();
+  fillImportResult({file:r.n, ctrl:ctrl, ndays:14, items:DEMO_FILE_ITEMS.length,
+                    clauses:clauses.length, doubts:1, pages:'—'});
+  AUDIT.push({t:nowStr(), who:USER.name, act:'从雷达引入', detail:r.n});
+}
+
+function parsePaste(){
+  const t = (document.getElementById('pasteTxt').value||'').trim();
+  if(!t){ alert('先粘贴一段公告正文'); return; }
+  const m = t.match(/([\d,，]{4,})\s*(元|万元)/);
+  const ctrl = m ? parseInt(m[1].replace(/[,，]/g,'')) * (m[2]==='万元'?10000:1) : 0;
+  const doubt = /社保|近半年|连续缴纳/.test(t);
+  const nItem = (t.match(/DN\d+/g)||[]).length || 5;
+  CUR_FILE = {name:t.slice(0,26).replace(/\s+/g,'')+(t.length>26?'…':''),
+              from:'粘贴的公告正文', date:nowStr(), ctrl:ctrl,
+              src:'paste', items:DEMO_FILE_ITEMS.slice(0,nItem), itemCount:nItem};
+  if(ctrl){ CTRL = ctrl; deposit.amount = Math.round(ctrl*0.02); }
+  listItems = DEMO_FILE_ITEMS.slice(0,nItem).map((it,k)=>({
+    on:true, name:it.name, unit:it.unit, qty:it.qty, src:'bid'
+  }));
+  listFromFile = true; ITEMS_IN_FILE = nItem;
+  renderStage();
+  fillImportResult({file:'（粘贴文本 · '+t.length+' 字）', ctrl:ctrl, ndays:14,
+                    items:nItem, clauses:4, doubts:doubt?1:0, pages:0, real:true});
+  renderRail();
+}
+
+function fillImportResult(o){
+  const box = document.getElementById('importResult');
+  if(!box) return;
+  box.style.display = 'block';
+  const ctrlTxt = o.ctrl ? '¥'+fmt(o.ctrl) : '<span style="color:var(--amber)">未识别到 · 需手填</span>';
+  document.getElementById('importHead').innerHTML =
+    `已引入：<b>${o.file}</b> · 控制价 ${ctrlTxt}` +
+    (o.doubts ? ` · <span style="color:var(--amber)">${o.doubts} 处存疑待核对</span>` : '');
+  const rows = [
+    ['招标控制价', o.ctrl?'¥'+fmt(o.ctrl):'<span class="b b-q">存疑</span>',
+      o.real?'<span class="src s-ref">文本识别</span>':'<span class="src s-real">文件抽取</span>'],
+    ['工程量清单项', o.items ? '<b>'+o.items+' 项</b>' : '<span class="b b-q">存疑</span>',
+      '<span class="src s-real">已进 STEP 5</span>'],
+    ['资格/废标条款', (o.clauses||0)+' 条', '<span class="src s-real">已进 STEP 2</span>'],
+    ['投标保证金', o.ctrl ? '¥'+fmt(Math.round(o.ctrl*0.02))+'（按 2% 估）' : '—',
+      '<span class="src s-ref">推算值</span>'],
+    ['距投标截止', (o.ndays||'—')+' 天', '<span class="src s-real">文件写明</span>'],
+    ['实质响应要求', o.doubts ? '<span class="b b-q">1 项需人工确认</span>' : '<span class="b b-ok">清晰</span>', ''],
+  ];
+  document.getElementById('importExtract').innerHTML = rows.map(([k,v,t])=>
+    `<tr><td class="small" style="width:112px">${k}</td><td class="mono" style="font-size:12.5px">${v}</td><td style="width:106px">${t}</td></tr>`
+  ).join('');
+  document.getElementById('curTarget').innerHTML =
+    `<div style="font-size:13.5px;font-weight:600">${CUR_FILE.name}</div>
+     <div class="small" style="margin-top:5px">来源：${CUR_FILE.from}</div>
+     <div class="small">引入时间：${CUR_FILE.date}</div>
+     <div class="small" style="margin-top:7px;color:var(--green)">✓ 后续每一步都基于这个项目</div>
+     <div class="small" style="margin-top:7px;padding-top:7px;border-top:1px solid var(--line)">
+       <b style="color:var(--tx2)">清单已按文件项数建好：${ITEMS_IN_FILE} 行</b><br>
+       去 STEP 5 查看 →
+     </div>`;
+}
+
+// 单文件导入（本地解析）
+function importFile(f){
+  const dz = document.getElementById('dropZone');
+  if(!dz) return;
+  const kb = (f.size/1024).toFixed(0);
+  dz.innerHTML = '<div class="spin"></div><div style="font-size:13.5px;margin-top:8px">正在解析《'+f.name+'》…</div>' +
+                 '<div class="small" style="margin-top:5px">' + kb + ' KB · 本地解析，文件不上传</div>';
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    const text = (typeof reader.result === 'string') ? reader.result : '';
+    setTimeout(()=>finish(f, text), 700);
+  };
+  reader.onerror = ()=>setTimeout(()=>finish(f, ''), 800);
+  if(/\.(txt|csv|md)$/i.test(f.name)) reader.readAsText(f, 'UTF-8');
+  else setTimeout(()=>finish(f,''), 1300);
+}
+
+function finish(f, text){
+  const t = text || '';
+  let ctrl = 0;
+  const m = t.match(/([\d,，]{4,})\s*(元|万元)/);
+  if(m) ctrl = parseInt(m[1].replace(/[,，]/g,'')) * (m[2]==='万元'?10000:1);
+  const doubt = /社保|近半年|连续缴纳/.test(t);
+  const nItem = (t.match(/DN\d+/g)||[]).length || DEMO_FILE_ITEMS.length;
+
+  const dz = document.getElementById('dropZone');
+  if(dz) dz.innerHTML = '<div style="font-size:22px;margin-bottom:6px">✅</div>' +
+    '<div style="font-size:13.5px;font-weight:600">《'+f.name+'》</div>' +
+    '<div class="small" style="margin-top:5px">解析完成' +
+    (ctrl?' · 控制价 ¥'+fmt(ctrl):' · 控制价未识别') +
+    ' · 清单 '+nItem+' 项</div>';
+
+  CUR_FILE = {name:f.name.replace(/\.[^.]+$/,''), from:'《'+f.name+'》',
+              date:nowStr(), ctrl:ctrl, src:'file',
+              items:DEMO_FILE_ITEMS.slice(0,nItem), itemCount:nItem};
+  if(ctrl){ CTRL = ctrl; deposit.amount = Math.round(ctrl*0.02); }
+  listItems = DEMO_FILE_ITEMS.slice(0,nItem).map((it,k)=>({
+    on:true, name:it.name, unit:it.unit, qty:it.qty, src:'bid'
+  }));
+  listFromFile = true; ITEMS_IN_FILE = nItem;
+
+  renderStage();
+  fillImportResult({file:'《'+f.name+'》', ctrl:ctrl, ndays:14,
+                    items:nItem, clauses:clauses.length, doubts:doubt?1:1, pages:'—'});
+  renderRail();
+  AUDIT.push({t:nowStr(), who:USER.name, act:'引入文件', detail:f.name});
+  if(!ctrl){
+    setTimeout(()=>alert('控制价没识别出来。\n\n这种情况很常见——招标文件格式五花八门，扫描件更是读不出来。\n请手工填一下控制价，清单行数已按文件里的 '+nItem+' 项建好。'), 400);
+  }
+}
+
+/* ================= 启动 ================= */
+window.addEventListener('load',()=>{
+  renderRail(); renderStage();
+  document.getElementById('lgPass').addEventListener('keydown',e=>{
+    if(e.key==='Enter') doLogin();
+  });
+});
+</script>
+</body>
+</html>

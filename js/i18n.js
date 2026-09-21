@@ -316,6 +316,8 @@
       'footer.l1': '工程施工',
       'footer.l2': '智慧消防',
       'footer.l3': '联系我们',
+      'footer.staff': '员工入口',
+      'footer.staffLink': '内部办公系统',
       'footer.copy': '© 2026 北京中航华信机电设备安装有限公司 版权所有',
       'footer.icp': '京ICP备XXXXXXXX号'
     },
@@ -612,6 +614,8 @@
       'footer.l1': 'Engineering',
       'footer.l2': 'Smart Fire Protection',
       'footer.l3': 'Contact Us',
+      'footer.staff': 'Employee Portal',
+      'footer.staffLink': 'Internal Office System',
       'footer.copy': '© 2026 Beijing Zhonghang Huaxin Electromechanical Equipment Installation Co., Ltd. All Rights Reserved',
       'footer.icp': 'ICP Filing No.: JingICP备XXXXXXXX'
     }
